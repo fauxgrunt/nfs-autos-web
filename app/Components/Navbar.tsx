@@ -20,11 +20,11 @@ export default function Navbar() {
   }
 
   const menuItems = [
-    { name: 'Current Inventory', href: '/inventory' },
-    { name: 'Import Brokerage', href: '/brokerage' },
-    { name: 'Previously Sold', href: '/sold' },
+    { name: 'Home', href: '/' },
+    { name: 'Inventory', href: '/inventory' },
     { name: 'Testimonials', href: '/testimonials' },
-    { name: 'Book Appointment', href: '/contact' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
   ]
 
   return (
@@ -65,12 +65,7 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
-            <Link 
-              href="/contact" 
-              className="px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white bg-blue-900 rounded hover:bg-blue-800 transition shadow-lg shadow-blue-900/20"
-            >
-              Contact Us
-            </Link>
+            
           </div>
 
           {/* === MOBILE MENU BUTTON === */}
@@ -108,11 +103,11 @@ export default function Navbar() {
               </Link>
             ))}
             <Link 
-                href="/contact"
-                onClick={() => setIsOpen(false)}
-                className="block w-full text-center mt-4 px-4 py-4 text-white bg-blue-900 font-bold uppercase tracking-widest rounded shadow-md"
+              href="/contact"
+              onClick={() => setIsOpen(false)}
+              className="block w-full text-center mt-4 px-4 py-4 text-white bg-blue-900 font-bold uppercase tracking-widest rounded shadow-md"
             >
-                Contact Details
+              Contact
             </Link>
           </div>
         </div>

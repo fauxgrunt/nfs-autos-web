@@ -22,7 +22,7 @@ export default function Footer() {
               NFS AUTOS
             </h2>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Premium JDM Imports & VIP Brokers. We specialize in bringing the finest Japanese engineering to your driveway.
+              Handpicked by us, according to your taste.
             </p>
             <div className="flex space-x-4 pt-2">
               {/* Social Icons */}
