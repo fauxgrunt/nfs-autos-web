@@ -1,77 +1,220 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import React from 'react';
+import { Award, Globe, Shield, Zap, CheckCircle, TrendingUp, Users, Clock } from 'lucide-react';
 
-export default function AboutHome() {
+const AboutSection = () => {
   return (
-    <section className="py-24 md:py-32 bg-white overflow-hidden">
-      <div className="max-w-[1920px] mx-auto px-6 md:px-12">
+    <section className="relative bg-black overflow-hidden">
+      
+      <div className="relative container mx-auto px-6 lg:px-12 py-24 lg:py-32 max-w-7xl">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           
-          {/* LEFT: TEXT CONTENT */}
-          <div className="flex flex-col gap-10">
+          {/* Left: Content */}
+          <div className="space-y-8">
             
-            {/* The Header Group */}
-            <div className="flex flex-col gap-2">
-              {/* ✨ THE LOOK: Thin, Large, Elegant */}
-              <h2 className="text-6xl md:text-8xl font-header font-extralight text-slate-900 leading-[1] tracking-tight">
-                About Us
-              </h2>
-              
-              {/* Refined Red Line (Thinner to match text) */}
-              <div className="h-[2px] w-24 bg-red-600 mt-4"></div>
+            {/* Eyebrow */}
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-px bg-red-600" />
+              <span className="text-xs font-bold text-red-600 uppercase tracking-[0.3em]">
+                Established 2025
+              </span>
             </div>
 
-            {/* Body Text: Clean and legible */}
-            <div className="flex flex-col gap-6 text-slate-500 font-sans text-lg leading-relaxed font-light">
-              <p>
-                Since our importing journey began, we have managed to assemble the best possible team 
-                across Japan and the UK, covering exclusive auctions and private buying avenues 
-                unavailable to the general public.
-              </p>
-              
-              <p>
-                With offices based in <strong className="text-slate-900 font-medium">Tokyo & Sydney</strong>, we source and export cars to enthusiasts 
-                who demand perfection. 
-              </p>
-            </div>
-
-            {/* Minimalist Link */}
-            <div className="pt-6">
-              <Link 
-                href="/about"
-                className="group inline-flex items-center gap-3 text-slate-900 font-header font-normal text-sm uppercase tracking-widest hover:text-red-600 transition-colors"
-              >
-                Read Our Story 
-                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
-                   <ArrowRight className="w-4 h-4" />
+            {/* Heading */}
+            <div className="space-y-4">
+              <h2 className="text-5xl lg:text-7xl font-black text-white leading-[0.9] tracking-tight">
+                Premium JDM<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700">
+                  Imports
                 </span>
-              </Link>
+                <br />Perfected
+              </h2>
             </div>
 
+            {/* Body Copy - Premium Feel */}
+            <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
+              <p className="text-xl text-white/90 font-light">
+                Since our importing journey began, we've assembled the <span className="text-white font-semibold">best possible team across Japan and Australia</span>, covering exclusive online auctions and private buying avenues unavailable to the general public.
+              </p>
+              
+              <p>
+                Based in <span className="text-white font-semibold">Australia</span> with trusted partners in Japan, we source and export premium Japanese auction vehicles—Crown, Mark X, Lexus—to enthusiasts who demand quality at accessible prices. Our streamlined import process delivers exceptional value without compromise.
+              </p>
+            </div>
+
+            {/* Key Differentiators */}
+            <div className="grid grid-cols-2 gap-4 pt-6">
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:border-red-600/50 transition-all duration-300">
+                <div className="w-10 h-10 rounded-full bg-red-600/20 flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-5 h-5 text-red-500" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-white mb-1">Quality Assured</div>
+                  <div className="text-xs text-gray-400">Auction grade vehicles</div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:border-red-600/50 transition-all duration-300">
+                <div className="w-10 h-10 rounded-full bg-red-600/20 flex items-center justify-center flex-shrink-0">
+                  <Globe className="w-5 h-5 text-red-500" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-white mb-1">Direct Access</div>
+                  <div className="text-xs text-gray-400">Japan auction network</div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:border-red-600/50 transition-all duration-300">
+                <div className="w-10 h-10 rounded-full bg-red-600/20 flex items-center justify-center flex-shrink-0">
+                  <Award className="w-5 h-5 text-red-500" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-white mb-1">JDM Specialists</div>
+                  <div className="text-xs text-gray-400">Crown, Mark X, Lexus</div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:border-red-600/50 transition-all duration-300">
+                <div className="w-10 h-10 rounded-full bg-red-600/20 flex items-center justify-center flex-shrink-0">
+                  <Zap className="w-5 h-5 text-red-500" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-white mb-1">Affordable Luxury</div>
+                  <div className="text-xs text-gray-400">Premium under $20k</div>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="pt-6">
+              <button className="group relative px-8 py-4 bg-red-600 hover:bg-red-700 transition-all duration-300 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative flex items-center gap-3">
+                  <span className="text-sm font-bold text-white uppercase tracking-widest">
+                    Read Our Story
+                  </span>
+                  <svg className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
+              </button>
+            </div>
           </div>
 
-          {/* RIGHT: HERO IMAGE */}
-          <div className="relative h-[500px] w-full group">
-            <div className="relative w-full h-full overflow-hidden rounded-sm">
-                <Image 
-                  src="/about-hero.jpg" 
-                  alt="NFS Autos Garage"
-                  fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                />
-            </div>
+          {/* Right: Visual Experience - JDM AUCTION STYLE */}
+          <div className="relative">
             
-            {/* Minimalist Badge */}
-            <div className="absolute -bottom-6 left-8 bg-white p-6 shadow-xl border-t border-red-600 z-10 hidden md:block">
-               <p className="text-4xl font-header font-thin text-slate-900">100%</p>
-               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Compliance Rate</p>
+            {/* Main Image Card */}
+            <div className="relative group">
+              {/* Floating Stats Card - Top Right */}
+              <div className="absolute -top-8 -right-8 z-20 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-2xl">
+                <div className="text-center">
+                  <div className="text-5xl font-black text-white mb-2">100%</div>
+                  <div className="text-xs text-white/70 uppercase tracking-wider">Compliance Ready</div>
+                </div>
+              </div>
+
+              {/* Main Image - TOYOTA CROWN / MARK X STYLE */}
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                <img 
+                  src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80" 
+                  alt="JDM Auction Vehicle"
+                  className="w-full h-[600px] object-cover transform group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                
+                {/* Auction Grade Badge */}
+                <div className="absolute top-6 left-6">
+                  <div className="px-4 py-2 bg-red-600 rounded-lg shadow-lg">
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">
+                      Auction Grade 4.5
+                    </span>
+                  </div>
+                </div>
+
+                {/* Bottom Overlay Info */}
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                  <div className="backdrop-blur-xl bg-black/60 border border-white/20 rounded-xl p-6">
+                    <div className="grid grid-cols-3 gap-6">
+                      <div>
+                        <div className="text-3xl font-black text-white mb-1">50+</div>
+                        <div className="text-xs text-white/70 uppercase tracking-wider">Premium Stock</div>
+                      </div>
+                      <div>
+                        <div className="text-3xl font-black text-white mb-1">Under</div>
+                        <div className="text-xs text-white/70 uppercase tracking-wider">$20k AUD</div>
+                      </div>
+                      <div>
+                        <div className="text-3xl font-black text-white mb-1">24/7</div>
+                        <div className="text-xs text-white/70 uppercase tracking-wider">Support Available</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Red Glow Accent */}
+              <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-red-600/20 rounded-full blur-3xl" />
+            </div>
+
+            {/* Secondary Image - JDM SEDAN DETAIL */}
+            <div className="absolute -bottom-12 -left-12 w-64 h-48 rounded-xl overflow-hidden shadow-2xl border-4 border-black z-10 hidden lg:block">
+              <img 
+                src="https://images.unsplash.com/photo-1552519507-04da22cb3711?w=400&q=80" 
+                alt="JDM Interior Detail"
+                className="w-full h-full object-cover"
+              />
+              {/* Auction Sheet Style Overlay */}
+              <div className="absolute top-3 left-3">
+                <div className="px-3 py-1 bg-black/80 rounded">
+                  <span className="text-xs font-bold text-red-500 uppercase">Verified</span>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
+        {/* Bottom Trust Bar */}
+        <div className="mt-24 pt-12 border-t border-white/10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            
+            <div className="text-center group cursor-pointer">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-600/20 to-red-800/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-red-600/30">
+                <CheckCircle className="w-8 h-8 text-red-500" />
+              </div>
+              <div className="text-2xl font-black text-white mb-2">Authentic</div>
+              <div className="text-sm text-gray-400">Direct from Japan auctions</div>
+            </div>
+
+            <div className="text-center group cursor-pointer">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-600/20 to-red-800/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-red-600/30">
+                <TrendingUp className="w-8 h-8 text-red-500" />
+              </div>
+              <div className="text-2xl font-black text-white mb-2">Transparent</div>
+              <div className="text-sm text-gray-400">Full auction sheets provided</div>
+            </div>
+
+            <div className="text-center group cursor-pointer">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-600/20 to-red-800/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-red-600/30">
+                <Users className="w-8 h-8 text-red-500" />
+              </div>
+              <div className="text-2xl font-black text-white mb-2">Student Friendly</div>
+              <div className="text-sm text-gray-400">Affordable premium imports</div>
+            </div>
+
+            <div className="text-center group cursor-pointer">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-600/20 to-red-800/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-red-600/30">
+                <Clock className="w-8 h-8 text-red-500" />
+              </div>
+              <div className="text-2xl font-black text-white mb-2">Efficient</div>
+              <div className="text-sm text-gray-400">Streamlined delivery</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default AboutSection;

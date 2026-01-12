@@ -4,167 +4,318 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ChevronDown, ArrowUpRight, Phone } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, Mail } from 'lucide-react';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showInventoryDropdown, setShowInventoryDropdown] = useState(false);
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
 
   const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
-  // 1. UPDATED FONT SIZES: Changed text-sm -> text-xs, increased tracking
   const NavLink = ({ href, label, hasDropdown = false }: { href: string; label: string; hasDropdown?: boolean }) => (
     <Link 
       href={href} 
-      className={`group relative h-full flex items-center px-5 text-xs font-chakra font-black italic uppercase tracking-[0.15em] transition-all duration-300
-        ${isActive(href) ? 'text-red-600' : 'text-slate-900 hover:text-red-600'}
+      className={`group relative h-full flex items-center px-6 text-sm font-medium uppercase tracking-wide transition-all duration-300
+        ${isActive(href) 
+          ? 'text-red-600' 
+          : 'text-black hover:text-red-600'}
       `}
+      style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
     >
-      <span className="relative z-10 flex items-center gap-1">
+      <span className="relative z-10 flex items-center gap-2">
         {label}
-        {hasDropdown && <ChevronDown className="w-3 h-3 transition-transform duration-300 group-hover:-rotate-180" />}
+        {hasDropdown && (
+          <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
+        )}
       </span>
-      <span className="absolute bottom-0 left-0 w-full h-[3px] bg-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
     </Link>
   );
 
   return (
     <>
-      <nav className="sticky top-0 w-full bg-white z-50 border-b border-gray-100 shadow-sm h-16 transition-all duration-300">
+      {/* DESKTOP & MOBILE HEADER - WHITE BACKGROUND */}
+      <nav className="sticky top-0 w-full bg-white z-50 shadow-sm h-20 transition-all duration-300">
         
-        <div className="max-w-[1920px] mx-auto flex justify-between items-stretch h-full px-6 md:px-12">
+        <div className="max-w-7xl mx-auto flex justify-between items-center h-full px-6 lg:px-12">
           
-          {/* BRAND IDENTITY */}
+          {/* LOGO */}
           <div className="flex items-center relative z-50 h-full">
-            <Link href="/" className="flex items-center gap-3 group pr-10 md:pr-12" onClick={() => setIsMobileMenuOpen(false)}>
-                {/* 2. LOGO SIZE: Adjusted to fit h-16 header */}
-                <div className="relative h-9 w-9 flex-shrink-0 transition-transform duration-500 group-hover:rotate-12">
-                  <Image 
-                    src="/logo.png" 
-                    alt="NFS Autos" 
-                    fill
-                    className="object-contain rounded-full" 
-                    priority
-                  />
-                </div>
-                <div className="flex flex-col">
-                  {/* 3. BRAND TEXT: Sized down to text-lg (was text-2xl) */}
-                  <span className="font-chakra font-black italic text-lg tracking-tighter text-slate-900 leading-none group-hover:text-red-600 transition-colors">
-                    NFS AUTOS
-                  </span>
-                  <span className="text-[8px] font-bold tracking-[0.3em] text-slate-400 uppercase ml-0.5">
-                    Est. 2026
-                  </span>
-                </div>
+            <Link 
+              href="/" 
+              className="flex items-center gap-3 group" 
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <div className="relative h-14 w-14 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
+                <Image 
+                  src="/logo.png" 
+                  alt="NFS Autos" 
+                  fill
+                  className="object-contain" 
+                  priority
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-2xl tracking-tight text-black leading-none transition-colors group-hover:text-red-600" style={{ fontFamily: 'Chakra Petch, system-ui, sans-serif' }}>
+                  NFS AUTOS
+                </span>
+              </div>
             </Link>
           </div>
 
           {/* DESKTOP MENU */}
-          <div className="hidden xl:flex items-stretch">
-            {/* Group 1: The Cars */}
-            <div className="flex items-stretch border-l border-gray-100 pl-4">
-              <div className="relative group flex items-center h-full">
-                 <NavLink href="/inventory" label="Inventory" hasDropdown />
-                 
-                 {/* Dropdown */}
-                 <div className="absolute top-full left-0 w-56 bg-white shadow-xl border-t-4 border-red-600 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-4 group-hover:translate-y-0">
-                    <div className="flex flex-col py-3">
-                      <Link href="/inventory?type=jdm" className="px-6 py-3 text-[10px] font-chakra font-bold text-slate-500 hover:text-red-600 hover:bg-slate-50 uppercase tracking-widest transition-colors flex justify-between group/item">
-                        JDM Legends <span className="opacity-0 group-hover/item:opacity-100 transition-opacity">→</span>
-                      </Link>
-                      <Link href="/inventory?type=euro" className="px-6 py-3 text-[10px] font-chakra font-bold text-slate-500 hover:text-red-600 hover:bg-slate-50 uppercase tracking-widest transition-colors flex justify-between group/item">
-                        Euro Spec <span className="opacity-0 group-hover/item:opacity-100 transition-opacity">→</span>
-                      </Link>
-                    </div>
-                 </div>
+          <div className="hidden lg:flex items-center h-full">
+            
+            <NavLink href="/" label="Home" />
+            
+            {/* Inventory with Dropdown */}
+            <div 
+              className="relative group flex items-center h-full"
+              onMouseEnter={() => setShowInventoryDropdown(true)}
+              onMouseLeave={() => setShowInventoryDropdown(false)}
+            >
+              <div className={`h-full flex items-center px-6 text-sm font-medium uppercase tracking-wide transition-all duration-300 cursor-pointer ${
+                pathname.includes('/inventory') || pathname.includes('/sold')
+                  ? 'text-red-600' 
+                  : 'text-black hover:text-red-600'
+              }`} style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+                <span className="relative z-10 flex items-center gap-2">
+                  Inventory
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showInventoryDropdown ? 'rotate-180' : ''}`} />
+                </span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
               </div>
-              <NavLink href="/sold" label="Previously Sold" />
+              
+              {/* Dropdown Menu */}
+              <div className={`absolute top-full left-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-2xl overflow-hidden transition-all duration-300 ${
+                showInventoryDropdown ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-2 invisible'
+              }`}>
+                <div className="py-2">
+                  <Link 
+                    href="/inventory" 
+                    className="block px-6 py-3 text-sm font-normal text-gray-700 hover:text-black hover:bg-gray-50 transition-all border-l-2 border-transparent hover:border-red-600"
+                    onClick={() => setShowInventoryDropdown(false)}
+                    style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                  >
+                    All Stock
+                  </Link>
+                  <Link 
+                    href="/inventory?type=jdm" 
+                    className="block px-6 py-3 text-sm font-normal text-gray-700 hover:text-black hover:bg-gray-50 transition-all border-l-2 border-transparent hover:border-red-600"
+                    onClick={() => setShowInventoryDropdown(false)}
+                    style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                  >
+                    JDM Imports
+                  </Link>
+                  <Link 
+                    href="/sold" 
+                    className="block px-6 py-3 text-sm font-normal text-gray-700 hover:text-black hover:bg-gray-50 transition-all border-l-2 border-transparent hover:border-red-600"
+                    onClick={() => setShowInventoryDropdown(false)}
+                    style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                  >
+                    Previously Sold
+                  </Link>
+                </div>
+              </div>
             </div>
 
-            {/* Group 2: The Service */}
-            <div className="flex items-stretch border-l border-gray-100 ml-4 pl-4">
-              <NavLink href="/services" label="Import Brokerage" />
-            </div>
-
-            {/* Group 3: The Trust */}
-            <div className="flex items-stretch border-l border-gray-100 ml-4 pl-4">
-              <NavLink href="/about" label="About" />
-              <NavLink href="/testimonials" label="Testimonials" />
-              <NavLink href="/contact" label="Contact" />
-            </div>
+            <NavLink href="/import-brokerage" label="Import Brokerage" />
+            <NavLink href="/testimonials" label="Testimonials" />
+            <NavLink href="/contact" label="Contact" />
           </div>
 
-          {/* CTA BUTTON */}
-          <div className="hidden md:flex items-center pl-8 border-l border-gray-100 h-full">
+          {/* DESKTOP CTA + CONTACT */}
+          <div className="hidden lg:flex items-center gap-4">
+            <a 
+              href="tel:0499176176" 
+              className="flex items-center gap-2 text-black hover:text-red-600 transition-colors group"
+              style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+            >
+              <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center group-hover:bg-red-600 group-hover:border-red-600 transition-all">
+                <Phone className="w-4 h-4 group-hover:text-white transition-colors" />
+              </div>
+              <span className="text-sm font-medium">Call Us</span>
+            </a>
+            
             <Link 
               href="/book" 
-              className="group relative px-6 py-2 overflow-hidden border border-red-600 bg-transparent transition-all duration-300 hover:bg-red-600"
+              className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold uppercase tracking-wide transition-all duration-300 hover:shadow-lg hover:shadow-red-600/50"
+              style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
             >
-              {/* 4. BUTTON TEXT: Sized down to text-[10px] for that 'Sharp' look */}
-              <span className="relative z-10 flex items-center gap-2 text-[10px] font-chakra font-black italic tracking-[0.2em] uppercase text-red-600 group-hover:text-white transition-colors">
-                Book Appointment
-                <ArrowUpRight className="w-3 h-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </span>
+              Book Now
             </Link>
           </div>
 
-          {/* MOBILE HAMBURGER */}
-          <div className="xl:hidden flex items-center ml-auto relative z-50">
+          {/* MOBILE: Hamburger + Quick Call Button */}
+          <div className="lg:hidden flex items-center gap-2 ml-auto relative z-50">
+            <a 
+              href="tel:0499176176"
+              className="p-2 hover:bg-gray-50 rounded-md transition-colors"
+              aria-label="Call us"
+            >
+              <Phone className="w-5 h-5 text-red-600" />
+            </a>
+            
             <button 
               onClick={toggleMenu}
-              className="p-2 hover:bg-slate-50 rounded-md transition-colors"
+              className="p-2 hover:bg-gray-50 rounded-md transition-colors"
+              aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? (
-                <X className="w-5 h-5 text-slate-900" />
+                <X className="w-6 h-6 text-black" />
               ) : (
-                <Menu className="w-5 h-5 text-slate-900" />
+                <Menu className="w-6 h-6 text-black" />
               )}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* MOBILE MENU */}
+      {/* MOBILE MENU - WHITE BACKGROUND */}
       <div 
-        className={`fixed inset-0 bg-white z-40 xl:hidden transition-transform duration-300 ease-in-out pt-20 px-6 ${
+        className={`fixed inset-0 bg-white z-40 lg:hidden transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex flex-col h-full pb-8 overflow-y-auto">
-          <div className="flex flex-col gap-5 mt-4">
+        <div className="flex flex-col h-full overflow-y-auto">
+          
+          {/* Mobile Nav Content */}
+          <div className="flex-1 pt-24 px-6 pb-6">
             
-            {/* 5. MOBILE FONTS: Sized down from text-xl to text-lg for cleaner look */}
-            <Link href="/" onClick={toggleMenu} className="text-lg font-chakra font-black italic text-slate-900 uppercase tracking-wide hover:text-red-600">Home</Link>
-            
-            <div className="flex flex-col gap-3 border-l-2 border-red-600 pl-5 py-2">
-              <span className="text-[9px] font-extrabold text-red-600 uppercase tracking-widest opacity-80">Inventory</span>
-              <Link href="/inventory" onClick={toggleMenu} className="text-xs font-chakra font-bold text-slate-700 hover:text-red-600 uppercase tracking-widest flex items-center justify-between">
-                View All Stock <span>→</span>
+            {/* Primary Actions */}
+            <div className="space-y-3 mb-8">
+              <Link 
+                href="/book" 
+                onClick={toggleMenu}
+                className="flex items-center justify-center gap-3 w-full py-4 bg-red-600 text-white font-semibold text-base uppercase tracking-wide hover:bg-red-700 transition-colors shadow-lg rounded-sm"
+                style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+              >
+                Book Appointment
               </Link>
-              <Link href="/sold" onClick={toggleMenu} className="text-xs font-chakra font-bold text-slate-400 hover:text-red-600 uppercase tracking-widest">
-                Previously Sold
-              </Link>
+              
+              <a 
+                href="tel:0499176176"
+                className="flex items-center justify-center gap-3 w-full py-4 border-2 border-gray-200 text-black font-semibold text-base uppercase tracking-wide hover:border-red-600 hover:text-red-600 transition-colors rounded-sm"
+                style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+              >
+                <Phone className="w-5 h-5" />
+                Call Now
+              </a>
             </div>
 
-            <Link href="/services" onClick={toggleMenu} className="text-lg font-chakra font-black italic text-slate-900 uppercase tracking-wide hover:text-red-600">Import Brokerage</Link>
-            <Link href="/about" onClick={toggleMenu} className="text-lg font-chakra font-black italic text-slate-900 uppercase tracking-wide hover:text-red-600">About Us</Link>
-            <Link href="/testimonials" onClick={toggleMenu} className="text-lg font-chakra font-black italic text-slate-900 uppercase tracking-wide hover:text-red-600">Testimonials</Link>
-            <Link href="/contact" onClick={toggleMenu} className="text-lg font-chakra font-black italic text-slate-900 uppercase tracking-wide hover:text-red-600">Contact</Link>
+            {/* Navigation Links */}
+            <div className="flex flex-col gap-2">
+              
+              <Link 
+                href="/" 
+                onClick={toggleMenu} 
+                className={`text-base font-medium uppercase tracking-wide py-4 px-4 rounded-sm transition-colors ${
+                  isActive('/') ? 'bg-red-600 text-white' : 'text-black hover:bg-gray-50'
+                }`}
+                style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+              >
+                Home
+              </Link>
+              
+              {/* Inventory Section */}
+              <div>
+                <button
+                  onClick={() => setShowInventoryDropdown(!showInventoryDropdown)}
+                  className={`w-full text-left text-base font-medium uppercase tracking-wide py-4 px-4 rounded-sm transition-colors flex items-center justify-between ${
+                    pathname.includes('/inventory') || pathname.includes('/sold') ? 'bg-red-600 text-white' : 'text-black hover:bg-gray-50'
+                  }`}
+                  style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                >
+                  Inventory
+                  <ChevronDown className={`w-5 h-5 transition-transform ${showInventoryDropdown ? 'rotate-180' : ''}`} />
+                </button>
+                
+                <div className={`overflow-hidden transition-all duration-300 ${showInventoryDropdown ? 'max-h-96' : 'max-h-0'}`}>
+                  <div className="flex flex-col border-l-4 border-red-600 ml-4 pl-4 py-2 gap-1">
+                    <Link 
+                      href="/inventory" 
+                      onClick={toggleMenu} 
+                      className="text-sm font-normal text-gray-600 hover:text-black uppercase tracking-wide py-3"
+                      style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                    >
+                      All Stock
+                    </Link>
+                    <Link 
+                      href="/inventory?type=jdm" 
+                      onClick={toggleMenu} 
+                      className="text-sm font-normal text-gray-600 hover:text-black uppercase tracking-wide py-3"
+                      style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                    >
+                      JDM Imports
+                    </Link>
+                    <Link 
+                      href="/sold" 
+                      onClick={toggleMenu} 
+                      className="text-sm font-normal text-gray-600 hover:text-black uppercase tracking-wide py-3 border-t border-gray-100 mt-1 pt-3"
+                      style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                    >
+                      Previously Sold
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <Link 
+                href="/import-brokerage" 
+                onClick={toggleMenu} 
+                className={`text-base font-medium uppercase tracking-wide py-4 px-4 rounded-sm transition-colors ${
+                  isActive('/import-brokerage') ? 'bg-red-600 text-white' : 'text-black hover:bg-gray-50'
+                }`}
+                style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+              >
+                Import Brokerage
+              </Link>
+              
+              <Link 
+                href="/testimonials" 
+                onClick={toggleMenu} 
+                className={`text-base font-medium uppercase tracking-wide py-4 px-4 rounded-sm transition-colors ${
+                  isActive('/testimonials') ? 'bg-red-600 text-white' : 'text-black hover:bg-gray-50'
+                }`}
+                style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+              >
+                Testimonials
+              </Link>
+              
+              <Link 
+                href="/contact" 
+                onClick={toggleMenu} 
+                className={`text-base font-medium uppercase tracking-wide py-4 px-4 rounded-sm transition-colors ${
+                  isActive('/contact') ? 'bg-red-600 text-white' : 'text-black hover:bg-gray-50'
+                }`}
+                style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+              >
+                Contact
+              </Link>
+            </div>
           </div>
 
-          <div className="mt-auto pt-8 border-t border-slate-100">
-            <Link 
-              href="/book" 
-              onClick={toggleMenu}
-              className="flex items-center justify-center gap-2 w-full py-4 bg-red-600 text-white font-chakra font-black italic text-xs uppercase tracking-widest mb-4 hover:bg-red-700 transition-colors"
-            >
-              Book Appointment <ArrowUpRight className="w-4 h-4" />
-            </Link>
-            
-            <div className="flex items-center justify-center gap-2 text-slate-500 text-[9px] font-bold uppercase tracking-widest">
-              <Phone className="w-3 h-3" />  Support
+          {/* Mobile Footer */}
+          <div className="border-t border-gray-200 p-6 bg-gray-50">
+            <div className="space-y-3 text-center">
+              <a 
+                href="tel:0499176176"
+                className="flex items-center justify-center gap-3 text-gray-700 text-sm font-medium"
+                style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+              >
+                <Phone className="w-4 h-4 text-red-600" /> 0499 176 176
+              </a>
+              <a 
+                href="mailto:info@nfsautos.com.au"
+                className="flex items-center justify-center gap-3 text-gray-700 text-sm font-medium"
+                style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+              >
+                <Mail className="w-4 h-4 text-red-600" /> info@nfsautos.com.au
+              </a>
+              <p className="text-xs text-gray-500 pt-2" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>Handpicked by us, according to your taste</p>
             </div>
           </div>
         </div>
