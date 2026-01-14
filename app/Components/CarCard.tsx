@@ -47,11 +47,11 @@ export default function CarCard({
           </div>
         )}
 
-        {/* Premium Weekly Finance Badge */}
+        {/* Premium Weekly Finance Badge - Monochrome Luxury */}
         {weeklyPrice && !isSold && (
-          <div className="absolute bottom-1.5 right-1.5 md:bottom-2 md:right-2 px-1.5 py-0.5 md:px-2 md:py-1 bg-white/95 backdrop-blur-sm border border-white/20 rounded-md shadow-sm">
-            <p className="text-[8px] md:text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-0.5">From</p>
-            <p className="text-xs md:text-sm font-bold text-red-700">
+          <div className="absolute bottom-1.5 right-1.5 md:bottom-2 md:right-2 px-2 py-1 md:px-2.5 md:py-1.5 bg-black/90 backdrop-blur-sm border border-black/20 rounded-md shadow-lg">
+            <p className="text-[8px] md:text-[9px] font-bold uppercase tracking-wider text-white/70 mb-0.5">From</p>
+            <p className="text-xs md:text-sm font-bold text-white">
               ${weeklyPrice}<span className="text-[10px] md:text-xs">/WK</span>
             </p>
           </div>
@@ -60,8 +60,8 @@ export default function CarCard({
 
       {/* 2. The Clean Details */}
       <div className="flex flex-col gap-1 px-1">
-        {/* Title: Sentence Case, Medium Weight */}
-        <h3 className="text-sm font-medium text-gray-900 truncate">
+        {/* Title: Bold Condensed - Premium Typography */}
+        <h3 className="font-condensed text-base font-bold text-gray-900 uppercase tracking-tight truncate">
           {title}
         </h3>
 

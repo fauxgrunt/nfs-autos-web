@@ -16,10 +16,20 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-manrope), sans-serif; /* Fallback added */
+  font-family: var(--font-inter), sans-serif;
 }
 
-/* Apply Barlow to Headings */
+/* Apply Oswald to Headings */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-barlow), sans-serif;
+  font-family: var(--font-oswald), sans-serif;
+}
+
+/* Hide scrollbar for horizontal snap scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }

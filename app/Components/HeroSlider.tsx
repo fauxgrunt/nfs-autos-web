@@ -91,44 +91,48 @@ const HeroSection = () => {
               <div className="max-w-3xl space-y-6">
                 
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md bg-white/10 border border-white/20 animate-pulse">
-                  <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                  <span className="text-xs font-bold text-white tracking-widest uppercase">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full backdrop-blur-md bg-white/10 border border-white/20 animate-pulse">
+                  <Star className="w-3 h-3 md:w-4 md:h-4 text-yellow-400 fill-yellow-400" />
+                  <span className="text-[0.65rem] md:text-xs font-bold text-white tracking-widest uppercase">
                     {slide.badge}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h1 className="text-6xl lg:text-8xl font-black text-white tracking-tight leading-none">
+                <h1 className="text-4xl md:text-6xl lg:text-8xl font-black text-white tracking-tight leading-none" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
                   {slide.title}
                 </h1>
 
                 {/* Subtitle */}
-                <p className="text-2xl lg:text-3xl text-white/90 font-light tracking-wide">
+                <p className="text-base md:text-2xl lg:text-3xl text-white/90 font-light tracking-wide" style={{ fontFamily: 'Raleway, sans-serif' }}>
                   {slide.subtitle}
                 </p>
 
                 {/* Offer Box */}
-                <div className="inline-block px-6 py-3 backdrop-blur-lg bg-white/20 border border-white/30 rounded-lg shadow-2xl">
-                  <p className="text-base lg:text-lg font-semibold text-white tracking-wide">
+                <div className="inline-block px-4 py-2 md:px-6 md:py-3 mx-2 md:mx-0 backdrop-blur-lg bg-white/20 border border-white/10 rounded-lg shadow-2xl">
+                  <p className="text-sm md:text-base lg:text-lg font-semibold text-white tracking-wide" style={{ fontFamily: 'Raleway, sans-serif' }}>
                     {slide.offer}
                   </p>
                 </div>
 
                 {/* CTAs */}
-                <div className="flex flex-wrap gap-4 pt-4">
-                  <button className="group px-8 py-4 bg-red-600 hover:bg-red-700 transition-all duration-300 shadow-2xl hover:shadow-red-600/50 hover:scale-105 flex items-center justify-center gap-3">
-                    <span className="text-sm font-bold text-white uppercase tracking-widest">
+                <div className="flex flex-wrap gap-3 md:gap-4 pt-4 pb-6 md:pb-0">
+                  <button className="group relative px-6 py-3 md:px-8 md:py-4 bg-gradient-to-b from-[#334155] to-[#0f172a] rounded-full border-t border-slate-500/30 shadow-2xl shadow-slate-900/40 hover:shadow-slate-900/60 hover:scale-105 transition-all duration-300 overflow-hidden flex items-center justify-center gap-2 md:gap-3">
+                    <span className="relative z-10 text-[0.65rem] md:text-sm font-medium text-white uppercase tracking-[0.2em] md:tracking-[0.25em]" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
                       {slide.tagline}
                     </span>
-                    <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="relative z-10 w-3.5 h-3.5 md:w-4 md:h-4 text-white group-hover:translate-x-1 transition-transform duration-300" />
+                    {/* Glossy top highlight */}
+                    <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-slate-300/40 to-transparent rounded-full"></div>
+                    {/* Diagonal sheen animation */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
                   </button>
 
-                  <button className="group px-8 py-4 backdrop-blur-md bg-white/10 border-2 border-white/30 hover:bg-white/20 transition-all duration-300 flex items-center justify-center gap-3">
-                    <span className="text-sm font-bold text-white uppercase tracking-widest">
+                  <button className="group px-6 py-3 md:px-8 md:py-4 backdrop-blur-md bg-white/10 border-2 border-white/10 hover:bg-white/20 rounded-full transition-all duration-300 flex items-center justify-center gap-2 md:gap-3">
+                    <span className="text-[0.65rem] md:text-sm font-medium text-white uppercase tracking-[0.2em] md:tracking-[0.25em]" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
                       View Inventory
                     </span>
-                    <Play className="w-4 h-4 text-white fill-white" />
+                    <Play className="w-3.5 h-3.5 md:w-4 md:h-4 text-white fill-white" />
                   </button>
                 </div>
               </div>
@@ -139,26 +143,26 @@ const HeroSection = () => {
               <div className="container mx-auto px-6 lg:px-12 max-w-7xl py-6">
                 <div className="flex items-center justify-start gap-12">
                   <div className="flex items-center gap-3">
-                    <div className="text-4xl font-black text-white">50+</div>
-                    <div className="text-xs text-white/70 uppercase tracking-wider leading-tight">
+                    <div className="text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>50+</div>
+                    <div className="text-xs text-white/70 uppercase tracking-wider leading-tight" style={{ fontFamily: 'Raleway, sans-serif' }}>
                       Premium<br/>Cars
                     </div>
                   </div>
                   
-                  <div className="w-px h-12 bg-white/20" />
+                  <div className="w-px h-12 bg-white/10" />
                   
                   <div className="flex items-center gap-3">
-                    <div className="text-4xl font-black text-white">100%</div>
-                    <div className="text-xs text-white/70 uppercase tracking-wider leading-tight">
+                    <div className="text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
+                    <div className="text-xs text-white/70 uppercase tracking-wider leading-tight" style={{ fontFamily: 'Raleway, sans-serif' }}>
                       Verified<br/>Imports
                     </div>
                   </div>
                   
-                  <div className="w-px h-12 bg-white/20" />
+                  <div className="w-px h-12 bg-white/10" />
                   
                   <div className="flex items-center gap-3">
-                    <div className="text-4xl font-black text-white">5★</div>
-                    <div className="text-xs text-white/70 uppercase tracking-wider leading-tight">
+                    <div className="text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>5★</div>
+                    <div className="text-xs text-white/70 uppercase tracking-wider leading-tight" style={{ fontFamily: 'Raleway, sans-serif' }}>
                       Customer<br/>Rated
                     </div>
                   </div>
@@ -172,7 +176,7 @@ const HeroSection = () => {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-8 top-1/2 -translate-y-1/2 p-4 backdrop-blur-md bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 rounded-full group z-20"
+        className="hidden md:flex absolute left-8 top-1/2 -translate-y-1/2 p-4 backdrop-blur-md bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 rounded-full group z-20"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-6 h-6 text-white group-hover:-translate-x-1 transition-transform" />
@@ -180,14 +184,14 @@ const HeroSection = () => {
 
       <button
         onClick={nextSlide}
-        className="absolute right-8 top-1/2 -translate-y-1/2 p-4 backdrop-blur-md bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 rounded-full group z-20"
+        className="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 p-4 backdrop-blur-md bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 rounded-full group z-20"
         aria-label="Next slide"
       >
         <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
       </button>
 
       {/* Progress Dots */}
-      <div className="absolute bottom-32 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
+      <div className="absolute bottom-28 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -207,7 +211,7 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-32 right-8 hidden lg:flex flex-col items-center gap-2 animate-bounce z-20">
+      <div className="absolute bottom-28 right-8 hidden lg:flex flex-col items-center gap-2 animate-bounce z-20">
         <span className="text-xs text-white/60 uppercase tracking-widest rotate-90 origin-center mb-8">
           Scroll
         </span>

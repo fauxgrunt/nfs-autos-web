@@ -128,12 +128,30 @@ export default function InventoryPage() {
 
   const filteredCars = [...MOCK_CARS]
     .filter(car => {
+      // Make filter
       if (selectedMakes.length > 0) {
         const carMake = car.title.includes('Lexus') ? 'Lexus' : 'Toyota';
         if (!selectedMakes.includes(carMake)) return false;
       }
+      
+      // Model filter
+      if (selectedModels.length > 0) {
+        const hasModel = selectedModels.some(model => car.title.includes(model));
+        if (!hasModel) return false;
+      }
+      
+      // Year filter
+      if (selectedYears.length > 0) {
+        const carYear = car.title.match(/\d{4}/)?.[0] || '';
+        if (!selectedYears.includes(carYear)) return false;
+      }
+      
+      // Transmission filter
       if (selectedTransmissions.length > 0 && !selectedTransmissions.includes(car.transmission)) return false;
+      
+      // Body type filter
       if (selectedBodies.length > 0 && !selectedBodies.includes(car.bodyType)) return false;
+      
       return true;
     })
     .sort((a, b) => {
@@ -175,15 +193,15 @@ export default function InventoryPage() {
         }
       `}</style>
 
-      <main className="min-h-screen bg-gray-100">
+      <main className="bg-gray-100">
         
-        <div className="max-w-[1800px] mx-auto min-h-screen">
-          <div className="flex items-stretch min-h-screen">
+        <div className="max-w-[1800px] mx-auto">
+          <div className="flex">
             
             {/* DARK SIDEBAR - "CONTROL CENTER" */}
             <aside className={`
               ${showMobileFilters ? 'fixed inset-0 z-50 overflow-y-auto' : 'hidden lg:block'}
-              lg:w-80 lg:flex-shrink-0 min-h-full bg-[#0b1d38] text-white
+              lg:w-80 lg:flex-shrink-0 lg:min-h-screen lg:sticky lg:top-0 lg:self-start bg-black text-white
             `}>
               
               {/* Mobile close */}
@@ -228,7 +246,7 @@ export default function InventoryPage() {
                             type="checkbox" 
                             checked={selectedMakes.includes(make)}
                             onChange={() => toggleMake(make)}
-                             className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-[#d32f2f] checked:border-[#d32f2f] checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400" 
+                             className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-neutral-800 checked:border-neutral-800 checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400" 
                           />
                           <span className="font-ui text-sm font-medium text-white/70 group-hover:text-white transition-colors tracking-wide">{make}</span>
                         </label>
@@ -257,7 +275,7 @@ export default function InventoryPage() {
                               type="checkbox"
                               checked={selectedModels.includes(model)}
                               onChange={() => toggleModel(model)}
-                              className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-[#d32f2f] checked:border-[#d32f2f] checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400"
+                              className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-neutral-800 checked:border-neutral-800 checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400"
                             />
                             <span className="font-ui text-sm font-medium text-white/70 group-hover:text-white transition-colors tracking-wide">{model}</span>
                           </label>
@@ -271,7 +289,7 @@ export default function InventoryPage() {
                               type="checkbox"
                               checked={selectedModels.includes(model)}
                               onChange={() => toggleModel(model)}
-                              className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-[#d32f2f] checked:border-[#d32f2f] checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400"
+                              className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-neutral-800 checked:border-neutral-800 checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400"
                             />
                             <span className="font-ui text-sm font-medium text-white/70 group-hover:text-white transition-colors tracking-wide">{model}</span>
                           </label>
@@ -299,7 +317,7 @@ export default function InventoryPage() {
                             type="checkbox"
                             checked={selectedTransmissions.includes(trans)}
                             onChange={() => toggleTransmission(trans)}
-                            className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-[#d32f2f] checked:border-[#d32f2f] checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400"
+                            className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-neutral-800 checked:border-neutral-800 checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400"
                           />
                           <span className="font-ui text-sm font-medium text-white/70 group-hover:text-white transition-colors tracking-wide">{trans}</span>
                         </label>
@@ -326,7 +344,7 @@ export default function InventoryPage() {
                             type="checkbox"
                             checked={selectedYears.includes(year)}
                             onChange={() => toggleYear(year)}
-                            className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-[#d32f2f] checked:border-[#d32f2f] checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400"
+                            className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-neutral-800 checked:border-neutral-800 checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400"
                           />
                           <span className="font-ui text-sm font-medium text-white/70 group-hover:text-white transition-colors tracking-wide">{year}</span>
                         </label>
@@ -353,7 +371,7 @@ export default function InventoryPage() {
                             type="checkbox"
                             checked={selectedBodies.includes(body)}
                             onChange={() => toggleBody(body)}
-                            className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-[#d32f2f] checked:border-[#d32f2f] checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400"
+                            className="appearance-none h-5 w-5 rounded-sm border border-gray-600 bg-transparent checked:bg-neutral-800 checked:border-neutral-800 checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%23fff%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-center cursor-pointer transition-all duration-200 hover:border-gray-400"
                           />
                           <span className="font-ui text-sm font-medium text-white/70 group-hover:text-white transition-colors tracking-wide">{body}</span>
                         </label>
@@ -488,12 +506,8 @@ export default function InventoryPage() {
 
               {/* Top bar */}
               <div className="px-6 lg:px-8 py-6 bg-white border-b border-gray-200">
-                <div className="flex items-center justify-between">
-                  <p className="font-condensed text-lg font-bold text-[#0b1d38] uppercase tracking-tight">
-                    {filteredCars.length} <span className="text-gray-500">VEHICLES</span>
-                  </p>
-                  
-                  {/* Desktop Sort Dropdown */}
+                <div className="flex items-center justify-end">
+                  {/* Desktop Sort Dropdown - Aligned Right */}
                   <div className="hidden lg:block">
                     <SortDropdown 
                       currentSort={currentSort}
