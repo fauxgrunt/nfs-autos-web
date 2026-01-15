@@ -27,10 +27,10 @@ export default function CarCard({
   isSold = false 
 }: CarProps) {
   return (
-    <Link href={`/inventory/${id}`} className="group relative flex flex-col gap-3 cursor-pointer bg-white">
+    <Link href={`/inventory/${id}`} className="group relative flex flex-col gap-3 cursor-pointer bg-white rounded-lg border border-gray-100 md:border-0 shadow-sm md:shadow-none hover:shadow-md md:hover:shadow-none transition-shadow duration-300">
       
       {/* 1. Image - The Hero */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-gray-100">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg md:rounded-lg bg-gray-100">
         <Image
           src={image}
           alt={title}
@@ -49,10 +49,10 @@ export default function CarCard({
 
         {/* Premium Weekly Finance Badge - Monochrome Luxury */}
         {weeklyPrice && !isSold && (
-          <div className="absolute bottom-1.5 right-1.5 md:bottom-2 md:right-2 px-2 py-1 md:px-2.5 md:py-1.5 bg-black/90 backdrop-blur-sm border border-black/20 rounded-md shadow-lg">
-            <p className="text-[8px] md:text-[9px] font-bold uppercase tracking-wider text-white/70 mb-0.5">From</p>
-            <p className="text-xs md:text-sm font-bold text-white">
-              ${weeklyPrice}<span className="text-[10px] md:text-xs">/WK</span>
+          <div className="absolute bottom-1.5 right-1.5 md:bottom-2 md:right-2 px-2 py-1 md:px-2.5 md:py-1.5 bg-black/80 backdrop-blur-sm border border-black/20 rounded-md shadow-lg">
+            <p className="text-[7px] md:text-[8px] font-medium uppercase tracking-wider text-white/60 mb-0.5">From</p>
+            <p className="text-sm md:text-base font-bold text-white">
+              ${weeklyPrice}<span className="text-[9px] md:text-xs font-medium text-white/90">/wk</span>
             </p>
           </div>
         )}
@@ -66,7 +66,7 @@ export default function CarCard({
         </h3>
 
         {/* Price: The Hero (No 'Cash Price' label) */}
-        <p className="text-base font-semibold text-gray-900">
+        <p className="text-base font-bold text-gray-900">
           ${price.toLocaleString()}
         </p>
 

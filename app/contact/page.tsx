@@ -3,19 +3,19 @@ import { MapPin, Phone, Mail, Clock, ArrowRight } from "lucide-react";
 
 export default function ContactPage() {
   return (
-    <div className="w-full min-h-screen bg-white">
+    <div className="w-full min-h-screen bg-white overflow-x-hidden pt-24">
       {/* 1. HERO SECTION (Premium Navy Blue Banner) */}
-      <div className="w-full bg-[#0f172a] py-16 md:py-24 text-center">
-        <h1 className="text-4xl md:text-6xl font-thin text-white tracking-wide">
+      <div className="w-full bg-[#0f172a] py-16 md:py-24 text-center px-4">
+        <h1 className="text-4xl md:text-6xl font-thin text-white tracking-wide break-words">
           Connect With Us
         </h1>
-        <p className="mt-4 text-slate-300 font-light text-lg tracking-wider uppercase">
+        <p className="mt-4 text-slate-300 font-light text-lg tracking-wider uppercase break-words">
           Concierge Import Services
         </p>
       </div>
 
       {/* 2. MAIN CONTENT CONTAINER */}
-      <div className="max-w-7xl mx-auto px-6 py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-12 py-16 md:py-24">
         
         <div className="grid md:grid-cols-2 gap-16 lg:gap-24">
           

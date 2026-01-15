@@ -2,14 +2,14 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Prevent horizontal scrolling globally */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 /* Use Next/font variables set on the HTML element */

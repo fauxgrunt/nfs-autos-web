@@ -84,7 +84,7 @@ export default function InventoryCarousel({ cars }: InventoryCarouselProps) {
           >
             
             {/* Image */}
-            <div className="relative h-64 overflow-hidden">
+            <div className="relative h-64 overflow-hidden w-full">
               <img 
                 src={car.image} 
                 alt={car.name}

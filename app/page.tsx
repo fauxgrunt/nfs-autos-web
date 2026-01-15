@@ -71,7 +71,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-white text-slate-900 font-sans">
+    <main className="min-h-screen bg-white text-slate-900 font-sans w-full overflow-x-hidden pt-24">
       
       {/* 1. HERO SECTION */}
       <section className="relative w-full">
@@ -80,13 +80,13 @@ export default function Home() {
 
       {/* 2. PREMIUM SECTIONS - FULL WIDTH */}
       <div className="bg-slate-50 py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           
           {/* FEATURED INVENTORY SECTION */}
           <InventoryCarousel cars={featuredCars} />
 
           {/* TWO COLUMN SECTION - TESTIMONIALS & SOLD CARS */}
-          <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
             
             {/* TESTIMONIALS */}
             <section className="flex flex-col justify-between h-full">
@@ -162,9 +162,10 @@ export default function Home() {
                   <p className="text-slate-600" style={{ fontFamily: 'Raleway, sans-serif' }}>Dreams fulfilled across Australia</p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-6">
+                {/* Horizontal Carousel on Mobile, Grid on Desktop */}
+                <div className="flex overflow-x-auto md:grid md:grid-cols-2 gap-4 mb-6 snap-x snap-mandatory scrollbar-hide px-4 md:px-0 -mx-4 md:mx-0">
                 {soldCars.map((car, idx) => (
-                  <div key={idx} className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer">
+                  <div key={idx} className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer flex-shrink-0 w-[90vw] md:w-auto snap-center">
                     <div className="aspect-square relative">
                       <img 
                         src={car.image} 
@@ -193,35 +194,35 @@ export default function Home() {
               </div>
 
               {/* Stats */}
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="bg-white rounded-lg p-4 md:p-6 shadow-md">
+                <div className="grid grid-cols-3 gap-2 md:gap-4 text-center divide-x divide-slate-200">
                   <div>
-                    <div className="flex items-center justify-center mb-2">
-                      <TrendingUp className="w-6 h-6 text-[#0f172a]" />
+                    <div className="flex items-center justify-center mb-1 md:mb-2">
+                      <TrendingUp className="w-4 h-4 md:w-6 md:h-6 text-[#0f172a]" />
                     </div>
-                    <div className="text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>50+</div>
-                    <div className="text-xs text-slate-600 uppercase tracking-wider mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Cars Sold</div>
+                    <div className="text-xl md:text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>50+</div>
+                    <div className="text-[10px] md:text-xs text-slate-600 uppercase tracking-wider mt-0.5 md:mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Cars Sold</div>
                   </div>
                   <div>
-                    <div className="flex items-center justify-center mb-2">
-                      <Award className="w-6 h-6 text-[#0f172a]" />
+                    <div className="flex items-center justify-center mb-1 md:mb-2">
+                      <Award className="w-4 h-4 md:w-6 md:h-6 text-[#0f172a]" />
                     </div>
-                    <div className="text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
-                    <div className="text-xs text-slate-600 uppercase tracking-wider mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Satisfied</div>
+                    <div className="text-xl md:text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
+                    <div className="text-[10px] md:text-xs text-slate-600 uppercase tracking-wider mt-0.5 md:mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Satisfied</div>
                   </div>
                   <div>
-                    <div className="flex items-center justify-center mb-2">
-                      <Shield className="w-6 h-6 text-[#0f172a]" />
+                    <div className="flex items-center justify-center mb-1 md:mb-2">
+                      <Shield className="w-4 h-4 md:w-6 md:h-6 text-[#0f172a]" />
                     </div>
-                    <div className="text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>5★</div>
-                    <div className="text-xs text-slate-600 uppercase tracking-wider mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Rated</div>
+                    <div className="text-xl md:text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>5★</div>
+                    <div className="text-[10px] md:text-xs text-slate-600 uppercase tracking-wider mt-0.5 md:mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Rated</div>
                   </div>
                 </div>
               </div>
             </div>
 
               <Link 
-                href="/sold"
+                href="/recently-sold"
                 className="mt-8 relative w-full px-8 py-4 bg-gradient-to-b from-[#1e293b] to-[#0f172a] text-white text-xs font-medium uppercase tracking-[0.25em] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden antialiased group/btn flex items-center justify-center gap-2"
                 style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
               >

@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, Heart, Gauge, Cog, Car, Phone, Eye } from 'lucide-react';
-import CarCard from '../Components/CarCard';
+import { ChevronDown } from 'lucide-react';
+import SoldCarCard from '../Components/SoldCarCard';
 import SortDropdown from '../Components/SortDropdown';
-import { INVENTORY_DATA } from '../lib/inventoryData';
+import { SOLD_INVENTORY_DATA } from '../lib/soldInventoryData';
 
-export default function InventoryPage() {
+export default function RecentlySoldPage() {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [selectedMakes, setSelectedMakes] = useState<string[]>([]);
@@ -14,7 +14,6 @@ export default function InventoryPage() {
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
   const [selectedTransmissions, setSelectedTransmissions] = useState<string[]>([]);
   const [selectedBodies, setSelectedBodies] = useState<string[]>([]);
-  const [watchlist, setWatchlist] = useState<string[]>([]);
   const [currentSort, setCurrentSort] = useState('newest');
   
   const [openSections, setOpenSections] = useState({
@@ -27,12 +26,6 @@ export default function InventoryPage() {
 
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
-  };
-
-  const toggleWatchlist = (id: string) => {
-    setWatchlist(prev => 
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    );
   };
 
   const toggleMake = (make: string) => {
@@ -65,15 +58,6 @@ export default function InventoryPage() {
     );
   };
 
-  const sortLabels: Record<string, string> = {
-    newest: 'Year: New → Old',
-    oldest: 'Year: Old → New',
-    price_asc: 'Price: Low → High',
-    price_desc: 'Price: High → Low',
-    mileage_asc: 'Mileage: Low → High',
-    mileage_desc: 'Mileage: High → Low'
-  };
-
   const handleSortChange = (sortValue: string) => {
     setCurrentSort(sortValue);
     setShowSortMenu(false);
@@ -87,15 +71,15 @@ export default function InventoryPage() {
     setSelectedBodies([]);
   };
 
-  // Generate dynamic filter options from INVENTORY_DATA
-  const availableMakes = Array.from(new Set(INVENTORY_DATA.map(car => car.make))).sort();
-  const availableModels = Array.from(new Set(INVENTORY_DATA.map(car => car.model))).sort();
-  const availableYears = Array.from(new Set(INVENTORY_DATA.map(car => car.year.toString()))).sort((a, b) => parseInt(b) - parseInt(a));
-  const availableTransmissions = Array.from(new Set(INVENTORY_DATA.map(car => car.transmission))).sort();
-  const availableBodies = Array.from(new Set(INVENTORY_DATA.map(car => car.bodyType))).sort();
+  // Generate dynamic filter options from SOLD_INVENTORY_DATA
+  const availableMakes = Array.from(new Set(SOLD_INVENTORY_DATA.map(car => car.make))).sort();
+  const availableModels = Array.from(new Set(SOLD_INVENTORY_DATA.map(car => car.model))).sort();
+  const availableYears = Array.from(new Set(SOLD_INVENTORY_DATA.map(car => car.year.toString()))).sort((a, b) => parseInt(b) - parseInt(a));
+  const availableTransmissions = Array.from(new Set(SOLD_INVENTORY_DATA.map(car => car.transmission))).sort();
+  const availableBodies = Array.from(new Set(SOLD_INVENTORY_DATA.map(car => car.bodyType))).sort();
 
   // Group models by make for better organization
-  const modelsByMake = INVENTORY_DATA.reduce((acc, car) => {
+  const modelsByMake = SOLD_INVENTORY_DATA.reduce((acc, car) => {
     if (!acc[car.make]) {
       acc[car.make] = new Set();
     }
@@ -103,7 +87,7 @@ export default function InventoryPage() {
     return acc;
   }, {} as Record<string, Set<string>>);
 
-  const filteredCars = [...INVENTORY_DATA]
+  const filteredCars = [...SOLD_INVENTORY_DATA]
     .filter(car => {
       // Make filter
       if (selectedMakes.length > 0) {
@@ -139,9 +123,9 @@ export default function InventoryPage() {
         case 'oldest':
           return a.year - b.year;
         case 'price_asc':
-          return a.price - b.price;
+          return a.soldPrice - b.soldPrice;
         case 'price_desc':
-          return b.price - a.price;
+          return b.soldPrice - a.soldPrice;
         case 'mileage_asc':
           return mileageA - mileageB;
         case 'mileage_desc':
@@ -168,32 +152,24 @@ export default function InventoryPage() {
 
       <main className="flex min-h-screen w-full overflow-x-hidden pt-24">
         
-        {/* MOBILE FILTER DRAWER */}
+        {/* MOBILE FILTER OVERLAY */}
         {showMobileFilters && (
-          <>
-            {/* Backdrop - 15% left side dimmed */}
-            <div 
-              onClick={() => setShowMobileFilters(false)}
-              className="fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm lg:hidden"
-            />
-            
-            {/* Drawer - 85% from right */}
-            <aside className="fixed right-0 top-0 bottom-0 w-[85%] z-[9999] overflow-y-auto bg-[#0a0a0a] text-white flex flex-col lg:hidden shadow-2xl">
+          <aside className="fixed inset-0 z-50 overflow-y-auto bg-black text-white flex flex-col lg:hidden">
               
               {/* Mobile close */}
               <button 
                 onClick={() => setShowMobileFilters(false)}
-                className="absolute top-6 right-6 text-white text-2xl hover:opacity-70 z-10"
+                className="absolute top-6 right-6 text-white text-2xl hover:opacity-70"
               >
                 ×
               </button>
 
-              <div className="p-6 pb-24">
+              <div className="p-6 lg:p-8">
                 
                 {/* Filter Header */}
                 <div className="mb-8 pb-6 border-b border-white/20">
                   <p className="font-ui text-sm font-semibold text-white/90 mb-3 tracking-wide">
-                    {filteredCars.length} <span className="text-white/60">VEHICLES AVAILABLE</span>
+                    {filteredCars.length} <span className="text-white/60">VEHICLES SOLD</span>
                   </p>
                   <button 
                     onClick={resetFilters}
@@ -347,18 +323,15 @@ export default function InventoryPage() {
                   )}
                 </div>
 
-                {/* Sticky Apply Button */}
-                <div className="fixed bottom-0 right-0 w-[85%] p-6 bg-[#0a0a0a] border-t border-white/10">
-                  <button
-                    onClick={() => setShowMobileFilters(false)}
-                    className="w-full py-4 bg-white text-[#0a0a0a] font-ui font-bold text-xs uppercase tracking-widest hover:bg-white/90 transition-all"
-                  >
-                    Apply Filters
-                  </button>
-                </div>
+                {/* Mobile Apply */}
+                <button
+                  onClick={() => setShowMobileFilters(false)}
+                  className="w-full mt-8 py-4 bg-white text-[#0b1d38] font-ui font-bold text-xs uppercase tracking-widest hover:bg-white/90 transition-all"
+                >
+                  Apply Filters
+                </button>
               </div>
           </aside>
-          </>
         )}
         
         {/* DARK SIDEBAR - "CONTROL CENTER" - FULL HEIGHT LEFT - ALWAYS VISIBLE ON DESKTOP */}
@@ -369,7 +342,7 @@ export default function InventoryPage() {
                 {/* Filter Header */}
                 <div className="mb-8 pb-6 border-b border-white/20">
                   <p className="font-ui text-sm font-semibold text-white/90 mb-3 tracking-wide">
-                    {filteredCars.length} <span className="text-white/60">VEHICLES AVAILABLE</span>
+                    {filteredCars.length} <span className="text-white/60">VEHICLES SOLD</span>
                   </p>
                   <button 
                     onClick={resetFilters}
@@ -639,7 +612,9 @@ export default function InventoryPage() {
 
               {/* Top bar - FULL WIDTH */}
               <div className="w-full px-6 lg:px-8 py-6 bg-white border-b border-gray-200">
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-between">
+                  <h1 className="font-condensed text-2xl font-bold text-gray-900 uppercase tracking-tight">Recently Sold</h1>
+                  
                   {/* Desktop Sort Dropdown - Aligned Right */}
                   <div className="hidden lg:block">
                     <SortDropdown 
@@ -654,16 +629,17 @@ export default function InventoryPage() {
               <div className="flex-1 p-6 lg:p-8">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-6 md:gap-6">
                   {filteredCars.map((car) => (
-                    <CarCard
+                    <SoldCarCard
                       key={car.id}
                       id={car.id}
                       title={car.title}
-                      price={car.price}
+                      soldPrice={car.soldPrice}
                       image={car.image}
                       mileage={car.mileage}
                       transmission={car.transmission}
                       bodyType={car.bodyType}
-                      weeklyPrice={car.weeklyPrice}
+                      soldTo={car.soldTo}
+                      soldDate={car.soldDate}
                     />
                   ))}
                 </div>
@@ -682,10 +658,10 @@ export default function InventoryPage() {
 
                     {/* Empty State Text */}
                     <h3 className="font-condensed text-2xl font-bold text-gray-900 mb-2 uppercase tracking-tight">
-                      No Vehicles Found
+                      No Sold Vehicles Found
                     </h3>
                     <p className="font-ui text-sm text-gray-500 mb-8 max-w-md mx-auto">
-                      No vehicles match your current filter criteria. Try adjusting your filters to see more results.
+                      No sold vehicles match your current filter criteria. Try adjusting your filters.
                     </p>
 
                     {/* Clear Filters Button */}

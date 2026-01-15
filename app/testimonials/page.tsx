@@ -60,7 +60,7 @@ const TestimonialsSection = () => {
   }, [testimonials.length]);
 
   return (
-    <section className="relative bg-[#0a0a0a] py-24 lg:py-32 overflow-hidden">
+    <section className="relative bg-[#0a0a0a] pt-48 pb-24 lg:pt-56 lg:pb-32 overflow-hidden w-full">
       
       {/* Subtle Grid Pattern */}
       <div className="absolute inset-0 opacity-[0.03]">
@@ -70,10 +70,10 @@ const TestimonialsSection = () => {
         }} />
       </div>
 
-      <div className="relative container mx-auto px-6 lg:px-12 max-w-7xl">
+      <div className="relative container mx-auto px-4 md:px-6 lg:px-12 max-w-7xl">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-16 px-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-6 backdrop-blur-sm">
             <Verified className="w-4 h-4 text-[#D4AF37]" />
             <span className="text-[10px] font-display font-black text-[#D4AF37] uppercase tracking-[0.25em]">
@@ -81,11 +81,11 @@ const TestimonialsSection = () => {
             </span>
           </div>
           
-          <h2 className="text-5xl lg:text-7xl font-display font-black text-white mb-6 uppercase tracking-tight leading-[0.9]">
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-display font-black text-white mb-6 uppercase tracking-tight leading-[0.9] break-words">
             WHAT OUR<br />CLIENTS SAY
           </h2>
           
-          <p className="text-base text-gray-400 font-body tracking-wide">
+          <p className="text-base text-gray-400 font-body tracking-wide break-words">
             Real feedback from verified buyers. We value transparency above all else.
           </p>
         </div>
