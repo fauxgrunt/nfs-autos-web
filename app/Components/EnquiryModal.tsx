@@ -1,84 +1,55 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { X, ChevronDown } from 'lucide-react';
 import { useEnquiryModal } from '../contexts/EnquiryModalContext';
-import { INVENTORY_DATA } from '../lib/inventoryData';
 
 export default function EnquiryModal() {
-  const { isOpen, carName, closeModal } = useEnquiryModal();
+  const { isOpen, carName, defaultService, closeModal } = useEnquiryModal();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    message: '',
-    subject: 'general' as 'general' | 'brokerage' | 'vehicle',
-    selectedVehicle: ''
+    email: '',
+    subject: 'general' as 'brokerage' | 'vehicle' | 'general',
+    preferredTime: ''
   });
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Group vehicles by make
-  const vehiclesByMake = INVENTORY_DATA.reduce((acc, car) => {
-    if (!acc[car.make]) {
-      acc[car.make] = [];
-    }
-    acc[car.make].push(car);
-    return acc;
-  }, {} as Record<string, typeof INVENTORY_DATA>);
+  const serviceOptions = [
+    { value: 'brokerage', label: 'Import Brokerage Service' },
+    { value: 'vehicle', label: 'Vehicle in Stock' },
+    { value: 'general', label: 'General Inquiry' }
+  ];
 
-  // Auto-fill message based on context
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Auto-set subject based on context
   useEffect(() => {
     if (!isOpen) return;
-
-    // If opened with a specific car name (from vehicle detail page)
-    if (carName) {
-      setFormData(prev => ({
-        ...prev,
-        subject: 'vehicle',
-        message: `Hi, I would like to book a viewing for the ${carName}. Please contact me at your earliest convenience.`
-      }));
-    } else {
-      // Default for general enquiries
-      setFormData(prev => ({
-        ...prev,
-        subject: 'general',
-        message: 'Hi, I would like to enquire about your vehicles. Please contact me at your earliest convenience.'
-      }));
+    if (defaultService) {
+      setFormData(prev => ({ ...prev, subject: defaultService }));
+    } else if (carName) {
+      setFormData(prev => ({ ...prev, subject: 'vehicle' }));
     }
-  }, [isOpen, carName]);
-
-  // Update message when subject or vehicle changes
-  useEffect(() => {
-    if (formData.subject === 'brokerage') {
-      setFormData(prev => ({
-        ...prev,
-        message: 'Hi, I am looking to import a car from Japan. Please guide me through the process.'
-      }));
-    } else if (formData.subject === 'vehicle' && formData.selectedVehicle) {
-      const vehicle = INVENTORY_DATA.find(v => v.id === formData.selectedVehicle);
-      if (vehicle) {
-        setFormData(prev => ({
-          ...prev,
-          message: `Hi, is the ${vehicle.year} ${vehicle.make} ${vehicle.model} still available? I would like to book a viewing.`
-        }));
-      }
-    } else if (formData.subject === 'vehicle' && !formData.selectedVehicle && !carName) {
-      setFormData(prev => ({
-        ...prev,
-        message: 'Hi, I would like to enquire about your vehicles. Please contact me at your earliest convenience.'
-      }));
-    } else if (formData.subject === 'general') {
-      setFormData(prev => ({
-        ...prev,
-        message: 'Hi, I would like to enquire about your vehicles. Please contact me at your earliest convenience.'
-      }));
-    }
-  }, [formData.subject, formData.selectedVehicle, carName]);
+  }, [isOpen, carName, defaultService]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Console log the form data
-    console.log('Enquiry Submission:', {
+    console.log('Appointment Request:', {
       ...formData,
       carName: carName || 'General Enquiry',
       timestamp: new Date().toISOString()
@@ -93,9 +64,9 @@ export default function EnquiryModal() {
       setFormData({ 
         name: '', 
         phone: '', 
-        message: '', 
+        email: '',
         subject: 'general',
-        selectedVehicle: ''
+        preferredTime: ''
       });
       closeModal();
     }, 3000);
@@ -106,9 +77,9 @@ export default function EnquiryModal() {
     setFormData({ 
       name: '', 
       phone: '', 
-      message: '', 
+      email: '',
       subject: 'general',
-      selectedVehicle: ''
+      preferredTime: ''
     });
     closeModal();
   };
@@ -120,16 +91,16 @@ export default function EnquiryModal() {
       {/* Backdrop */}
       <div 
         onClick={handleClose}
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-lg bg-neutral-900 border border-gray-700 rounded-lg shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-lg bg-white rounded-lg shadow-2xl overflow-hidden">
         
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 z-10 text-gray-400 hover:text-white transition-colors"
+          className="absolute top-5 right-5 z-10 text-gray-400 hover:text-[#0f172a] transition-colors"
         >
           <X className="w-6 h-6" />
         </button>
@@ -147,22 +118,22 @@ export default function EnquiryModal() {
             </div>
 
             {/* Success Message */}
-            <h3 className="font-condensed text-2xl font-bold text-white mb-3 uppercase tracking-tight">
-              Thank You
+            <h3 className="text-2xl font-bold text-[#0f172a] mb-3 uppercase tracking-tight" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
+              Request Confirmed
             </h3>
-            <p className="font-ui text-sm text-gray-300 leading-relaxed">
-              Our concierge will contact you shortly.
+            <p className="text-sm text-gray-600 leading-relaxed" style={{ fontFamily: 'Raleway, sans-serif' }}>
+              Our team will contact you within 24 hours.
             </p>
           </div>
         ) : (
           <>
             {/* Header */}
-            <div className="px-8 pt-8 pb-6 border-b border-gray-800">
-              <h2 className="font-condensed text-2xl font-bold text-white uppercase tracking-tight">
-                {carName ? 'Book a Viewing' : 'Contact Us'}
+            <div className="px-8 pt-8 pb-6 border-b border-gray-100">
+              <h2 className="text-2xl font-bold text-[#0f172a] uppercase tracking-tight" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
+                {defaultService === 'brokerage' ? 'Request a Quote' : (carName ? `Book Viewing: ${carName}` : 'Book Appointment')}
               </h2>
-              <p className="font-ui text-sm text-gray-400 mt-2">
-                Fill out the form below and our team will get back to you shortly.
+              <p className="text-sm text-gray-600 mt-2" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                Complete the form below and our team will reach out shortly.
               </p>
             </div>
 
@@ -171,69 +142,66 @@ export default function EnquiryModal() {
               <div className="space-y-5">
                 
                 {/* Subject Dropdown */}
-                <div>
+                <div className="relative" ref={dropdownRef}>
                   <label 
                     htmlFor="subject" 
-                    className="block font-ui text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2"
+                    className="block text-xs font-semibold text-[#0f172a] uppercase tracking-wider mb-2"
+                    style={{ fontFamily: 'Raleway, sans-serif' }}
                   >
-                    What are you interested in? <span className="text-red-500">*</span>
+                    Service Type <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    id="subject"
-                    required
-                    value={formData.subject}
-                    onChange={(e) => setFormData(prev => ({ 
-                      ...prev, 
-                      subject: e.target.value as 'general' | 'brokerage' | 'vehicle',
-                      selectedVehicle: '' // Reset vehicle selection when subject changes
-                    }))}
-                    className="w-full px-6 py-4 pr-12 bg-neutral-800 border border-neutral-700 text-white font-ui text-base font-medium rounded-lg focus:outline-none focus:border-white focus:ring-2 focus:ring-white/30 transition-all cursor-pointer hover:border-neutral-600"
+                  
+                  {/* Custom Dropdown Button */}
+                  <button
+                    type="button"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="w-full px-5 py-3.5 bg-white border border-gray-200 text-[#0f172a] text-base font-medium rounded-md focus:outline-none focus:border-[#0f172a] focus:ring-2 focus:ring-[#0f172a]/20 transition-all cursor-pointer hover:border-gray-300 shadow-sm flex items-center justify-between"
+                    style={{ fontFamily: 'Raleway, sans-serif' }}
                   >
-                    <option value="general" className="bg-neutral-800">General Inquiry</option>
-                    <option value="brokerage" className="bg-neutral-800">Import Brokerage Service</option>
-                    <option value="vehicle" className="bg-neutral-800">Vehicle in Stock</option>
-                  </select>
-                </div>
+                    <span>{serviceOptions.find(opt => opt.value === formData.subject)?.label}</span>
+                    <ChevronDown 
+                      className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                        isDropdownOpen ? 'rotate-180' : ''
+                      }`} 
+                    />
+                  </button>
 
-                {/* Conditional Vehicle Dropdown */}
-                {formData.subject === 'vehicle' && (
-                  <div>
-                    <label 
-                      htmlFor="vehicle" 
-                      className="block font-ui text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2"
+                  {/* Custom Dropdown Menu */}
+                  {isDropdownOpen && (
+                    <div 
+                      className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-xl overflow-hidden transition-all duration-200 ease-out origin-top"
+                      style={{
+                        animation: 'dropdownReveal 200ms ease-out'
+                      }}
                     >
-                      Select Vehicle <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      id="vehicle"
-                      required={formData.subject === 'vehicle'}
-                      value={formData.selectedVehicle}
-                      onChange={(e) => setFormData(prev => ({ ...prev, selectedVehicle: e.target.value }))}
-                      className="w-full px-6 py-4 pr-12 bg-neutral-800 border border-neutral-700 text-white font-ui text-base font-medium rounded-lg focus:outline-none focus:border-white focus:ring-2 focus:ring-white/30 transition-all cursor-pointer hover:border-neutral-600"
-                    >
-                      <option value="" className="bg-neutral-800">-- Choose a vehicle --</option>
-                      {Object.keys(vehiclesByMake).sort().map(make => (
-                        <optgroup key={make} label={make} className="bg-neutral-800 font-semibold">
-                          {vehiclesByMake[make].map(vehicle => (
-                            <option 
-                              key={vehicle.id} 
-                              value={vehicle.id}
-                              className="bg-neutral-800 font-normal"
-                            >
-                              {vehicle.year} {vehicle.model} - ${vehicle.price.toLocaleString()}
-                            </option>
-                          ))}
-                        </optgroup>
+                      {serviceOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => {
+                            setFormData(prev => ({ ...prev, subject: option.value as 'brokerage' | 'vehicle' | 'general' }));
+                            setIsDropdownOpen(false);
+                          }}
+                          className={`w-full px-5 py-3.5 text-left text-base font-medium transition-all duration-150 active:scale-[0.98] ${
+                            formData.subject === option.value
+                              ? 'bg-slate-50 text-[#0f172a]'
+                              : 'text-gray-700 hover:bg-slate-50 hover:text-[#0f172a]'
+                          }`}
+                          style={{ fontFamily: 'Raleway, sans-serif' }}
+                        >
+                          {option.label}
+                        </button>
                       ))}
-                    </select>
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
 
                 {/* Name Field */}
                 <div>
                   <label 
                     htmlFor="name" 
-                    className="block font-ui text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2"
+                    className="block text-xs font-semibold text-[#0f172a] uppercase tracking-wider mb-2"
+                    style={{ fontFamily: 'Raleway, sans-serif' }}
                   >
                     Name <span className="text-red-500">*</span>
                   </label>
@@ -243,7 +211,8 @@ export default function EnquiryModal() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-6 py-4 bg-neutral-800 border border-neutral-700 text-white font-ui text-base rounded-lg focus:outline-none focus:border-white focus:ring-2 focus:ring-white/30 transition-all placeholder:text-gray-500 hover:border-neutral-600"
+                    className="w-full px-5 py-3.5 bg-white border border-gray-200 text-[#0f172a] text-base rounded-md focus:outline-none focus:border-[#0f172a] focus:ring-2 focus:ring-[#0f172a]/20 transition-all placeholder:text-gray-400 hover:border-gray-300 shadow-sm"
+                    style={{ fontFamily: 'Raleway, sans-serif' }}
                     placeholder="Your full name"
                   />
                 </div>
@@ -252,7 +221,8 @@ export default function EnquiryModal() {
                 <div>
                   <label 
                     htmlFor="phone" 
-                    className="block font-ui text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2"
+                    className="block text-xs font-semibold text-[#0f172a] uppercase tracking-wider mb-2"
+                    style={{ fontFamily: 'Raleway, sans-serif' }}
                   >
                     Phone <span className="text-red-500">*</span>
                   </label>
@@ -262,27 +232,50 @@ export default function EnquiryModal() {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                    className="w-full px-6 py-4 bg-neutral-800 border border-neutral-700 text-white font-ui text-base rounded-lg focus:outline-none focus:border-white focus:ring-2 focus:ring-white/30 transition-all placeholder:text-gray-500 hover:border-neutral-600"
+                    className="w-full px-5 py-3.5 bg-white border border-gray-200 text-[#0f172a] text-base rounded-md focus:outline-none focus:border-[#0f172a] focus:ring-2 focus:ring-[#0f172a]/20 transition-all placeholder:text-gray-400 hover:border-gray-300 shadow-sm"
+                    style={{ fontFamily: 'Raleway, sans-serif' }}
                     placeholder="Your phone number"
                   />
                 </div>
 
-                {/* Message Field */}
+                {/* Email Field */}
                 <div>
                   <label 
-                    htmlFor="message" 
-                    className="block font-ui text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2"
+                    htmlFor="email" 
+                    className="block text-xs font-semibold text-[#0f172a] uppercase tracking-wider mb-2"
+                    style={{ fontFamily: 'Raleway, sans-serif' }}
                   >
-                    Message <span className="text-red-500">*</span>
+                    Email <span className="text-red-500">*</span>
                   </label>
-                  <textarea
-                    id="message"
+                  <input
+                    type="email"
+                    id="email"
                     required
-                    rows={5}
-                    value={formData.message}
-                    onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-                    className="w-full px-6 py-4 bg-neutral-800 border border-neutral-700 text-white font-ui text-base leading-relaxed rounded-lg focus:outline-none focus:border-white focus:ring-2 focus:ring-white/30 transition-all resize-none placeholder:text-gray-500 hover:border-neutral-600"
-                    placeholder="Your message..."
+                    value={formData.email}
+                    onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                    className="w-full px-5 py-3.5 bg-white border border-gray-200 text-[#0f172a] text-base rounded-md focus:outline-none focus:border-[#0f172a] focus:ring-2 focus:ring-[#0f172a]/20 transition-all placeholder:text-gray-400 hover:border-gray-300 shadow-sm"
+                    style={{ fontFamily: 'Raleway, sans-serif' }}
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                {/* Preferred Time Field */}
+                <div>
+                  <label 
+                    htmlFor="preferredTime" 
+                    className="block text-xs font-semibold text-[#0f172a] uppercase tracking-wider mb-2"
+                    style={{ fontFamily: 'Raleway, sans-serif' }}
+                  >
+                    Best Time to Call
+                  </label>
+                  <input
+                    type="text"
+                    id="preferredTime"
+                    value={formData.preferredTime}
+                    onChange={(e) => setFormData(prev => ({ ...prev, preferredTime: e.target.value }))}
+                    className="w-full px-5 py-3.5 bg-white border border-gray-200 text-[#0f172a] text-base rounded-md focus:outline-none focus:border-[#0f172a] focus:ring-2 focus:ring-[#0f172a]/20 transition-all placeholder:text-gray-400 hover:border-gray-300 shadow-sm"
+                    style={{ fontFamily: 'Raleway, sans-serif' }}
+                    placeholder="e.g., Weekday mornings, After 5pm"
                   />
                 </div>
               </div>
@@ -290,30 +283,32 @@ export default function EnquiryModal() {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full mt-6 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-ui font-bold text-xs uppercase tracking-widest rounded-md hover:from-red-700 hover:to-red-800 transition-all shadow-lg hover:shadow-xl"
+                className="w-full mt-6 px-8 py-4 bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white font-semibold text-xs uppercase tracking-[0.15em] rounded-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.01] active:scale-95 active:shadow-md"
+                style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
               >
-                Send Enquiry
+                {defaultService === 'brokerage' ? 'Send Quote Request' : 'Confirm Appointment Request'}
               </button>
 
-              {/* Privacy Notice */}
-              <p className="font-ui text-xs text-gray-500 text-center mt-4">
-                By submitting this form, you agree to be contacted by our team.
+              {/* Trust Signal */}
+              <p className="text-xs text-gray-500 text-center mt-4 leading-relaxed" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                No-obligation. Our team will contact you within 24 hours.
               </p>
             </form>
           </>
         )}
       </div>
 
-      {/* Google Fonts */}
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
-        
-        .font-condensed {
-          font-family: 'Barlow Condensed', sans-serif;
-        }
-        
-        .font-ui {
-          font-family: 'Manrope', sans-serif;
+      {/* Premium Dropdown Animation */}
+      <style jsx>{`
+        @keyframes dropdownReveal {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
         }
       `}</style>
     </div>

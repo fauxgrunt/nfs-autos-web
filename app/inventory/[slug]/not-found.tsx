@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 pt-24">
       <div className="text-center max-w-md">
         <div className="mb-8">
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center mx-auto mb-6">
@@ -20,13 +20,13 @@ export default function NotFound() {
         <div className="space-y-3">
           <Link 
             href="/inventory"
-            className="inline-block w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+            className="inline-block w-full bg-[#0f172a] hover:bg-[#1e293b] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 active:scale-[0.98]"
           >
             Browse All Inventory
           </Link>
           <Link 
             href="/"
-            className="inline-block w-full bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3 px-6 rounded-lg border-2 border-gray-300 transition-colors"
+            className="inline-block w-full bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3 px-6 rounded-lg border-2 border-gray-300 hover:border-gray-400 transition-all duration-300 active:scale-[0.98]"
           >
             Go to Homepage
           </Link>

@@ -1,6 +1,35 @@
+'use client';
+
 import { ShieldCheck, Globe, Star } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function AboutPage() {
+  const [visibleCards, setVisibleCards] = useState<number[]>([]);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observers = cardRefs.current.map((card, index) => {
+      if (!card) return null;
+      
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setVisibleCards((prev) => [...new Set([...prev, index])]);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+      
+      observer.observe(card);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer) => observer?.disconnect());
+    };
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       
@@ -25,7 +54,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Section - Split Layout with Strict Typography */}
-      <section className="bg-white py-20 lg:py-28">
+      <section className="bg-slate-50 pt-12 pb-20 lg:py-28 rounded-t-[40px] -mt-8">
         <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             
@@ -41,17 +70,17 @@ export default function AboutPage() {
                 className="space-y-5 text-lg text-slate-600 leading-relaxed"
                 style={{ fontFamily: 'Raleway, sans-serif' }}
               >
-                <p>
+                <p className="leading-relaxed">
                   NFS Autos exists to bring you the finest Japanese sedans without the hassle. 
                   We specialize in premium models like the <strong className="text-slate-900 font-semibold">Toyota Crown</strong>, <strong className="text-slate-900 font-semibold">Mark X</strong>, and <strong className="text-slate-900 font-semibold">Lexus IS/GS series</strong> 
                   — vehicles that combine refinement, reliability, and timeless design.
                 </p>
-                <p>
+                <p className="leading-relaxed">
                   We&apos;re not a volume dealer. We don&apos;t chase numbers. Instead, we carefully source 
                   each car from trusted Japanese auctions, inspect it thoroughly, and import it directly 
                   to ensure you receive a vehicle worthy of our name.
                 </p>
-                <p className="text-slate-900 font-semibold text-xl">
+                <p className="text-slate-900 font-bold text-xl leading-relaxed mt-8">
                   Quality over quantity. Transparency over sales tactics.
                 </p>
               </div>
@@ -70,7 +99,7 @@ export default function AboutPage() {
       </section>
 
       {/* The Pillars - Technical Showroom Style */}
-      <section className="bg-slate-50 py-20 lg:py-28 border-t border-slate-200">
+      <section className="bg-white py-20 lg:py-28 border-t border-slate-200">
         <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-7xl">
           
           {/* Section Header */}
@@ -93,7 +122,13 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             {/* Card 1: Transparency */}
-            <div className="bg-white rounded-xl p-10 border border-slate-200 hover:border-blue-900 hover:shadow-sm transition-all duration-300 group">
+            <div 
+              ref={(el) => { cardRefs.current[0] = el; }}
+              className={`bg-white rounded-xl p-10 border border-slate-200 hover:border-blue-900 hover:shadow-sm transition-all duration-500 group ${
+                visibleCards.includes(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '0ms' }}
+            >
               <div className="w-16 h-16 bg-gradient-to-br from-[#334155] to-[#0f172a] rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
                 <ShieldCheck className="w-8 h-8 text-white" />
               </div>
@@ -113,7 +148,13 @@ export default function AboutPage() {
             </div>
 
             {/* Card 2: Direct Import */}
-            <div className="bg-white rounded-xl p-10 border border-slate-200 hover:border-blue-900 hover:shadow-sm transition-all duration-300 group">
+            <div 
+              ref={(el) => { cardRefs.current[1] = el; }}
+              className={`bg-white rounded-xl p-10 border border-slate-200 hover:border-blue-900 hover:shadow-sm transition-all duration-500 group ${
+                visibleCards.includes(1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '100ms' }}
+            >
               <div className="w-16 h-16 bg-gradient-to-br from-[#334155] to-[#0f172a] rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
                 <Globe className="w-8 h-8 text-white" />
               </div>
@@ -133,7 +174,13 @@ export default function AboutPage() {
             </div>
 
             {/* Card 3: Quality Assurance */}
-            <div className="bg-white rounded-xl p-10 border border-slate-200 hover:border-blue-900 hover:shadow-sm transition-all duration-300 group">
+            <div 
+              ref={(el) => { cardRefs.current[2] = el; }}
+              className={`bg-white rounded-xl p-10 border border-slate-200 hover:border-blue-900 hover:shadow-sm transition-all duration-500 group ${
+                visibleCards.includes(2) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: '200ms' }}
+            >
               <div className="w-16 h-16 bg-gradient-to-br from-[#334155] to-[#0f172a] rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
                 <Star className="w-8 h-8 text-white" />
               </div>

@@ -1,8 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
-
+import Link from 'next/link';import { Gauge, Cog, Car } from 'lucide-react';
 interface CarProps {
   id: string;
   title: string;
@@ -27,7 +26,7 @@ export default function CarCard({
   isSold = false 
 }: CarProps) {
   return (
-    <Link href={`/inventory/${id}`} className="group relative flex flex-col gap-3 cursor-pointer bg-white rounded-lg border border-gray-100 md:border-0 shadow-sm md:shadow-none hover:shadow-md md:hover:shadow-none transition-shadow duration-300">
+    <Link href={`/inventory/${id}`} className="group relative flex flex-col gap-3 cursor-pointer bg-white rounded-lg border border-gray-100 md:border-0 shadow-sm md:shadow-none hover:shadow-md md:hover:shadow-none transition-all duration-200 active:scale-[0.97]">
       
       {/* 1. Image - The Hero */}
       <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg md:rounded-lg bg-gray-100">
@@ -70,14 +69,21 @@ export default function CarCard({
           ${price.toLocaleString()}
         </p>
 
-        {/* Specs: Single Elegant Line */}
-        <p className="text-xs text-gray-500 flex items-center gap-1.5">
-          <span>{mileage}</span>
-          <span className="text-gray-300">•</span>
-          <span>{transmission}</span>
-          <span className="text-gray-300">•</span>
-          <span>{bodyType}</span>
-        </p>
+        {/* Icon Row - Premium metadata with icons */}
+        <div className="flex items-center gap-3 text-slate-500 text-sm">
+          <div className="flex items-center gap-1.5">
+            <Gauge className="w-4 h-4" />
+            <span>{mileage}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Cog className="w-4 h-4" />
+            <span>{transmission}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Car className="w-4 h-4" />
+            <span>{bodyType}</span>
+          </div>
+        </div>
       </div>
     </Link>
   );

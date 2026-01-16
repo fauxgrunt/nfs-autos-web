@@ -6,10 +6,26 @@
 }
 
 /* Prevent horizontal scrolling globally */
-html, body {
+html {
   overflow-x: hidden;
   width: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 100%;
   position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* Prevent any child from causing overflow */
+#__next,
+body > div {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Use Next/font variables set on the HTML element */
@@ -32,4 +48,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Premium entrance animation for vehicle detail page */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

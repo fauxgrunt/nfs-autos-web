@@ -46,11 +46,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-white overflow-x-hidden w-full max-w-[100vw]">
+    <html lang="en" className="bg-white overflow-x-hidden w-full">
       {/* 4. Apply the new variables and the Platinum background */}
-      <body className={`${raleway.variable} ${lato.variable} ${chakraPetch.variable} antialiased bg-white text-slate-900 overflow-x-hidden w-full max-w-[100vw]`}>
+      <body className={`${raleway.variable} ${lato.variable} ${chakraPetch.variable} antialiased bg-white text-slate-900 overflow-x-hidden w-full`}>
         <EnquiryModalProvider>
-          <div className="flex flex-col min-h-screen w-full max-w-[100vw] overflow-x-hidden">
+          <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
             <Navbar />
             <main className="flex-grow w-full overflow-x-hidden">
               {children}

@@ -163,7 +163,7 @@ export default function Home() {
                 </div>
 
                 {/* Horizontal Carousel on Mobile, Grid on Desktop */}
-                <div className="flex overflow-x-auto md:grid md:grid-cols-2 gap-4 mb-6 snap-x snap-mandatory scrollbar-hide px-4 md:px-0 -mx-4 md:mx-0">
+                <div className="flex overflow-x-auto md:grid md:grid-cols-2 gap-4 mb-6 snap-x snap-mandatory scrollbar-hide md:px-0">
                 {soldCars.map((car, idx) => (
                   <div key={idx} className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer flex-shrink-0 w-[90vw] md:w-auto snap-center">
                     <div className="aspect-square relative">

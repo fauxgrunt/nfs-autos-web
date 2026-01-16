@@ -169,16 +169,17 @@ export default function InventoryPage() {
       <main className="flex min-h-screen w-full overflow-x-hidden pt-24">
         
         {/* MOBILE FILTER DRAWER */}
-        {showMobileFilters && (
-          <>
-            {/* Backdrop - 15% left side dimmed */}
-            <div 
-              onClick={() => setShowMobileFilters(false)}
-              className="fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm lg:hidden"
-            />
-            
-            {/* Drawer - 85% from right */}
-            <aside className="fixed right-0 top-0 bottom-0 w-[85%] z-[9999] overflow-y-auto bg-[#0a0a0a] text-white flex flex-col lg:hidden shadow-2xl">
+        <>
+          {/* Backdrop - 15% left side dimmed */}
+          <div 
+            onClick={() => setShowMobileFilters(false)}
+            className={`fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm lg:hidden transition-opacity duration-500 ${showMobileFilters ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          />
+          
+          {/* Drawer - 85% from right */}
+          <aside 
+            className={`fixed right-0 top-0 bottom-0 w-[85%] z-[9999] overflow-y-auto bg-[#0a0a0a] text-white flex flex-col lg:hidden shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.1)] transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${showMobileFilters ? 'translate-x-0' : 'translate-x-full'}`}
+          >
               
               {/* Mobile close */}
               <button 
@@ -358,8 +359,7 @@ export default function InventoryPage() {
                 </div>
               </div>
           </aside>
-          </>
-        )}
+        </> 
         
         {/* DARK SIDEBAR - "CONTROL CENTER" - FULL HEIGHT LEFT - ALWAYS VISIBLE ON DESKTOP */}
         <aside className="hidden lg:flex w-80 flex-shrink-0 min-h-screen bg-black text-white flex-col">
@@ -523,10 +523,10 @@ export default function InventoryPage() {
                   )}
                 </div>
               </div>
-            </aside>
+        </aside>
 
-            {/* MAIN CONTENT AREA - FULL WIDTH RIGHT */}
-            <div className="flex-1 flex flex-col bg-gray-100 min-h-screen">
+        {/* MAIN CONTENT AREA - FULL WIDTH RIGHT */}
+        <div className="flex-1 flex flex-col bg-gray-100 min-h-screen">
               
               {/* PREMIUM STICKY UTILITY BAR - MOBILE ONLY */}
               <div className="lg:hidden sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-gray-200">
@@ -534,23 +534,25 @@ export default function InventoryPage() {
                   {/* Left Half - Filters */}
                   <button
                     onClick={() => setShowMobileFilters(true)}
-                    className="flex-1 h-full flex items-center justify-center gap-2 text-sm font-medium text-[#0B1221] hover:bg-gray-50/50 transition-colors"
+                    className="flex-1 h-full flex items-center justify-center gap-2 text-sm font-medium text-[#0B1221] active:bg-slate-50 transition-colors duration-200 active:scale-95 transform"
+                    style={{ touchAction: 'manipulation' }}
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 transition-transform duration-200 active:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h18M3 12h12M3 20h6" />
                     </svg>
                     Filters
                   </button>
 
                   {/* Vertical Divider */}
-                  <div className="h-6 w-px bg-gray-200" />
+                  <div className="h-6 w-px bg-slate-100" />
 
                   {/* Right Half - Sort */}
                   <button
                     onClick={() => setShowSortMenu(!showSortMenu)}
-                    className="flex-1 h-full flex items-center justify-center gap-2 text-sm font-medium text-[#0B1221] hover:bg-gray-50/50 transition-colors"
+                    className="flex-1 h-full flex items-center justify-center gap-2 text-sm font-medium text-[#0B1221] active:bg-slate-50 transition-colors duration-200 active:scale-95 transform"
+                    style={{ touchAction: 'manipulation' }}
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 transition-transform duration-200 active:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
                     </svg>
                     Sort
@@ -559,16 +561,15 @@ export default function InventoryPage() {
               </div>
 
               {/* MOBILE SORT MENU DROPDOWN */}
-              {showSortMenu && (
-                <div className="lg:hidden fixed inset-0 z-50 flex items-end">
-                  {/* Backdrop */}
-                  <div 
-                    onClick={() => setShowSortMenu(false)}
-                    className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-                  />
-                  
-                  {/* Sort Menu */}
-                  <div className="relative w-full bg-white rounded-t-2xl shadow-2xl">
+              <div className={`lg:hidden fixed inset-0 z-50 flex items-end transition-all duration-500 ${showSortMenu ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+                {/* Backdrop */}
+                <div 
+                  onClick={() => setShowSortMenu(false)}
+                  className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${showSortMenu ? 'opacity-100' : 'opacity-0'}`}
+                />
+                
+                {/* Sort Menu */}
+                <div className={`relative w-full bg-white rounded-t-2xl shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] pb-safe ${showSortMenu ? 'translate-y-0' : 'translate-y-full'}`}>
                     {/* Handle Bar */}
                     <div className="flex justify-center pt-3 pb-2">
                       <div className="w-12 h-1 bg-gray-300 rounded-full" />
@@ -583,48 +584,48 @@ export default function InventoryPage() {
                     <div className="px-6 py-4 space-y-1">
                       <button 
                         onClick={() => handleSortChange('newest')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'newest' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                        className={`w-full text-left py-3 px-4 rounded-lg transition-all duration-150 font-ui text-sm font-medium active:scale-[0.98] ${
+                          currentSort === 'newest' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 active:bg-gray-50'
                         }`}
                       >
                         Year: New → Old
                       </button>
                       <button 
                         onClick={() => handleSortChange('oldest')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'oldest' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                        className={`w-full text-left py-3 px-4 rounded-lg transition-all duration-150 font-ui text-sm font-medium active:scale-[0.98] ${
+                          currentSort === 'oldest' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 active:bg-gray-50'
                         }`}
                       >
                         Year: Old → New
                       </button>
                       <button 
                         onClick={() => handleSortChange('price_asc')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'price_asc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                        className={`w-full text-left py-3 px-4 rounded-lg transition-all duration-150 font-ui text-sm font-medium active:scale-[0.98] ${
+                          currentSort === 'price_asc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 active:bg-gray-50'
                         }`}
                       >
                         Price: Low → High
                       </button>
                       <button 
                         onClick={() => handleSortChange('price_desc')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'price_desc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                        className={`w-full text-left py-3 px-4 rounded-lg transition-all duration-150 font-ui text-sm font-medium active:scale-[0.98] ${
+                          currentSort === 'price_desc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 active:bg-gray-50'
                         }`}
                       >
                         Price: High → Low
                       </button>
                       <button 
                         onClick={() => handleSortChange('mileage_asc')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'mileage_asc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                        className={`w-full text-left py-3 px-4 rounded-lg transition-all duration-150 font-ui text-sm font-medium active:scale-[0.98] ${
+                          currentSort === 'mileage_asc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 active:bg-gray-50'
                         }`}
                       >
                         Mileage: Low → High
                       </button>
                       <button 
                         onClick={() => handleSortChange('mileage_desc')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'mileage_desc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                        className={`w-full text-left py-3 px-4 rounded-lg transition-all duration-150 font-ui text-sm font-medium active:scale-[0.98] ${
+                          currentSort === 'mileage_desc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 active:bg-gray-50'
                         }`}
                       >
                         Mileage: High → Low
@@ -635,7 +636,6 @@ export default function InventoryPage() {
                     <div className="pb-6" />
                   </div>
                 </div>
-              )}
 
               {/* Top bar - FULL WIDTH */}
               <div className="w-full px-6 lg:px-8 py-6 bg-white border-b border-gray-200">
@@ -701,7 +701,7 @@ export default function InventoryPage() {
                   </div>
                 )}
               </div>
-            </div>
+        </div>
       </main>
     </>
   );

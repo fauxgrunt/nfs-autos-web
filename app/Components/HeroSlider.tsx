@@ -137,34 +137,36 @@ const HeroSection = () => {
                 </div>
 
                 {/* STATS BAR */}
-                <div className="absolute bottom-0 left-0 right-0 backdrop-blur-xl bg-black/40 border-t border-white/10 pointer-events-auto w-full">
-                  <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-7xl py-6 w-full">
-                    <div className="flex items-center justify-start gap-4 md:gap-8 lg:gap-12 overflow-x-auto">
-                      <div className="flex items-center gap-3">
+                <div className="absolute bottom-0 left-0 right-0 backdrop-blur-xl bg-black/40 border-t border-white/10 pointer-events-auto">
+                  <div className="overflow-x-auto scrollbar-hide">
+                    <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-7xl py-6">
+                      <div className="flex items-center justify-start gap-4 md:gap-8 lg:gap-12">
+                        <div className="flex items-center gap-3 flex-shrink-0">
                         <div className="text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>50+</div>
                         <div className="text-xs text-white/70 uppercase tracking-wider leading-tight" style={{ fontFamily: 'Raleway, sans-serif' }}>
                           Premium<br/>Cars
                         </div>
                       </div>
                       
-                      <div className="w-px h-12 bg-white/10" />
+                      <div className="w-px h-12 bg-white/10 flex-shrink-0" />
                       
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-shrink-0">
                         <div className="text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
                         <div className="text-xs text-white/70 uppercase tracking-wider leading-tight" style={{ fontFamily: 'Raleway, sans-serif' }}>
                           Verified<br/>Imports
                         </div>
                       </div>
                       
-                      <div className="w-px h-12 bg-white/10" />
+                      <div className="w-px h-12 bg-white/10 flex-shrink-0" />
                       
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-shrink-0">
                         <div className="text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>5★</div>
                         <div className="text-xs text-white/70 uppercase tracking-wider leading-tight" style={{ fontFamily: 'Raleway, sans-serif' }}>
                           Customer<br/>Rated
                         </div>
                       </div>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>

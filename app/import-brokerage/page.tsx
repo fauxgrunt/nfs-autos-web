@@ -4,10 +4,12 @@ import { useState, FormEvent } from 'react';
 import { CheckCircle, Search, Shield, Truck } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
+import { useEnquiryModal } from '../contexts/EnquiryModalContext';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 export default function ImportBrokeragePage() {
+  const { openModal } = useEnquiryModal();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -411,8 +413,9 @@ export default function ImportBrokeragePage() {
                       <span>Shipping coordination</span>
                     </li>
                   </ul>
-                  <button 
-                    className="w-full py-4 border-2 border-[#0f172a] text-[#0f172a] font-bold text-sm uppercase tracking-widest rounded-full hover:bg-[#0f172a] hover:text-white transition-all duration-300"
+                  <button
+                    onClick={() => openModal(undefined, 'brokerage')}
+                    className="w-full py-4 border-2 border-[#0f172a] text-[#0f172a] font-bold text-sm uppercase tracking-widest rounded-full hover:bg-[#0f172a] hover:text-white transition-all duration-300 active:scale-95"
                     style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
                   >
                     Contact for Quote
@@ -471,8 +474,9 @@ export default function ImportBrokeragePage() {
                       <span>Full concierge service & support</span>
                     </li>
                   </ul>
-                  <button 
-                    className="w-full py-4 bg-[#0f172a] text-white font-bold text-sm uppercase tracking-widest rounded-full hover:bg-[#1e293b] transition-all duration-300"
+                  <button
+                    onClick={() => openModal(undefined, 'brokerage')}
+                    className="w-full py-4 bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white font-bold text-sm uppercase tracking-widest rounded-full hover:shadow-xl transition-all duration-300 active:scale-95"
                     style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
                   >
                     Contact for Quote
@@ -525,8 +529,9 @@ export default function ImportBrokeragePage() {
                   <span>Shipping coordination</span>
                 </li>
               </ul>
-              <button 
-                className="w-full py-4 border-2 border-[#0f172a] text-[#0f172a] font-bold text-sm uppercase tracking-widest rounded-full hover:bg-[#0f172a] hover:text-white transition-all duration-300"
+              <button
+                onClick={() => openModal(undefined, 'brokerage')}
+                className="w-full py-4 border-2 border-[#0f172a] text-[#0f172a] font-bold text-sm uppercase tracking-widest rounded-full hover:bg-[#0f172a] hover:text-white transition-all duration-300 active:scale-95"
                 style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
               >
                 Contact for Quote
@@ -583,8 +588,9 @@ export default function ImportBrokeragePage() {
                   <span>Full concierge service & support</span>
                 </li>
               </ul>
-              <button 
-                className="w-full py-4 bg-[#0f172a] text-white font-bold text-sm uppercase tracking-widest rounded-full hover:bg-[#1e293b] transition-all duration-300"
+              <button
+                onClick={() => openModal(undefined, 'brokerage')}
+                className="w-full py-4 bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white font-bold text-sm uppercase tracking-widest rounded-full hover:shadow-xl transition-all duration-300 active:scale-95"
                 style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
               >
                 Contact for Quote

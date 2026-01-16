@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
 import SoldCarCard from '../Components/SoldCarCard';
 import SortDropdown from '../Components/SortDropdown';
 import { SOLD_INVENTORY_DATA } from '../lib/soldInventoryData';
 
 export default function RecentlySoldPage() {
+  const [visibleCards, setVisibleCards] = useState<number[]>([]);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [selectedMakes, setSelectedMakes] = useState<string[]>([]);
@@ -57,6 +59,31 @@ export default function RecentlySoldPage() {
       prev.includes(body) ? prev.filter(b => b !== body) : [...prev, body]
     );
   };
+
+  // Intersection Observer for card reveal animations
+  useEffect(() => {
+    const observers = cardRefs.current.map((card, index) => {
+      if (!card) return null;
+      
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setVisibleCards((prev) => [...new Set([...prev, index])]);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      
+      observer.observe(card);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach((observer) => observer?.disconnect());
+    };
+  }, []);
 
   const handleSortChange = (sortValue: string) => {
     setCurrentSort(sortValue);
@@ -152,9 +179,18 @@ export default function RecentlySoldPage() {
 
       <main className="flex min-h-screen w-full overflow-x-hidden pt-24">
         
-        {/* MOBILE FILTER OVERLAY */}
-        {showMobileFilters && (
-          <aside className="fixed inset-0 z-50 overflow-y-auto bg-black text-white flex flex-col lg:hidden">
+        {/* MOBILE FILTER DRAWER */}
+        <>
+          {/* Backdrop - 15% left side dimmed */}
+          <div 
+            onClick={() => setShowMobileFilters(false)}
+            className={`fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm lg:hidden transition-opacity duration-500 ${showMobileFilters ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          />
+          
+          {/* Drawer - 85% from right */}
+          <aside 
+            className={`fixed right-0 top-0 bottom-0 w-[85%] z-[9999] overflow-y-auto bg-[#0a0a0a] text-white flex flex-col lg:hidden shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.1)] transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${showMobileFilters ? 'translate-x-0' : 'translate-x-full'}`}
+          >
               
               {/* Mobile close */}
               <button 
@@ -332,12 +368,12 @@ export default function RecentlySoldPage() {
                 </button>
               </div>
           </aside>
-        )}
+        </>
         
         {/* DARK SIDEBAR - "CONTROL CENTER" - FULL HEIGHT LEFT - ALWAYS VISIBLE ON DESKTOP */}
         <aside className="hidden lg:flex w-80 flex-shrink-0 min-h-screen bg-black text-white flex-col">
               
-              <div className="p-6 lg:p-8">
+          <div className="p-6 lg:p-8">
                 
                 {/* Filter Header */}
                 <div className="mb-8 pb-6 border-b border-white/20">
@@ -496,188 +532,196 @@ export default function RecentlySoldPage() {
                   )}
                 </div>
               </div>
-            </aside>
+        </aside>
 
-            {/* MAIN CONTENT AREA - FULL WIDTH RIGHT */}
-            <div className="flex-1 flex flex-col bg-gray-100 min-h-screen">
+        {/* MAIN CONTENT AREA - FULL WIDTH RIGHT */}
+        <div className="flex-1 flex flex-col bg-gray-100 min-h-screen">
+          
+          {/* PREMIUM STICKY UTILITY BAR - MOBILE ONLY */}
+          <div className="lg:hidden sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-gray-200">
+            <div className="h-12 flex items-center">
+              {/* Left Half - Filters */}
+              <button
+                onClick={() => setShowMobileFilters(true)}
+                className="flex-1 h-full flex items-center justify-center gap-2 text-sm font-medium text-[#0B1221] active:bg-slate-50 transition-colors duration-200 active:scale-95 transform"
+                style={{ touchAction: 'manipulation' }}
+              >
+                <svg className="w-4 h-4 transition-transform duration-200 active:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h18M3 12h12M3 20h6" />
+                </svg>
+                Filters
+              </button>
+
+              {/* Vertical Divider */}
+              <div className="h-6 w-px bg-slate-100" />
+
+              {/* Right Half - Sort */}
+              <button
+                onClick={() => setShowSortMenu(!showSortMenu)}
+                className="flex-1 h-full flex items-center justify-center gap-2 text-sm font-medium text-[#0B1221] active:bg-slate-50 transition-colors duration-200 active:scale-95 transform"
+                style={{ touchAction: 'manipulation' }}
+              >
+                <svg className="w-4 h-4 transition-transform duration-200 active:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                </svg>
+                Sort
+              </button>
+            </div>
+          </div>
+
+          {/* MOBILE SORT MENU DROPDOWN */}
+          <div className={`lg:hidden fixed inset-0 z-50 flex items-end transition-all duration-500 ${showSortMenu ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+            {/* Backdrop */}
+            <div 
+              onClick={() => setShowSortMenu(false)}
+              className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${showSortMenu ? 'opacity-100' : 'opacity-0'}`}
+            />
+            
+            {/* Sort Menu */}
+            <div className={`relative w-full bg-white rounded-t-2xl shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] pb-safe ${showSortMenu ? 'translate-y-0' : 'translate-y-full'}`}>
+              {/* Handle Bar */}
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-12 h-1 bg-gray-300 rounded-full" />
+              </div>
+
+              {/* Header */}
+              <div className="px-6 py-4 border-b border-gray-200">
+                <h3 className="font-ui text-base font-bold text-[#0B1221] uppercase tracking-wide">Sort By</h3>
+              </div>
+
+              {/* Sort Options */}
+              <div className="px-6 py-4 space-y-1">
+                <button 
+                  onClick={() => handleSortChange('newest')}
+                  className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
+                    currentSort === 'newest' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Year: New → Old
+                </button>
+                <button 
+                  onClick={() => handleSortChange('oldest')}
+                  className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
+                    currentSort === 'oldest' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Year: Old → New
+                </button>
+                <button 
+                  onClick={() => handleSortChange('price_asc')}
+                  className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
+                    currentSort === 'price_asc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Price: Low → High
+                </button>
+                <button 
+                  onClick={() => handleSortChange('price_desc')}
+                  className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
+                    currentSort === 'price_desc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Price: High → Low
+                </button>
+                <button 
+                  onClick={() => handleSortChange('mileage_asc')}
+                  className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
+                    currentSort === 'mileage_asc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Mileage: Low → High
+                </button>
+                <button 
+                  onClick={() => handleSortChange('mileage_desc')}
+                  className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
+                    currentSort === 'mileage_desc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  Mileage: High → Low
+                </button>
+              </div>
+
+              {/* Bottom Padding */}
+              <div className="pb-6" />
+            </div>
+          </div>
+
+          {/* Top bar - FULL WIDTH */}
+          <div className="w-full px-6 lg:px-8 py-6 bg-white border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <h1 className="font-condensed text-2xl font-bold text-gray-900 uppercase tracking-tight">Recently Sold</h1>
               
-              {/* PREMIUM STICKY UTILITY BAR - MOBILE ONLY */}
-              <div className="lg:hidden sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-gray-200">
-                <div className="h-12 flex items-center">
-                  {/* Left Half - Filters */}
-                  <button
-                    onClick={() => setShowMobileFilters(true)}
-                    className="flex-1 h-full flex items-center justify-center gap-2 text-sm font-medium text-[#0B1221] hover:bg-gray-50/50 transition-colors"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h18M3 12h12M3 20h6" />
-                    </svg>
-                    Filters
-                  </button>
-
-                  {/* Vertical Divider */}
-                  <div className="h-6 w-px bg-gray-200" />
-
-                  {/* Right Half - Sort */}
-                  <button
-                    onClick={() => setShowSortMenu(!showSortMenu)}
-                    className="flex-1 h-full flex items-center justify-center gap-2 text-sm font-medium text-[#0B1221] hover:bg-gray-50/50 transition-colors"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                    </svg>
-                    Sort
-                  </button>
-                </div>
-              </div>
-
-              {/* MOBILE SORT MENU DROPDOWN */}
-              {showSortMenu && (
-                <div className="lg:hidden fixed inset-0 z-50 flex items-end">
-                  {/* Backdrop */}
-                  <div 
-                    onClick={() => setShowSortMenu(false)}
-                    className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-                  />
-                  
-                  {/* Sort Menu */}
-                  <div className="relative w-full bg-white rounded-t-2xl shadow-2xl">
-                    {/* Handle Bar */}
-                    <div className="flex justify-center pt-3 pb-2">
-                      <div className="w-12 h-1 bg-gray-300 rounded-full" />
-                    </div>
-
-                    {/* Header */}
-                    <div className="px-6 py-4 border-b border-gray-200">
-                      <h3 className="font-ui text-base font-bold text-[#0B1221] uppercase tracking-wide">Sort By</h3>
-                    </div>
-
-                    {/* Sort Options */}
-                    <div className="px-6 py-4 space-y-1">
-                      <button 
-                        onClick={() => handleSortChange('newest')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'newest' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                      >
-                        Year: New → Old
-                      </button>
-                      <button 
-                        onClick={() => handleSortChange('oldest')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'oldest' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                      >
-                        Year: Old → New
-                      </button>
-                      <button 
-                        onClick={() => handleSortChange('price_asc')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'price_asc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                      >
-                        Price: Low → High
-                      </button>
-                      <button 
-                        onClick={() => handleSortChange('price_desc')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'price_desc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                      >
-                        Price: High → Low
-                      </button>
-                      <button 
-                        onClick={() => handleSortChange('mileage_asc')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'mileage_asc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                      >
-                        Mileage: Low → High
-                      </button>
-                      <button 
-                        onClick={() => handleSortChange('mileage_desc')}
-                        className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-ui text-sm font-medium ${
-                          currentSort === 'mileage_desc' ? 'bg-red-50 text-[#d32f2f] font-bold' : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                      >
-                        Mileage: High → Low
-                      </button>
-                    </div>
-
-                    {/* Bottom Padding */}
-                    <div className="pb-6" />
-                  </div>
-                </div>
-              )}
-
-              {/* Top bar - FULL WIDTH */}
-              <div className="w-full px-6 lg:px-8 py-6 bg-white border-b border-gray-200">
-                <div className="flex items-center justify-between">
-                  <h1 className="font-condensed text-2xl font-bold text-gray-900 uppercase tracking-tight">Recently Sold</h1>
-                  
-                  {/* Desktop Sort Dropdown - Aligned Right */}
-                  <div className="hidden lg:block">
-                    <SortDropdown 
-                      currentSort={currentSort}
-                      onSort={setCurrentSort}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* PRO GRID */}
-              <div className="flex-1 p-6 lg:p-8">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-6 md:gap-6">
-                  {filteredCars.map((car) => (
-                    <SoldCarCard
-                      key={car.id}
-                      id={car.id}
-                      title={car.title}
-                      soldPrice={car.soldPrice}
-                      image={car.image}
-                      mileage={car.mileage}
-                      transmission={car.transmission}
-                      bodyType={car.bodyType}
-                      soldTo={car.soldTo}
-                      soldDate={car.soldDate}
-                    />
-                  ))}
-                </div>
-
-                {/* No results */}
-                {filteredCars.length === 0 && (
-                  <div className="text-center py-20 bg-white rounded-lg border border-gray-200 shadow-sm">
-                    {/* Empty State Icon */}
-                    <div className="flex justify-center mb-6">
-                      <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center">
-                        <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                      </div>
-                    </div>
-
-                    {/* Empty State Text */}
-                    <h3 className="font-condensed text-2xl font-bold text-gray-900 mb-2 uppercase tracking-tight">
-                      No Sold Vehicles Found
-                    </h3>
-                    <p className="font-ui text-sm text-gray-500 mb-8 max-w-md mx-auto">
-                      No sold vehicles match your current filter criteria. Try adjusting your filters.
-                    </p>
-
-                    {/* Clear Filters Button */}
-                    <button 
-                      onClick={resetFilters}
-                      className="inline-flex items-center gap-2 px-8 py-3 bg-[#d32f2f] text-white font-ui font-bold text-xs uppercase tracking-widest rounded-md hover:bg-[#b71c1c] transition-all shadow-md hover:shadow-lg"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                      </svg>
-                      Clear All Filters
-                    </button>
-                  </div>
-                )}
+              {/* Desktop Sort Dropdown - Aligned Right */}
+              <div className="hidden lg:block">
+                <SortDropdown 
+                  currentSort={currentSort}
+                  onSort={setCurrentSort}
+                />
               </div>
             </div>
+          </div>
+
+          {/* PRO GRID */}
+          <div className="flex-1 p-6 lg:p-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-6 md:gap-6">
+              {filteredCars.map((car, index) => (
+                <div
+                  key={car.id}
+                  ref={(el) => { cardRefs.current[index] = el; }}
+                  className={`transition-all duration-500 ${
+                    visibleCards.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionDelay: `${(index % 3) * 100}ms` }}
+                >
+                  <SoldCarCard
+                    id={car.id}
+                    title={car.title}
+                    soldPrice={car.soldPrice}
+                    image={car.image}
+                    mileage={car.mileage}
+                    transmission={car.transmission}
+                    bodyType={car.bodyType}
+                    soldTo={car.soldTo}
+                    soldDate={car.soldDate}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* No results */}
+            {filteredCars.length === 0 && (
+              <div className="text-center py-20 bg-white rounded-lg border border-gray-200 shadow-sm">
+                {/* Empty State Icon */}
+                <div className="flex justify-center mb-6">
+                  <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center">
+                    <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Empty State Text */}
+                <h3 className="font-condensed text-2xl font-bold text-gray-900 mb-2 uppercase tracking-tight">
+                  No Sold Vehicles Found
+                </h3>
+                <p className="font-ui text-sm text-gray-500 mb-8 max-w-md mx-auto">
+                  No sold vehicles match your current filter criteria. Try adjusting your filters.
+                </p>
+
+                {/* Clear Filters Button */}
+                <button 
+                  onClick={resetFilters}
+                  className="inline-flex items-center gap-2 px-8 py-3 bg-[#d32f2f] text-white font-ui font-bold text-xs uppercase tracking-widest rounded-md hover:bg-[#b71c1c] transition-all shadow-md hover:shadow-lg"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Clear All Filters
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </main>
     </>
   );

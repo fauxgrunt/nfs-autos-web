@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams, notFound } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
 import { getVehicleById } from '@/app/lib/inventoryData';
 import { useEnquiryModal } from '@/app/contexts/EnquiryModalContext';
 
@@ -24,20 +25,23 @@ export default function VehicleDetailPage() {
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden w-full pt-24">
-      {/* Back Navigation */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-4">
-          <Link href="/inventory" className="text-gray-600 hover:text-black inline-flex items-center gap-2 font-medium text-sm">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Inventory
-          </Link>
+      {/* Premium Entrance Animation Wrapper */}
+      <div key={slug} className="animate-fadeInUp">
+        {/* Back Navigation */}
+        <div className="bg-white border-b border-gray-200">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-4">
+            <Link 
+              href="/inventory" 
+              className="group inline-flex items-center gap-2 py-2 pr-4 text-[#0f172a] font-medium text-sm hover:border-b-2 hover:border-[#0f172a] hover:pb-[6px] transition-all duration-300"
+            >
+              <ArrowLeft className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1" />
+              Back to Inventory
+            </Link>
+          </div>
         </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-12 lg:py-16">
+        {/* Main Content */}
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 py-12 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
           
           {/* LEFT COLUMN - Gallery (65%) */}
@@ -234,6 +238,8 @@ export default function VehicleDetailPage() {
             </div>
           </div>
         </div>
+      </div>
+      {/* End Animation Wrapper */}
       </div>
 
       {/* Mobile Sticky CTA Footer */}
