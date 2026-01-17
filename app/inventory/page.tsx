@@ -178,7 +178,7 @@ export default function InventoryPage() {
           
           {/* Drawer - 85% from right */}
           <aside 
-            className={`fixed right-0 top-0 bottom-0 w-[85%] z-[9999] overflow-y-auto bg-[#0a0a0a] text-white flex flex-col lg:hidden shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.1)] transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${showMobileFilters ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`fixed right-0 top-0 bottom-0 w-[85%] z-[9999] bg-[#0a0a0a] text-white flex flex-col lg:hidden shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.1)] transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${showMobileFilters ? 'translate-x-0' : 'translate-x-full'}`}
           >
               
               {/* Mobile close */}
@@ -189,7 +189,9 @@ export default function InventoryPage() {
                 ×
               </button>
 
-              <div className="p-6 pb-24">
+              {/* Scrollable content area */}
+              <div className="flex-1 overflow-y-auto">
+                <div className="p-6 pb-6">
                 
                 {/* Filter Header */}
                 <div className="mb-8 pb-6 border-b border-white/20">
@@ -348,15 +350,17 @@ export default function InventoryPage() {
                   )}
                 </div>
 
-                {/* Sticky Apply Button */}
-                <div className="fixed bottom-0 right-0 w-[85%] p-6 bg-[#0a0a0a] border-t border-white/10">
-                  <button
-                    onClick={() => setShowMobileFilters(false)}
-                    className="w-full py-4 bg-white text-[#0a0a0a] font-ui font-bold text-xs uppercase tracking-widest hover:bg-white/90 transition-all"
-                  >
-                    Apply Filters
-                  </button>
                 </div>
+              </div>
+              
+              {/* Sticky Apply Button - Outside scrollable area */}
+              <div className="flex-shrink-0 p-6 bg-[#0a0a0a] border-t border-white/10">
+                <button
+                  onClick={() => setShowMobileFilters(false)}
+                  className="w-full py-4 bg-white text-[#0a0a0a] font-ui font-bold text-xs uppercase tracking-widest hover:bg-white/90 transition-all"
+                >
+                  Apply Filters
+                </button>
               </div>
           </aside>
         </> 

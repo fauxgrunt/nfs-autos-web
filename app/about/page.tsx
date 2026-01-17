@@ -89,8 +89,8 @@ export default function AboutPage() {
             {/* Right Side - Image with Proper Styling */}
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-slate-200 w-full">
               <img
-                src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1200&q=80"
-                alt="Premium JDM Vehicle"
+                src="/cta-handover.jpg"
+                alt="Keys to your premium JDM import"
                 className="w-full h-full object-cover"
               />
             </div>

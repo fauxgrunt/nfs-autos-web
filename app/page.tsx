@@ -12,7 +12,7 @@ export default function Home() {
       id: 1,
       name: '2015 Toyota Crown Athlete',
       price: '$18,999',
-      image: 'https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80',
+      image: '/inventory/crown-athlete.jpg',
       badge: 'Just Arrived',
       specs: ['Auto', 'V6 3.5L', '65K km']
     },
@@ -20,7 +20,7 @@ export default function Home() {
       id: 2,
       name: '2013 Toyota Mark X 250G',
       price: '$15,500',
-      image: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80',
+      image: '/inventory/mark-x-stock.jpg',
       badge: 'Available Now',
       specs: ['RWD', '2.5L', '72K km']
     },
@@ -28,7 +28,7 @@ export default function Home() {
       id: 3,
       name: '2016 Lexus IS250 F-Sport',
       price: '$22,900',
-      image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80',
+      image: '/inventory/lexus-is-stock.jpg',
       badge: 'Premium',
       specs: ['Auto', '2.5L V6', '58K km']
     }
@@ -64,10 +64,10 @@ export default function Home() {
 
   // Sold cars data - REALISTIC VEHICLES YOU ACTUALLY SELL
   const soldCars = [
-    { name: 'Toyota Crown Athlete', location: 'Sydney', date: 'Jan 2025', image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=400&q=80' },
-    { name: 'Lexus GS350', location: 'Melbourne', date: 'Jan 2025', image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&q=80' },
-    { name: 'Toyota Mark X 350S', location: 'Perth', date: 'Dec 2024', image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&q=80' },
-    { name: 'Lexus IS250', location: 'Brisbane', date: 'Dec 2024', image: 'https://images.unsplash.com/photo-1621839673705-6617adf9e890?w=400&q=80' }
+    { name: 'Toyota Crown Athlete', location: 'Sydney, NSW', date: 'Grade 4.5 Import', image: '/delivered/crown-owner.jpg' },
+    { name: 'Lexus GS350', location: 'Melbourne, VIC', date: 'Black Line Edition', image: '/delivered/gs350-city.jpg' },
+    { name: 'Toyota Mark X 350S', location: 'Perth, WA', date: 'Custom Widebody Source', image: '/delivered/markx-street.jpg' },
+    { name: 'Lexus IS250', location: 'Brisbane, QLD', date: 'Showroom Condition', image: '/delivered/is250-rear.jpg' }
   ];
 
   return (
@@ -165,7 +165,7 @@ export default function Home() {
                 {/* Horizontal Carousel on Mobile, Grid on Desktop */}
                 <div className="flex overflow-x-auto md:grid md:grid-cols-2 gap-4 mb-6 snap-x snap-mandatory scrollbar-hide md:px-0">
                 {soldCars.map((car, idx) => (
-                  <div key={idx} className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer flex-shrink-0 w-[90vw] md:w-auto snap-center">
+                  <Link href="/recently-sold" key={idx} className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer flex-shrink-0 w-[90vw] md:w-auto snap-center">
                     <div className="aspect-square relative">
                       <img 
                         src={car.image} 
@@ -173,7 +173,7 @@ export default function Home() {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                       {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 group-hover:opacity-90 transition-opacity">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-100 group-hover:opacity-95 transition-opacity">
                         <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                           <div className="font-bold text-sm mb-1">{car.name}</div>
                           <div className="flex items-center justify-between text-xs">
@@ -189,7 +189,7 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
 

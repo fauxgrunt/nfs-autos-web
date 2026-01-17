@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Play, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -14,45 +14,80 @@ import 'swiper/css/effect-fade';
 
 const HeroSection = () => {
   const swiperRef = useRef<SwiperType | null>(null);
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
+  const inactivityTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const slides = [
-    // Slide 1: Service / Brokerage Focus
+    // Slide 1: Toyota Crown - Center Aligned
     {
       id: 1,
-      image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1920&q=80',
-      subtitle: 'IS250 • GS350 • Premium Imports',
-      title: 'PREMIUM JDM SEDANS',
-      primaryCtaText: 'EXPLORE NOW',
-      primaryCtaLink: '/import-brokerage',
-      secondaryCtaText: 'VIEW INVENTORY',
-      secondaryCtaLink: '/inventory'
-    },
-    // Slide 2: High-End Inventory Focus (The Crown)
-    {
-      id: 2,
-      image: 'https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=1920&q=80',
+      image: '/crown-royal.jpg',
       subtitle: 'Premium Japanese Sedans from $18,999',
-      title: '2015 TOYOTA CROWN',
+      title: 'ROYAL AUTHORITY',
       primaryCtaText: 'RESERVE NOW',
       primaryCtaLink: '/inventory/toyota-crown-athlete-2015',
       secondaryCtaText: 'VIEW INVENTORY',
-      secondaryCtaLink: '/inventory'
+      secondaryCtaLink: '/inventory',
+      alignment: 'center'
     },
-    // Slide 3: Performance/Value Focus (The Mark X)
+    // Slide 2: Lexus - Left Aligned
+    {
+      id: 2,
+      image: '/lexus-rx.jpg',
+      subtitle: 'IS250 • GS350 • Premium Imports',
+      title: 'UNCOMPROMISED LUXURY',
+      primaryCtaText: 'EXPLORE NOW',
+      primaryCtaLink: '/import-brokerage',
+      secondaryCtaText: 'VIEW INVENTORY',
+      secondaryCtaLink: '/inventory',
+      alignment: 'left'
+    },
+    // Slide 3: Mark X - Right Aligned
     {
       id: 3,
-      image: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1920&q=80',
+      image: '/mark-x.jpg',
       subtitle: 'RWD Performance Sedans from $15,500',
-      title: 'TOYOTA MARK X',
+      title: 'STREET LEGEND',
       primaryCtaText: 'BOOK INSPECTION',
       primaryCtaLink: '/inventory/toyota-mark-x-250g-2013',
       secondaryCtaText: 'VIEW INVENTORY',
-      secondaryCtaLink: '/inventory'
+      secondaryCtaLink: '/inventory',
+      alignment: 'right'
     }
   ];
 
+  // Handle user interaction - pause autoplay and set timer to resume
+  const handleUserInteraction = () => {
+    if (swiperRef.current?.autoplay && swiperRef.current.autoplay.running) {
+      swiperRef.current.autoplay.stop();
+      setIsUserInteracting(true);
+
+      // Clear existing timer
+      if (inactivityTimerRef.current) {
+        clearTimeout(inactivityTimerRef.current);
+      }
+
+      // Resume autoplay after 3 seconds of inactivity
+      inactivityTimerRef.current = setTimeout(() => {
+        if (swiperRef.current?.autoplay) {
+          swiperRef.current.autoplay.start();
+          setIsUserInteracting(false);
+        }
+      }, 3000);
+    }
+  };
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (inactivityTimerRef.current) {
+        clearTimeout(inactivityTimerRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <div className="relative w-full h-screen max-h-[800px] overflow-hidden bg-black">
+    <div className="relative w-full h-[85vh] overflow-hidden bg-black">
       
       <Swiper
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
@@ -61,8 +96,9 @@ const HeroSection = () => {
         spaceBetween={0}
         slidesPerView={1}
         speed={1000}
+        loop={true}
         autoplay={{
-          delay: 5000,
+          delay: 2000,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}
@@ -77,31 +113,41 @@ const HeroSection = () => {
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
+        onTouchStart={() => {
+          handleUserInteraction();
+        }}
         className="w-full h-full"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
             <div className="relative w-full h-full">
-              {/* Background Image with Overlay */}
+              {/* Background Image with Enhanced Gradient Overlay */}
               <div className="absolute inset-0 pointer-events-none">
                 <img
                   src={slide.image}
                   alt={slide.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                {/* Dark gradient scrim for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60" />
               </div>
 
               {/* Content Container */}
-              <div className="relative h-full flex flex-col justify-center pointer-events-none w-full">
-                <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-7xl w-full">
+              <div className="relative h-full flex flex-col justify-center w-full z-30">
+                <div className={`container mx-auto px-4 md:px-6 lg:px-12 max-w-7xl w-full ${
+                  slide.alignment === 'center' ? 'flex justify-center' : 
+                  slide.alignment === 'right' ? 'flex justify-end' : ''
+                }`}>
                   
                   {/* Main Content Card */}
-                  <div className="max-w-3xl space-y-6 pointer-events-auto w-full">
+                  <div className={`max-w-4xl space-y-6 w-full relative z-10 ${
+                    slide.alignment === 'center' ? 'text-center' : 
+                    slide.alignment === 'right' ? 'text-right' : 'text-left'
+                  }`}>
                     
                     {/* Title */}
-                    <h1 className="text-4xl md:text-6xl lg:text-8xl font-black text-white tracking-tight leading-none break-words" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black text-white tracking-tighter leading-[0.95] break-words hyphens-auto" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif', wordBreak: 'break-word' }}>
                       {slide.title}
                     </h1>
 
@@ -111,10 +157,13 @@ const HeroSection = () => {
                     </p>
 
                     {/* CTAs */}
-                    <div className="flex flex-wrap gap-3 md:gap-4 pt-4 pb-6 md:pb-0 relative z-30">
+                    <div className={`flex flex-wrap gap-3 md:gap-4 pt-4 pb-6 md:pb-0 relative z-30 ${
+                      slide.alignment === 'center' ? 'justify-center' : 
+                      slide.alignment === 'right' ? 'justify-end' : 'justify-start'
+                    }`}>
                       <Link 
                         href={slide.primaryCtaLink}
-                        className="group relative px-6 py-3 md:px-8 md:py-4 bg-gradient-to-b from-[#334155] to-[#0f172a] rounded-full border-t border-slate-500/30 shadow-2xl shadow-slate-900/40 hover:shadow-2xl hover:shadow-slate-900/70 hover:scale-[1.08] hover:-translate-y-1 active:scale-[0.98] transition-all duration-300 overflow-hidden flex items-center justify-center gap-2 md:gap-3 cursor-pointer"
+                        className="group relative px-6 py-3 md:px-8 md:py-4 bg-gradient-to-b from-[#334155] to-[#0f172a] rounded-full border-t border-slate-500/30 shadow-2xl shadow-slate-900/40 hover:shadow-2xl hover:shadow-slate-900/70 hover:scale-[1.08] hover:-translate-y-1 active:scale-95 transition-all duration-300 overflow-hidden flex items-center justify-center gap-2 md:gap-3 cursor-pointer touch-manipulation"
                       >
                         <span className="relative z-10 text-[0.65rem] md:text-sm font-medium text-white uppercase tracking-[0.2em] md:tracking-[0.25em]" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
                           {slide.primaryCtaText}
@@ -125,7 +174,7 @@ const HeroSection = () => {
 
                       <Link 
                         href={slide.secondaryCtaLink}
-                        className="group px-6 py-3 md:px-8 md:py-4 backdrop-blur-md bg-white/10 border-2 border-white/10 hover:bg-white/20 hover:border-white/20 rounded-full transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 cursor-pointer"
+                        className="group px-6 py-3 md:px-8 md:py-4 backdrop-blur-md bg-white/10 border-2 border-white/10 hover:bg-white/20 hover:border-white/20 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 cursor-pointer touch-manipulation"
                       >
                         <span className="text-[0.65rem] md:text-sm font-medium text-white uppercase tracking-[0.2em] md:tracking-[0.25em]" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
                           {slide.secondaryCtaText}
@@ -175,19 +224,23 @@ const HeroSection = () => {
         ))}
       </Swiper>
 
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows - Premium Glassmorphism */}
       <button
-        className="hero-button-prev hidden md:flex absolute left-8 top-1/2 -translate-y-1/2 p-4 backdrop-blur-md bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 rounded-full group z-20 pointer-events-auto cursor-pointer"
+        onClick={handleUserInteraction}
+        className="hero-button-prev hidden md:flex absolute left-6 lg:left-8 top-1/2 -translate-y-1/2 p-5 lg:p-6 backdrop-blur-md bg-black/30 border border-white/20 hover:bg-black/50 hover:border-white/40 hover:scale-110 active:scale-95 transition-all duration-300 rounded-full group z-20 pointer-events-auto cursor-pointer shadow-2xl shadow-black/50"
         aria-label="Previous slide"
+        style={{ appearance: 'none', outline: 'none' }}
       >
-        <ChevronLeft className="w-6 h-6 text-white group-hover:-translate-x-1 transition-transform" />
+        <ChevronLeft className="w-7 h-7 lg:w-8 lg:h-8 text-white group-hover:-translate-x-1 transition-transform" strokeWidth={2.5} />
       </button>
 
       <button
-        className="hero-button-next hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 p-4 backdrop-blur-md bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 rounded-full group z-20 pointer-events-auto cursor-pointer"
+        onClick={handleUserInteraction}
+        className="hero-button-next hidden md:flex absolute right-6 lg:right-8 top-1/2 -translate-y-1/2 p-5 lg:p-6 backdrop-blur-md bg-black/30 border border-white/20 hover:bg-black/50 hover:border-white/40 hover:scale-110 active:scale-95 transition-all duration-300 rounded-full group z-20 pointer-events-auto cursor-pointer shadow-2xl shadow-black/50"
         aria-label="Next slide"
+        style={{ appearance: 'none', outline: 'none' }}
       >
-        <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
+        <ChevronRight className="w-7 h-7 lg:w-8 lg:h-8 text-white group-hover:translate-x-1 transition-transform" strokeWidth={2.5} />
       </button>
 
       {/* Custom Pagination Dots */}

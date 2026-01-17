@@ -249,8 +249,8 @@ export default function Navbar() {
       }`}>
         <div className="flex flex-col h-full">
           
-          {/* Menu Content */}
-          <div className="flex-1 pt-32 px-8 pb-8 flex flex-col gap-6 overflow-y-auto">
+          {/* Menu Content - Added padding bottom to account for sticky CTA */}
+          <div className="flex-1 pt-32 px-8 pb-40 flex flex-col gap-6 overflow-y-auto">
             <Link href="/" onClick={toggleMenu} className="text-2xl font-light text-[#0f172a] tracking-widest uppercase border-b border-slate-100 pb-4" style={{ fontFamily: 'Raleway, sans-serif' }}>Home</Link>
             
             {/* Inventory with Dropdown */}

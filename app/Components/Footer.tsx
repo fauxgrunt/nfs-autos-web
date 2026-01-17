@@ -26,7 +26,7 @@ const Footer = () => {
             
             {/* Tagline */}
             <p className="text-sm text-gray-400 leading-relaxed" style={{ fontFamily: 'Raleway, sans-serif' }}>
-              Handpicked by us, according to your taste. Premium JDM imports from Japan auctions. Crown, Mark X, Lexus specialists.
+              Handpicked by us, according to your taste. Premium JDM imports from Japan auctions.
             </p>
 
             {/* Social Links */}
