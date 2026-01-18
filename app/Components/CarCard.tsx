@@ -1,7 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';import { Gauge, Cog, Car } from 'lucide-react';
+import Link from 'next/link';
+import { Gauge, Cog, Car } from 'lucide-react';
+
 interface CarProps {
   id: string;
   title: string;
@@ -28,8 +30,8 @@ export default function CarCard({
   return (
     <Link href={`/inventory/${id}`} className="group relative flex flex-col gap-3 cursor-pointer bg-white rounded-lg border border-gray-100 md:border-0 shadow-sm md:shadow-none hover:shadow-md md:hover:shadow-none transition-all duration-200 active:scale-[0.97]">
       
-      {/* 1. Image - The Hero */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg md:rounded-lg bg-gray-100">
+      {/* 1. Image - Fixed Aspect Ratio */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg bg-gray-100">
         <Image
           src={image}
           alt={title}
@@ -46,42 +48,42 @@ export default function CarCard({
           </div>
         )}
 
-        {/* Premium Weekly Finance Badge - Monochrome Luxury */}
+        {/* Premium Weekly Finance Badge - Top Right with Glassmorphism */}
         {weeklyPrice && !isSold && (
-          <div className="absolute bottom-1.5 right-1.5 md:bottom-2 md:right-2 px-2 py-1 md:px-2.5 md:py-1.5 bg-black/80 backdrop-blur-sm border border-black/20 rounded-md shadow-lg">
-            <p className="text-[7px] md:text-[8px] font-medium uppercase tracking-wider text-white/60 mb-0.5">From</p>
-            <p className="text-sm md:text-base font-bold text-white">
-              ${weeklyPrice}<span className="text-[9px] md:text-xs font-medium text-white/90">/wk</span>
+          <div className="absolute top-2 right-2 px-2.5 py-1.5 md:px-3 md:py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg">
+            <p className="text-[7px] md:text-[8px] font-medium uppercase tracking-wider text-white/90 mb-0.5">From</p>
+            <p className="text-xs md:text-sm font-bold text-white">
+              ${weeklyPrice}<span className="text-[8px] md:text-[10px] font-medium text-white/90">/wk</span>
             </p>
           </div>
         )}
       </div>
 
       {/* 2. The Clean Details */}
-      <div className="flex flex-col gap-1 px-1">
-        {/* Title: Bold Condensed - Premium Typography */}
-        <h3 className="font-condensed text-base font-bold text-gray-900 uppercase tracking-tight truncate">
+      <div className="flex flex-col gap-1.5 px-1">
+        {/* Title: Bold Condensed with line-clamp-2 and min-height */}
+        <h3 className="font-condensed text-sm md:text-base font-bold text-gray-900 uppercase tracking-tight line-clamp-2 min-h-[3rem]">
           {title}
         </h3>
 
-        {/* Price: The Hero (No 'Cash Price' label) */}
-        <p className="text-base font-bold text-gray-900">
+        {/* Price: The Hero */}
+        <p className="text-base md:text-lg font-bold text-gray-900">
           ${price.toLocaleString()}
         </p>
 
-        {/* Icon Row - Premium metadata with icons */}
-        <div className="flex items-center gap-3 text-slate-500 text-sm">
-          <div className="flex items-center gap-1.5">
-            <Gauge className="w-4 h-4" />
-            <span>{mileage}</span>
+        {/* Icon Row - Premium metadata with flex-shrink-0 icons */}
+        <div className="flex items-center gap-2 md:gap-3 text-slate-500 text-xs md:text-sm flex-wrap">
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <Gauge className="w-3.5 h-3.5 md:w-4 md:h-4 flex-shrink-0" />
+            <span className="whitespace-nowrap">{mileage}</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Cog className="w-4 h-4" />
-            <span>{transmission}</span>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <Cog className="w-3.5 h-3.5 md:w-4 md:h-4 flex-shrink-0" />
+            <span className="whitespace-nowrap">{transmission}</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Car className="w-4 h-4" />
-            <span>{bodyType}</span>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <Car className="w-3.5 h-3.5 md:w-4 md:h-4 flex-shrink-0" />
+            <span className="whitespace-nowrap">{bodyType}</span>
           </div>
         </div>
       </div>

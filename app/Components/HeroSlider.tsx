@@ -87,7 +87,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-[85vh] overflow-hidden bg-black">
+    <div className="relative w-full h-screen flex flex-col overflow-hidden bg-black">
       
       <Swiper
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
@@ -119,10 +119,10 @@ const HeroSection = () => {
         className="w-full h-full"
       >
         {slides.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <div className="relative w-full h-full">
-              {/* Background Image with Enhanced Gradient Overlay */}
-              <div className="absolute inset-0 pointer-events-none">
+          <SwiperSlide key={slide.id} className="h-full">
+            <div className="relative w-full h-full flex flex-col">
+              {/* Background Image with Enhanced Gradient Overlay - Absolute Layer */}
+              <div className="absolute inset-0 z-0">
                 <img
                   src={slide.image}
                   alt={slide.title}
@@ -133,89 +133,89 @@ const HeroSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60" />
               </div>
 
-              {/* Content Container */}
-              <div className="relative h-full flex flex-col justify-center w-full z-30">
-                <div className={`container mx-auto px-4 md:px-6 lg:px-12 max-w-7xl w-full ${
+              {/* Hero Text Content - Flexible Middle Section */}
+              <div className="relative flex-1 flex flex-col justify-center z-10 px-4 md:px-6 lg:px-12 py-8">
+                <div className={`container mx-auto max-w-7xl w-full ${
                   slide.alignment === 'center' ? 'flex justify-center' : 
                   slide.alignment === 'right' ? 'flex justify-end' : ''
                 }`}>
                   
                   {/* Main Content Card */}
-                  <div className={`max-w-4xl space-y-6 w-full relative z-10 ${
+                  <div className={`max-w-4xl space-y-4 md:space-y-6 w-full ${
                     slide.alignment === 'center' ? 'text-center' : 
                     slide.alignment === 'right' ? 'text-right' : 'text-left'
                   }`}>
                     
-                    {/* Title */}
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black text-white tracking-tighter leading-[0.95] break-words hyphens-auto" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif', wordBreak: 'break-word' }}>
+                    {/* Title with Responsive Clamp */}
+                    <h1 className="font-black text-white tracking-tighter leading-[0.95] break-words" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif', fontSize: 'clamp(2rem, 8vw, 6rem)' }}>
                       {slide.title}
                     </h1>
 
                     {/* Subtitle */}
-                    <p className="text-base md:text-2xl lg:text-3xl text-white/90 font-light tracking-wide break-words" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                    <p className="text-sm md:text-2xl lg:text-3xl text-white/90 font-light tracking-wide break-words" style={{ fontFamily: 'Raleway, sans-serif' }}>
                       {slide.subtitle}
                     </p>
 
                     {/* CTAs */}
-                    <div className={`flex flex-wrap gap-3 md:gap-4 pt-4 pb-6 md:pb-0 relative z-30 ${
+                    <div className={`flex flex-wrap gap-3 md:gap-4 pt-2 md:pt-4 ${
                       slide.alignment === 'center' ? 'justify-center' : 
                       slide.alignment === 'right' ? 'justify-end' : 'justify-start'
                     }`}>
                       <Link 
                         href={slide.primaryCtaLink}
-                        className="group relative px-6 py-3 md:px-8 md:py-4 bg-gradient-to-b from-[#334155] to-[#0f172a] rounded-full border-t border-slate-500/30 shadow-2xl shadow-slate-900/40 hover:shadow-2xl hover:shadow-slate-900/70 hover:scale-[1.08] hover:-translate-y-1 active:scale-95 transition-all duration-300 overflow-hidden flex items-center justify-center gap-2 md:gap-3 cursor-pointer touch-manipulation"
+                        className="group relative px-5 py-2.5 md:px-8 md:py-4 bg-gradient-to-b from-[#334155] to-[#0f172a] rounded-full border-t border-slate-500/30 shadow-2xl shadow-slate-900/40 hover:shadow-2xl hover:shadow-slate-900/70 hover:scale-[1.08] hover:-translate-y-1 active:scale-95 transition-all duration-300 overflow-hidden flex items-center justify-center gap-2 md:gap-3 cursor-pointer touch-manipulation"
                       >
-                        <span className="relative z-10 text-[0.65rem] md:text-sm font-medium text-white uppercase tracking-[0.2em] md:tracking-[0.25em]" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
+                        <span className="relative z-10 text-[0.6rem] md:text-sm font-medium text-white uppercase tracking-[0.2em] md:tracking-[0.25em]" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
                           {slide.primaryCtaText}
                         </span>
-                        <ArrowRight className="relative z-10 w-3.5 h-3.5 md:w-4 md:h-4 text-white group-hover:translate-x-1 transition-transform duration-300" />
+                        <ArrowRight className="relative z-10 w-3 h-3 md:w-4 md:h-4 text-white group-hover:translate-x-1 transition-transform duration-300" />
                         <div className="absolute inset-0 bg-gradient-to-t from-blue-500/0 to-blue-400/0 group-hover:from-blue-500/20 group-hover:to-blue-400/10 transition-all duration-500 rounded-full"></div>
                       </Link>
 
                       <Link 
                         href={slide.secondaryCtaLink}
-                        className="group px-6 py-3 md:px-8 md:py-4 backdrop-blur-md bg-white/10 border-2 border-white/10 hover:bg-white/20 hover:border-white/20 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 cursor-pointer touch-manipulation"
+                        className="group px-5 py-2.5 md:px-8 md:py-4 backdrop-blur-md bg-white/10 border-2 border-white/10 hover:bg-white/20 hover:border-white/20 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 cursor-pointer touch-manipulation"
                       >
-                        <span className="text-[0.65rem] md:text-sm font-medium text-white uppercase tracking-[0.2em] md:tracking-[0.25em]" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
+                        <span className="text-[0.6rem] md:text-sm font-medium text-white uppercase tracking-[0.2em] md:tracking-[0.25em]" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
                           {slide.secondaryCtaText}
                         </span>
-                        <Play className="w-3.5 h-3.5 md:w-4 md:h-4 text-white fill-white" />
+                        <Play className="w-3 h-3 md:w-4 md:h-4 text-white fill-white" />
                       </Link>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* STATS BAR */}
-                <div className="absolute bottom-0 left-0 right-0 backdrop-blur-xl bg-black/40 border-t border-white/10 pointer-events-auto">
-                  <div className="overflow-x-auto scrollbar-hide w-full">
-                    <div className="px-4 md:px-6 lg:px-12 py-4 md:py-6 mx-auto max-w-7xl">
-                      <div className="flex items-center justify-start gap-6 md:gap-8 lg:gap-12 min-w-max">
-                        <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
-                        <div className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>50+</div>
-                        <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
+              {/* STATS BAR - Fixed at Bottom */}
+              <div className="relative z-20 w-full backdrop-blur-xl bg-black/40 border-t border-white/10 flex-shrink-0">
+                <div className="overflow-x-auto scrollbar-hide w-full">
+                  <div className="px-4 md:px-6 lg:px-12 py-3 md:py-6 mx-auto max-w-7xl">
+                    <div className="flex items-center justify-start gap-4 md:gap-8 lg:gap-12 min-w-max">
+                      <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
+                        <div className="text-2xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>50+</div>
+                        <div className="text-[8px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
                           PREMIUM<br/>CARS
                         </div>
                       </div>
                       
-                      <div className="w-px h-8 md:h-12 bg-white/10 flex-shrink-0" />
+                      <div className="w-px h-6 md:h-12 bg-white/10 flex-shrink-0" />
                       
                       <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
-                        <div className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
-                        <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                        <div className="text-2xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
+                        <div className="text-[8px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
                           VERIFIED<br/>IMPORTS
                         </div>
                       </div>
                       
-                      <div className="w-px h-8 md:h-12 bg-white/10 flex-shrink-0" />
+                      <div className="w-px h-6 md:h-12 bg-white/10 flex-shrink-0" />
                       
                       <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
-                        <div className="text-3xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>5★</div>
-                        <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                        <div className="text-2xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>5★</div>
+                        <div className="text-[8px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
                           CUSTOMER<br/>RATED
                         </div>
                       </div>
                     </div>
-                  </div>
                   </div>
                 </div>
               </div>
@@ -244,10 +244,10 @@ const HeroSection = () => {
       </button>
 
       {/* Custom Pagination Dots */}
-      <div className="hero-pagination absolute bottom-24 md:bottom-28 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20 pointer-events-auto"></div>
+      <div className="hero-pagination absolute bottom-20 md:bottom-28 left-1/2 -translate-x-1/2 flex items-center gap-3 z-30 pointer-events-auto"></div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-24 md:bottom-28 right-8 hidden lg:flex flex-col items-center gap-2 animate-bounce z-20">
+      <div className="absolute bottom-20 md:bottom-28 right-8 hidden lg:flex flex-col items-center gap-2 animate-bounce z-30">
         <span className="text-xs text-white/60 uppercase tracking-widest rotate-90 origin-center mb-8">
           Scroll
         </span>

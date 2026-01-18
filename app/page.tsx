@@ -1,8 +1,13 @@
+'use client';
 import HeroSlider from "./Components/HeroSlider"; 
 import AboutHome from "./Components/AboutHome";
 import InventoryCarousel from "./Components/InventoryCarousel";
 import Link from 'next/link';
-import { ArrowRight, Star, MapPin, Calendar, ChevronRight, TrendingUp, Award, Shield } from 'lucide-react';
+import { ArrowRight, Star, MapPin, Calendar, ChevronRight, TrendingUp, Award, Shield, ChevronLeft } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 export default function Home() {
 
@@ -162,36 +167,80 @@ export default function Home() {
                   <p className="text-slate-600" style={{ fontFamily: 'Raleway, sans-serif' }}>Dreams fulfilled across Australia</p>
                 </div>
 
-                {/* Horizontal Carousel on Mobile, Grid on Desktop */}
-                <div className="flex overflow-x-auto md:grid md:grid-cols-2 gap-4 mb-6 snap-x snap-mandatory scrollbar-hide md:px-0">
-                {soldCars.map((car, idx) => (
-                  <Link href="/recently-sold" key={idx} className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer flex-shrink-0 w-[90vw] md:w-auto snap-center">
-                    <div className="aspect-square relative">
-                      <img 
-                        src={car.image} 
-                        alt={car.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-100 group-hover:opacity-95 transition-opacity">
-                        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                          <div className="font-bold text-sm mb-1">{car.name}</div>
-                          <div className="flex items-center justify-between text-xs">
-                            <span className="flex items-center gap-1">
-                              <MapPin className="w-3 h-3" />
-                              {car.location}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Calendar className="w-3 h-3" />
-                              {car.date}
-                            </span>
+                {/* Swiper Carousel with Floating Navigation */}
+                <div className="relative group/carousel mb-6">
+                  <Swiper
+                    modules={[Navigation]}
+                    navigation={{
+                      nextEl: '.sold-button-next',
+                      prevEl: '.sold-button-prev',
+                    }}
+                    centeredSlides={false}
+                    grabCursor={true}
+                    speed={800}
+                    watchSlidesProgress={true}
+                    breakpoints={{
+                      0: {
+                        slidesPerView: 1.2,
+                        spaceBetween: 16,
+                      },
+                      768: {
+                        slidesPerView: 2.2,
+                        spaceBetween: 24,
+                      },
+                      1024: {
+                        slidesPerView: 3.5,
+                        spaceBetween: 32,
+                      },
+                    }}
+                    className="!pb-2"
+                  >
+                    {soldCars.map((car, idx) => (
+                      <SwiperSlide key={idx}>
+                        <Link href="/recently-sold" className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl hover:shadow-red-900/20 transition-all duration-500 cursor-pointer block">
+                          <div className="aspect-square relative">
+                            <img 
+                              src={car.image} 
+                              alt={car.name}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            />
+                            {/* Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-100 group-hover:opacity-95 transition-opacity">
+                              <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                                <div className="font-bold text-sm mb-1">{car.name}</div>
+                                <div className="flex items-center justify-between text-xs">
+                                  <span className="flex items-center gap-1">
+                                    <MapPin className="w-3 h-3" />
+                                    {car.location}
+                                  </span>
+                                  <span className="flex items-center gap-1">
+                                    <Calendar className="w-3 h-3" />
+                                    {car.date}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                        </Link>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+
+                  {/* Floating Navigation Arrows */}
+                  <button
+                    className="sold-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300 bg-white/10 backdrop-blur-md p-4 rounded-full hover:bg-white/20 cursor-pointer"
+                    aria-label="Previous slide"
+                  >
+                    <ChevronLeft className="w-6 h-6 text-white" strokeWidth={2.5} />
+                  </button>
+
+                  <button
+                    className="sold-button-next absolute right-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300 bg-white/10 backdrop-blur-md p-4 rounded-full hover:bg-white/20 cursor-pointer"
+                    aria-label="Next slide"
+                  >
+                    <ChevronRight className="w-6 h-6 text-white" strokeWidth={2.5} />
+                  </button>
+                </div>
 
               {/* Stats */}
               <div className="bg-white rounded-lg p-4 md:p-6 shadow-md">

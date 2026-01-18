@@ -29,7 +29,7 @@ export default function SoldCarCard({
     <div className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 hover:border-gray-300 active:scale-[0.97] cursor-pointer">
       
       {/* Image Container - Desaturated */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+      <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
         <Image
           src={image}
           alt={title}
@@ -44,31 +44,31 @@ export default function SoldCarCard({
       </div>
 
       {/* Content */}
-      <div className="p-5">
+      <div className="p-4 md:p-5">
         
-        {/* Title - Bold Navy matching inventory */}
-        <h3 className="font-condensed text-lg font-bold text-[#0f172a] mb-3 uppercase tracking-tight line-clamp-1 group-hover:text-gray-700 transition-colors">
+        {/* Title - Bold Navy with line-clamp-2 and min-height */}
+        <h3 className="font-condensed text-sm md:text-lg font-bold text-[#0f172a] mb-3 uppercase tracking-tight line-clamp-2 min-h-[3rem] group-hover:text-gray-700 transition-colors">
           {title}
         </h3>
 
-        {/* Icon Row - Matching inventory metadata */}
-        <div className="flex items-center gap-3 text-gray-500 text-xs mb-4 pb-4 border-b border-gray-100">
-          <div className="flex items-center gap-1.5">
-            <Gauge className="w-4 h-4" />
-            <span>{mileage}</span>
+        {/* Icon Row - Matching inventory metadata with flex-shrink-0 */}
+        <div className="flex items-center gap-2 md:gap-3 text-gray-500 text-xs md:text-sm mb-4 pb-4 border-b border-gray-100 flex-wrap">
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <Gauge className="w-3.5 h-3.5 md:w-4 md:h-4 flex-shrink-0" />
+            <span className="whitespace-nowrap">{mileage}</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Cog className="w-4 h-4" />
-            <span>{transmission}</span>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <Cog className="w-3.5 h-3.5 md:w-4 md:h-4 flex-shrink-0" />
+            <span className="whitespace-nowrap">{transmission}</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Car className="w-4 h-4" />
-            <span>{bodyType}</span>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <Car className="w-3.5 h-3.5 md:w-4 md:h-4 flex-shrink-0" />
+            <span className="whitespace-nowrap">{bodyType}</span>
           </div>
         </div>
 
         {/* Sold Info Line - Clean single line */}
-        <div className="text-sm text-slate-500">
+        <div className="text-xs md:text-sm text-slate-500">
           <span>Sold to {soldTo} • {soldDate}</span>
         </div>
       </div>

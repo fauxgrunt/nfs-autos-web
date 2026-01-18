@@ -656,7 +656,7 @@ export default function InventoryPage() {
 
               {/* PRO GRID */}
               <div className="flex-1 p-6 lg:p-8">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-6 md:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {filteredCars.map((car) => (
                     <CarCard
                       key={car.id}
