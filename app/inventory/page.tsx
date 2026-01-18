@@ -667,7 +667,6 @@ export default function InventoryPage() {
                       mileage={car.mileage}
                       transmission={car.transmission}
                       bodyType={car.bodyType}
-                      weeklyPrice={car.weeklyPrice}
                     />
                   ))}
                 </div>

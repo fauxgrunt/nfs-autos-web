@@ -71,17 +71,16 @@ export default function AboutPage() {
                 style={{ fontFamily: 'Raleway, sans-serif' }}
               >
                 <p className="leading-relaxed">
-                  NFS Autos exists to bring you the finest Japanese sedans without the hassle. 
-                  We specialize in premium models like the <strong className="text-slate-900 font-semibold">Toyota Crown</strong>, <strong className="text-slate-900 font-semibold">Mark X</strong>, and <strong className="text-slate-900 font-semibold">Lexus IS/GS series</strong> 
-                  — vehicles that combine refinement, reliability, and timeless design.
+                  We don't just sell what's on the lot. We act as your eyes on the ground in Japan, 
+                  navigating auctions to find the exact make, model, and grade you require. Every import 
+                  is a mission to find a vehicle worthy of our name.
                 </p>
                 <p className="leading-relaxed">
-                  We&apos;re not a volume dealer. We don&apos;t chase numbers. Instead, we carefully source 
-                  each car from trusted Japanese auctions, inspect it thoroughly, and import it directly 
-                  to ensure you receive a vehicle worthy of our name.
+                  NFS Autos exists to bridge the gap between global auctions and your driveway. 
+                  While we have a passion for premium Japanese sedans, our true expertise lies in <strong className="text-slate-900 font-semibold">Custom Import Brokerage</strong>. We specialize in sourcing any vehicle that meets the unique tastes and high standards of our discerning clients.
                 </p>
                 <p className="text-slate-900 font-bold text-xl leading-relaxed mt-8">
-                  Quality over quantity. Transparency over sales tactics.
+                  Your Vision. Our Sourcing. Total Transparency.
                 </p>
               </div>
             </div>

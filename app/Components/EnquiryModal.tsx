@@ -130,7 +130,7 @@ export default function EnquiryModal() {
             {/* Header */}
             <div className="px-8 pt-8 pb-6 border-b border-gray-100">
               <h2 className="text-2xl font-bold text-[#0f172a] uppercase tracking-tight" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
-                {defaultService === 'brokerage' ? 'Request a Quote' : (carName ? `Book Viewing: ${carName}` : 'Book Appointment')}
+                {defaultService === 'brokerage' ? 'Request a Quote' : (carName ? `Inquire About: ${carName}` : 'Vehicle Inquiry')}
               </h2>
               <p className="text-sm text-gray-600 mt-2" style={{ fontFamily: 'Raleway, sans-serif' }}>
                 Complete the form below and our team will reach out shortly.

@@ -6,7 +6,6 @@ export interface Vehicle {
   title: string; // Full display title
   year: number;
   price: number;
-  weeklyPrice: number;
   mileage: string;
   odometer: number; // Numeric value for specs
   transmission: string;
@@ -29,7 +28,6 @@ export const INVENTORY_DATA: Vehicle[] = [
     title: '2015 Toyota Crown Athlete',
     year: 2015,
     price: 18999,
-    weeklyPrice: 91,
     mileage: '65,000',
     odometer: 65000,
     transmission: 'Auto',
@@ -53,7 +51,6 @@ export const INVENTORY_DATA: Vehicle[] = [
     title: '2013 Toyota Mark X 250G',
     year: 2013,
     price: 15500,
-    weeklyPrice: 74,
     mileage: '72,000',
     odometer: 72000,
     transmission: 'Auto',
@@ -77,7 +74,6 @@ export const INVENTORY_DATA: Vehicle[] = [
     title: '2016 Lexus IS250 F-Sport',
     year: 2016,
     price: 22900,
-    weeklyPrice: 110,
     mileage: '58,000',
     odometer: 58000,
     transmission: 'Auto',

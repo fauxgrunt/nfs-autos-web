@@ -24,7 +24,7 @@ const HeroSection = () => {
       image: '/crown-royal.jpg',
       subtitle: 'Premium Japanese Sedans from $18,999',
       title: 'ROYAL AUTHORITY',
-      primaryCtaText: 'RESERVE NOW',
+      primaryCtaText: 'VIEW DETAILS',
       primaryCtaLink: '/inventory/toyota-crown-athlete-2015',
       secondaryCtaText: 'VIEW INVENTORY',
       secondaryCtaLink: '/inventory',
@@ -36,10 +36,10 @@ const HeroSection = () => {
       image: '/lexus-rx.jpg',
       subtitle: 'IS250 • GS350 • Premium Imports',
       title: 'UNCOMPROMISED LUXURY',
-      primaryCtaText: 'EXPLORE NOW',
-      primaryCtaLink: '/import-brokerage',
-      secondaryCtaText: 'VIEW INVENTORY',
-      secondaryCtaLink: '/inventory',
+      primaryCtaText: 'VIEW INVENTORY',
+      primaryCtaLink: '/inventory',
+      secondaryCtaText: 'LEARN MORE',
+      secondaryCtaLink: '/import-brokerage',
       alignment: 'left'
     },
     // Slide 3: Mark X - Right Aligned
@@ -48,7 +48,7 @@ const HeroSection = () => {
       image: '/mark-x.jpg',
       subtitle: 'RWD Performance Sedans from $15,500',
       title: 'STREET LEGEND',
-      primaryCtaText: 'BOOK INSPECTION',
+      primaryCtaText: 'VIEW DETAILS',
       primaryCtaLink: '/inventory/toyota-mark-x-250g-2013',
       secondaryCtaText: 'VIEW INVENTORY',
       secondaryCtaLink: '/inventory',
@@ -188,32 +188,37 @@ const HeroSection = () => {
 
               {/* STATS BAR - Fixed at Bottom */}
               <div className="relative z-20 w-full backdrop-blur-xl bg-black/40 border-t border-white/10 flex-shrink-0">
-                <div className="overflow-x-auto scrollbar-hide w-full">
-                  <div className="px-4 md:px-6 lg:px-12 py-3 md:py-6 mx-auto max-w-7xl">
-                    <div className="flex items-center justify-start gap-4 md:gap-8 lg:gap-12 min-w-max">
-                      <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
-                        <div className="text-2xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>50+</div>
-                        <div className="text-[8px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                          PREMIUM<br/>CARS
-                        </div>
+                <div className="px-4 md:px-6 lg:px-12 py-3 md:py-6 mx-auto max-w-7xl">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    {/* Stat 1: Curated Units */}
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <div className="text-2xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>4</div>
+                      <div className="text-[8px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                        CURATED<br/>UNITS
                       </div>
-                      
-                      <div className="w-px h-6 md:h-12 bg-white/10 flex-shrink-0" />
-                      
-                      <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
-                        <div className="text-2xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
-                        <div className="text-[8px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                          VERIFIED<br/>IMPORTS
-                        </div>
+                    </div>
+                    
+                    {/* Stat 2: Satisfaction */}
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <div className="text-2xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
+                      <div className="text-[8px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                        SATISFACTION
                       </div>
-                      
-                      <div className="w-px h-6 md:h-12 bg-white/10 flex-shrink-0" />
-                      
-                      <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
-                        <div className="text-2xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>5★</div>
-                        <div className="text-[8px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                          CUSTOMER<br/>RATED
-                        </div>
+                    </div>
+                    
+                    {/* Stat 3: Grade Handpicked */}
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <div className="text-xl md:text-3xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>4.0+</div>
+                      <div className="text-[8px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                        GRADE<br/>HANDPICKED
+                      </div>
+                    </div>
+                    
+                    {/* Stat 4: Rust-Free & Pristine */}
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <div className="text-2xl md:text-4xl font-black text-white" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>✓</div>
+                      <div className="text-[8px] md:text-xs text-white/70 uppercase tracking-wide leading-tight whitespace-nowrap" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                        RUST-FREE &<br/>PRISTINE
                       </div>
                     </div>
                   </div>

@@ -12,7 +12,6 @@ interface CarProps {
   mileage: string;
   transmission: string;
   bodyType: string;
-  weeklyPrice?: number;
   isSold?: boolean;
 }
 
@@ -24,7 +23,6 @@ export default function CarCard({
   mileage, 
   transmission, 
   bodyType, 
-  weeklyPrice,
   isSold = false 
 }: CarProps) {
   return (
@@ -45,16 +43,6 @@ export default function CarCard({
              <span className="bg-black text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1">
                Sold
              </span>
-          </div>
-        )}
-
-        {/* Premium Weekly Finance Badge - Top Right with Glassmorphism */}
-        {weeklyPrice && !isSold && (
-          <div className="absolute top-2 right-2 px-2.5 py-1.5 md:px-3 md:py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg">
-            <p className="text-[7px] md:text-[8px] font-medium uppercase tracking-wider text-white/90 mb-0.5">From</p>
-            <p className="text-xs md:text-sm font-bold text-white">
-              ${weeklyPrice}<span className="text-[8px] md:text-[10px] font-medium text-white/90">/wk</span>
-            </p>
           </div>
         )}
       </div>

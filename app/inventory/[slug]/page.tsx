@@ -111,10 +111,6 @@ export default function VehicleDetailPage() {
                   <p className="text-sm text-gray-500">Location</p>
                   <p className="font-semibold text-gray-900">{vehicle.location}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Weekly Price</p>
-                  <p className="font-semibold text-gray-900">${vehicle.weeklyPrice}/week</p>
-                </div>
               </div>
             </div>
           </div>
@@ -139,9 +135,6 @@ export default function VehicleDetailPage() {
                 <p className="text-3xl font-semibold text-gray-900 mb-2">
                   ${vehicle.price.toLocaleString()}
                 </p>
-                <p className="text-sm text-gray-500">
-                  From ${vehicle.weeklyPrice}/week
-                </p>
               </div>
 
               {/* Status Badge */}
@@ -161,9 +154,9 @@ export default function VehicleDetailPage() {
                   className="w-full bg-black hover:bg-gray-800 text-white font-bold py-4 px-6 transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-wide text-sm"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                   </svg>
-                  Book a Viewing
+                  Inquire Now
                 </button>
                 
                 <button className="w-full bg-white hover:bg-gray-50 text-black font-semibold py-4 px-6 border border-black transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-wide text-sm">
@@ -224,13 +217,9 @@ export default function VehicleDetailPage() {
                     <span className="text-sm text-gray-600">Fuel Type</span>
                     <span className="font-semibold text-gray-900">{vehicle.fuel}</span>
                   </div>
-                  <div className="flex justify-between py-3 border-b border-gray-200">
+                  <div className="flex justify-between py-3">
                     <span className="text-sm text-gray-600">Location</span>
                     <span className="font-semibold text-gray-900">{vehicle.location}</span>
-                  </div>
-                  <div className="flex justify-between py-3">
-                    <span className="text-sm text-gray-600">Weekly Price</span>
-                    <span className="font-semibold text-gray-900">${vehicle.weeklyPrice}/week</span>
                   </div>
                 </div>
               </div>
@@ -244,11 +233,14 @@ export default function VehicleDetailPage() {
 
       {/* Mobile Sticky CTA Footer */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-50">
-        <button className="w-full bg-black hover:bg-gray-800 text-white font-bold py-4 px-6 transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-wide text-sm">
+        <button 
+          onClick={() => openModal(`${vehicle.year} ${vehicle.make} ${vehicle.model}`)}
+          className="w-full bg-black hover:bg-gray-800 text-white font-bold py-4 px-6 transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-wide text-sm"
+        >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
           </svg>
-          Book a Viewing
+          Inquire Now
         </button>
       </div>
 
