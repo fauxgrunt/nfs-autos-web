@@ -338,7 +338,7 @@ export default function ImportBrokeragePage() {
         </div>
       </section>
 
-      {/* Section 3: Pricing Models */}
+      {/* Section 3: Transparent Sourcing */}
       <section className="bg-slate-50 py-20 lg:py-28 border-t border-slate-200">
         <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-6xl">
           
@@ -348,253 +348,100 @@ export default function ImportBrokeragePage() {
               className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight uppercase mb-4"
               style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
             >
-              SERVICE TIERS
+              TRANSPARENT SOURCING
             </h2>
             <p 
               className="text-xl text-slate-500 max-w-2xl mx-auto"
               style={{ fontFamily: 'Raleway, sans-serif' }}
             >
-              Choose the package that fits your needs
+              One fixed service fee. Zero hidden markups.
             </p>
           </div>
 
-          {/* Mobile Swiper - Hidden on Desktop */}
-          <div className="md:hidden">
-            <Swiper
-              modules={[Pagination]}
-              spaceBetween={16}
-              slidesPerView={1.15}
-              centeredSlides={false}
-              pagination={{
-                clickable: true,
-                bulletClass: 'swiper-pagination-bullet !bg-slate-400',
-                bulletActiveClass: 'swiper-pagination-bullet-active !bg-slate-900'
-              }}
-              className="!pb-12"
-            >
-              {/* Tier 1: Standard Brokerage */}
-              <SwiperSlide>
-                <div className="bg-white rounded-xl p-8 border border-slate-200 h-[620px] flex flex-col">
-                  <div className="text-center mb-6">
-                    <h3 
-                      className="text-2xl font-bold text-slate-900 uppercase mb-2 tracking-tight"
-                      style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                    >
-                      STANDARD BROKERAGE
-                    </h3>
-                    <p 
-                      className="text-slate-500 mb-6"
-                      style={{ fontFamily: 'Raleway, sans-serif' }}
-                    >
-                      Transparent fee structure
-                    </p>
-                    <div 
-                      className="text-4xl font-bold text-slate-900 mb-4"
-                      style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                    >
-                      $$$
-                    </div>
-                  </div>
-                  <ul className="space-y-3 mb-8 flex-1" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                    <li className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                      <span>You pay actual car cost</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                      <span>Flat service fee per import</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                      <span>Full auction sheet access</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                      <span>Shipping coordination</span>
-                    </li>
-                  </ul>
-                  <button
-                    onClick={() => openModal(undefined, 'brokerage')}
-                    className="w-full py-4 border-2 border-[#0f172a] text-[#0f172a] font-bold text-sm uppercase tracking-widest rounded-full hover:bg-[#0f172a] hover:text-white transition-all duration-300 active:scale-95"
-                    style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                  >
-                    Contact for Quote
-                  </button>
-                </div>
-              </SwiperSlide>
-
-              {/* Tier 2: All-Inclusive */}
-              <SwiperSlide>
-                <div className="bg-white rounded-xl p-8 border-2 border-[#0f172a] relative overflow-hidden h-[620px] flex flex-col">
-                  {/* Popular Badge */}
-                  <div className="absolute top-4 right-4 z-10">
-                    <span 
-                      className="inline-block px-3 py-1 bg-[#0f172a] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg"
-                      style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                    >
-                      Popular
-                    </span>
-                  </div>
-                  
-                  <div className="text-center mb-6">
-                    <h3 
-                      className="text-2xl font-bold text-slate-900 uppercase mb-2 tracking-tight"
-                      style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                    >
-                      ALL-INCLUSIVE
-                    </h3>
-                    <p 
-                      className="text-slate-500 mb-6"
-                      style={{ fontFamily: 'Raleway, sans-serif' }}
-                    >
-                      One fixed price, zero stress
-                    </p>
-                    <div 
-                      className="text-4xl font-bold text-slate-900 mb-4"
-                      style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                    >
-                      $$$$$
-                    </div>
-                  </div>
-                  <ul className="space-y-3 mb-8 flex-1" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                    <li className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                      <span>One fixed price delivered to your door</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                      <span>All customs & compliance included</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                      <span>Priority sourcing from premium auctions</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-slate-600">
-                      <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                      <span>Full concierge service & support</span>
-                    </li>
-                  </ul>
-                  <button
-                    onClick={() => openModal(undefined, 'brokerage')}
-                    className="w-full py-4 bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white font-bold text-sm uppercase tracking-widest rounded-full hover:shadow-xl transition-all duration-300 active:scale-95"
-                    style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                  >
-                    Contact for Quote
-                  </button>
-                </div>
-              </SwiperSlide>
-            </Swiper>
-          </div>
-
-          {/* Desktop Grid - Hidden on Mobile */}
-          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            
-            {/* Tier 1: Standard Brokerage */}
-            <div className="bg-white rounded-xl p-10 border border-slate-200 hover:border-slate-300 transition-all duration-300 flex flex-col h-[580px]">
-              <div className="text-center mb-6">
-                <h3 
-                  className="text-2xl font-bold text-slate-900 uppercase mb-2 tracking-tight"
-                  style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                >
-                  STANDARD BROKERAGE
-                </h3>
-                <p 
-                  className="text-slate-500 mb-6"
-                  style={{ fontFamily: 'Raleway, sans-serif' }}
-                >
-                  Transparent fee structure
-                </p>
-                <div 
-                  className="text-4xl font-bold text-slate-900 mb-4"
-                  style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                >
-                  $$$
-                </div>
-              </div>
-              <ul className="space-y-3 mb-8 flex-1" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                <li className="flex items-start gap-3 text-slate-600">
-                  <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                  <span>You pay actual car cost</span>
-                </li>
-                <li className="flex items-start gap-3 text-slate-600">
-                  <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                  <span>Flat service fee per import</span>
-                </li>
-                <li className="flex items-start gap-3 text-slate-600">
-                  <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                  <span>Full auction sheet access</span>
-                </li>
-                <li className="flex items-start gap-3 text-slate-600">
-                  <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                  <span>Shipping coordination</span>
-                </li>
-              </ul>
-              <button
-                onClick={() => openModal(undefined, 'brokerage')}
-                className="w-full py-4 border-2 border-[#0f172a] text-[#0f172a] font-bold text-sm uppercase tracking-widest rounded-full hover:bg-[#0f172a] hover:text-white transition-all duration-300 active:scale-95"
-                style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-              >
-                Contact for Quote
-              </button>
-            </div>
-
-            {/* Tier 2: All-Inclusive */}
-            <div className="bg-white rounded-xl p-10 border-2 border-[#0f172a] relative overflow-hidden flex flex-col h-[580px]">
-              {/* Popular Badge */}
+          {/* Single Premium Card - Centered */}
+          <div className="max-w-[500px] mx-auto">
+            <div className="bg-white rounded-2xl p-8 md:p-10 border-2 border-[#0f172a] relative overflow-hidden shadow-xl">
+              
+              {/* Authorised Badge */}
               <div className="absolute top-4 right-4 z-10">
-                <span 
-                  className="inline-block px-3 py-1 bg-[#0f172a] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg"
-                  style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                >
-                  Popular
-                </span>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-300 rounded-full shadow-sm">
+                  <Shield className="w-3.5 h-3.5 text-amber-700" />
+                  <span 
+                    className="text-[10px] font-bold text-amber-900 uppercase tracking-wider"
+                    style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
+                  >
+                    Authorised Brokerage
+                  </span>
+                </div>
               </div>
               
-              <div className="text-center mb-6">
+              <div className="text-center mb-8 mt-4">
                 <h3 
-                  className="text-2xl font-bold text-slate-900 uppercase mb-2 tracking-tight"
+                  className="text-3xl font-bold text-slate-900 uppercase mb-3 tracking-tight"
                   style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
                 >
-                  ALL-INCLUSIVE
+                  Premium Import Brokerage
                 </h3>
                 <p 
-                  className="text-slate-500 mb-6"
+                  className="text-slate-500 mb-6 text-sm"
                   style={{ fontFamily: 'Raleway, sans-serif' }}
                 >
-                  One fixed price, zero stress
+                  Transparent flat-fee structure
                 </p>
                 <div 
-                  className="text-4xl font-bold text-slate-900 mb-4"
+                  className="text-5xl font-bold text-slate-900 mb-2"
                   style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
                 >
-                  $$$$$
+                  $$
                 </div>
+                <p 
+                  className="text-xs text-slate-500"
+                  style={{ fontFamily: 'Raleway, sans-serif' }}
+                >
+                  Flat service fee per import
+                </p>
               </div>
-              <ul className="space-y-3 mb-8 flex-1" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                <li className="flex items-start gap-3 text-slate-600">
-                  <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                  <span>One fixed price delivered to your door</span>
+
+              {/* Features List */}
+              <ul className="space-y-4 mb-8" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                <li className="flex items-start gap-3 text-slate-700">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="font-medium">One fixed service fee (No hidden markups)</span>
                 </li>
-                <li className="flex items-start gap-3 text-slate-600">
-                  <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                  <span>All customs & compliance included</span>
+                <li className="flex items-start gap-3 text-slate-700">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="font-medium">Full auction sheet & translation access</span>
                 </li>
-                <li className="flex items-start gap-3 text-slate-600">
-                  <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                  <span>Priority sourcing from premium auctions</span>
+                <li className="flex items-start gap-3 text-slate-700">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="font-medium">360° physical inspection in Japan</span>
                 </li>
-                <li className="flex items-start gap-3 text-slate-600">
-                  <CheckCircle className="w-5 h-5 text-slate-900 flex-shrink-0 mt-0.5" />
-                  <span>Full concierge service & support</span>
+                <li className="flex items-start gap-3 text-slate-700">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="font-medium">Complete customs, compliance & logistics handling</span>
+                </li>
+                <li className="flex items-start gap-3 text-slate-700">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="font-medium">Delivered to your door in pristine condition</span>
                 </li>
               </ul>
+
+              {/* CTA Button */}
               <button
                 onClick={() => openModal(undefined, 'brokerage')}
-                className="w-full py-4 bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white font-bold text-sm uppercase tracking-widest rounded-full hover:shadow-xl transition-all duration-300 active:scale-95"
+                className="w-full py-4 bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white font-bold text-sm uppercase tracking-widest rounded-full hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 active:scale-95"
                 style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
               >
-                Contact for Quote
+                START YOUR SEARCH
               </button>
+
+              {/* Trust Signal */}
+              <p 
+                className="text-xs text-slate-500 text-center mt-4"
+                style={{ fontFamily: 'Raleway, sans-serif' }}
+              >
+                No obligation consultation. Response within 24 hours.
+              </p>
             </div>
           </div>
         </div>
