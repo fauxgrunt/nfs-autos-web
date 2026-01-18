@@ -4,10 +4,6 @@ import AboutHome from "./Components/AboutHome";
 import InventoryCarousel from "./Components/InventoryCarousel";
 import Link from 'next/link';
 import { ArrowRight, Star, MapPin, Calendar, ChevronRight, TrendingUp, Award, Shield, ChevronLeft } from 'lucide-react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
 
 export default function Home() {
 
@@ -90,197 +86,168 @@ export default function Home() {
           {/* FEATURED INVENTORY SECTION */}
           <InventoryCarousel cars={featuredCars} />
 
-          {/* TWO COLUMN SECTION - TESTIMONIALS & SOLD CARS */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+          {/* TWO COLUMN SECTION - TESTIMONIALS & RECENTLY DELIVERED */}
+          <div className="flex flex-col lg:flex-row items-stretch gap-12 mb-8">
             
             {/* TESTIMONIALS */}
-            <section className="flex flex-col justify-between h-full">
-              <div>
-                <div className="mb-8">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-1 w-12 bg-[#0f172a]"></div>
-                    <span className="text-sm font-bold text-slate-600 uppercase tracking-widest" style={{ fontFamily: 'Raleway, sans-serif' }}>Client Stories</span>
-                  </div>
-                  <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] tracking-tight mb-2" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
-                    What Our Clients Say
-                  </h2>
+            <div className="flex-1">
+              <div className="mb-8">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="h-1 w-12 bg-[#0f172a]"></div>
+                  <span className="text-sm font-bold text-slate-600 uppercase tracking-widest" style={{ fontFamily: 'Raleway, sans-serif' }}>Client Stories</span>
                 </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] tracking-tight mb-2" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
+                  What Our Clients Say
+                </h2>
+              </div>
 
-                <div className="space-y-6">
-                {testimonials.map((testimonial) => (
-                  <div key={testimonial.id} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border-l-4 border-[#0f172a]">
-                    
-                    {/* Stars */}
-                    <div className="flex gap-1 mb-4">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                      ))}
-                    </div>
+              <div className="space-y-6">
+              {testimonials.map((testimonial) => (
+                <div key={testimonial.id} className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border-l-4 border-[#0f172a]">
+                  
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
 
-                    {/* Quote */}
-                    <p className="text-slate-700 leading-relaxed mb-6 text-base" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                      "{testimonial.text}"
-                    </p>
+                  {/* Quote */}
+                  <p className="text-slate-700 leading-relaxed mb-6 text-base" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                    "{testimonial.text}"
+                  </p>
 
-                    {/* Author */}
-                    <div className="flex items-center gap-4">
-                      <img 
-                        src={testimonial.image} 
-                        alt={testimonial.name}
-                        className="w-12 h-12 rounded-full"
-                      />
-                      <div>
-                        <div className="font-bold text-slate-900">{testimonial.name}</div>
-                        <div className="text-sm text-slate-500 flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
-                          {testimonial.role}
-                        </div>
+                  {/* Author */}
+                  <div className="flex items-center gap-4">
+                    <img 
+                      src={testimonial.image} 
+                      alt={testimonial.name}
+                      className="w-12 h-12 rounded-full"
+                    />
+                    <div>
+                      <div className="font-bold text-slate-900">{testimonial.name}</div>
+                      <div className="text-sm text-slate-500 flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        {testimonial.role}
                       </div>
                     </div>
                   </div>
+                </div>
+              ))}
+            </div>
+            </div>
+
+            {/* RECENTLY DELIVERED - HIGH FIDELITY PREMIUM GALLERY */}
+            <div className="flex-1 flex flex-col">
+              <div className="mb-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="h-1 w-12 bg-[#0f172a]"></div>
+                  <span className="text-sm font-bold text-slate-600 uppercase tracking-widest" style={{ fontFamily: 'Raleway, sans-serif' }}>Success Stories</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] tracking-tight mb-2" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
+                  Recently Delivered
+                </h2>
+                <p className="text-slate-600 text-sm" style={{ fontFamily: 'Raleway, sans-serif' }}>Dreams fulfilled across Australia</p>
+              </div>
+
+              {/* Premium Grid Layout - 2x2 Grid - Fills to match testimonials */}
+              <div className="grid grid-cols-2 gap-4 h-full flex-grow">
+                {soldCars.map((car, idx) => (
+                  <Link 
+                    key={idx} 
+                    href="/recently-sold" 
+                    className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 flex flex-col"
+                  >
+                    {/* Image Container */}
+                    <div className="relative flex-1 overflow-hidden">
+                      <img 
+                        src={car.image} 
+                        alt={car.name}
+                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                      />
+                      
+                      {/* Boutique DELIVERED Badge - Top Right */}
+                      <div className="absolute top-2 right-2 px-2.5 py-1.5 bg-black/60 backdrop-blur-sm rounded border border-white/20">
+                        <span className="text-white text-[10px] font-semibold uppercase tracking-widest" style={{ fontFamily: 'Georgia, serif' }}>Delivered</span>
+                      </div>
+                    </div>
+
+                    {/* Premium Details Section */}
+                    <div className="p-3 border-t border-slate-100">
+                      {/* Car Model Name */}
+                      <h3 className="font-bold text-xs text-[#0f172a] mb-2.5 line-clamp-2 leading-tight" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
+                        {car.name}
+                      </h3>
+                      
+                      {/* Metadata - Grade & Location */}
+                      <div className="space-y-1.5 text-[10px]">
+                        <div className="flex items-center gap-1.5 text-slate-700">
+                          <Award className="w-3 h-3 text-[#0f172a] flex-shrink-0" />
+                          <span className="font-medium text-slate-900">{car.date}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-slate-700">
+                          <MapPin className="w-3 h-3 text-[#0f172a] flex-shrink-0" />
+                          <span className="font-medium text-slate-900">{car.location}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>
+          </div>
 
-              <Link 
-                href="/testimonials"
-                className="mt-8 relative w-full px-8 py-4 bg-gradient-to-b from-[#1e293b] to-[#0f172a] text-white text-xs font-medium uppercase tracking-[0.25em] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden antialiased group/btn flex items-center justify-center gap-2"
-                style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-              >
-                <span className="relative z-10">Read All Reviews</span>
-                <ArrowRight className="relative z-10 w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 skew-x-12"></div>
-              </Link>
-            </section>
+          {/* BUTTON ROW - BELOW COLUMNS */}
+          <div className="flex flex-col lg:flex-row gap-12 mb-8">
+            <Link 
+              href="/testimonials"
+              className="w-full relative px-8 py-4 bg-gradient-to-b from-[#1e293b] to-[#0f172a] text-white text-xs font-medium uppercase tracking-[0.25em] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden antialiased group/btn flex items-center justify-center gap-2"
+              style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
+            >
+              <span className="relative z-10">Read All Reviews</span>
+              <ArrowRight className="relative z-10 w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 skew-x-12"></div>
+            </Link>
 
-            {/* PREVIOUSLY SOLD */}
-            <section className="flex flex-col justify-between h-full">
+            <Link 
+              href="/recently-sold"
+              className="w-full relative px-8 py-4 bg-gradient-to-b from-[#1e293b] to-[#0f172a] text-white text-xs font-medium uppercase tracking-[0.25em] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden antialiased group/btn flex items-center justify-center gap-2"
+              style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
+            >
+              <span className="relative z-10">View All Sold Cars</span>
+              <ArrowRight className="relative z-10 w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 skew-x-12"></div>
+            </Link>
+          </div>
+
+          {/* STATS BAR - FULL WIDTH BELOW BUTTON ROW */}
+          <div className="w-full bg-white rounded-lg p-4 shadow-md mt-12">
+            <div className="grid grid-cols-3 gap-4 text-center divide-x divide-slate-200">
               <div>
-                <div className="mb-8">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-1 w-12 bg-[#0f172a]"></div>
-                    <span className="text-sm font-bold text-slate-600 uppercase tracking-widest" style={{ fontFamily: 'Raleway, sans-serif' }}>Success Stories</span>
-                  </div>
-                  <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] tracking-tight mb-2" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
-                    Recently Delivered
-                  </h2>
-                  <p className="text-slate-600" style={{ fontFamily: 'Raleway, sans-serif' }}>Dreams fulfilled across Australia</p>
+                <div className="flex items-center justify-center mb-1">
+                  <TrendingUp className="w-4 h-4 text-[#0f172a]" />
                 </div>
-
-                {/* Swiper Carousel with Floating Navigation */}
-                <div className="relative group/carousel mb-6">
-                  <Swiper
-                    modules={[Navigation]}
-                    navigation={{
-                      nextEl: '.sold-button-next',
-                      prevEl: '.sold-button-prev',
-                    }}
-                    centeredSlides={false}
-                    grabCursor={true}
-                    speed={800}
-                    watchSlidesProgress={true}
-                    breakpoints={{
-                      0: {
-                        slidesPerView: 1.2,
-                        spaceBetween: 16,
-                      },
-                      768: {
-                        slidesPerView: 2.2,
-                        spaceBetween: 24,
-                      },
-                      1024: {
-                        slidesPerView: 3.5,
-                        spaceBetween: 32,
-                      },
-                    }}
-                    className="!pb-2"
-                  >
-                    {soldCars.map((car, idx) => (
-                      <SwiperSlide key={idx}>
-                        <Link href="/recently-sold" className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl hover:shadow-red-900/20 transition-all duration-500 cursor-pointer block">
-                          <div className="aspect-square relative">
-                            <img 
-                              src={car.image} 
-                              alt={car.name}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                            />
-                            {/* Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-100 group-hover:opacity-95 transition-opacity">
-                              <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                                <div className="font-bold text-sm mb-1">{car.name}</div>
-                                <div className="flex items-center justify-between text-xs">
-                                  <span className="flex items-center gap-1">
-                                    <MapPin className="w-3 h-3" />
-                                    {car.location}
-                                  </span>
-                                  <span className="flex items-center gap-1">
-                                    <Calendar className="w-3 h-3" />
-                                    {car.date}
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-
-                  {/* Floating Navigation Arrows */}
-                  <button
-                    className="sold-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300 bg-white/10 backdrop-blur-md p-4 rounded-full hover:bg-white/20 cursor-pointer"
-                    aria-label="Previous slide"
-                  >
-                    <ChevronLeft className="w-6 h-6 text-white" strokeWidth={2.5} />
-                  </button>
-
-                  <button
-                    className="sold-button-next absolute right-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300 bg-white/10 backdrop-blur-md p-4 rounded-full hover:bg-white/20 cursor-pointer"
-                    aria-label="Next slide"
-                  >
-                    <ChevronRight className="w-6 h-6 text-white" strokeWidth={2.5} />
-                  </button>
+                <div className="text-lg font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>50+</div>
+                <div className="text-xs text-slate-600 uppercase tracking-wider mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Cars Sold</div>
+              </div>
+              <div>
+                <div className="flex items-center justify-center mb-1">
+                  <Award className="w-4 h-4 text-[#0f172a]" />
                 </div>
-
-              {/* Stats */}
-              <div className="bg-white rounded-lg p-4 md:p-6 shadow-md">
-                <div className="grid grid-cols-3 gap-2 md:gap-4 text-center divide-x divide-slate-200">
-                  <div>
-                    <div className="flex items-center justify-center mb-1 md:mb-2">
-                      <TrendingUp className="w-4 h-4 md:w-6 md:h-6 text-[#0f172a]" />
-                    </div>
-                    <div className="text-xl md:text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>50+</div>
-                    <div className="text-[10px] md:text-xs text-slate-600 uppercase tracking-wider mt-0.5 md:mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Cars Sold</div>
-                  </div>
-                  <div>
-                    <div className="flex items-center justify-center mb-1 md:mb-2">
-                      <Award className="w-4 h-4 md:w-6 md:h-6 text-[#0f172a]" />
-                    </div>
-                    <div className="text-xl md:text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
-                    <div className="text-[10px] md:text-xs text-slate-600 uppercase tracking-wider mt-0.5 md:mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Satisfied</div>
-                  </div>
-                  <div>
-                    <div className="flex items-center justify-center mb-1 md:mb-2">
-                      <Shield className="w-4 h-4 md:w-6 md:h-6 text-[#0f172a]" />
-                    </div>
-                    <div className="text-xl md:text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>5★</div>
-                    <div className="text-[10px] md:text-xs text-slate-600 uppercase tracking-wider mt-0.5 md:mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Rated</div>
-                  </div>
+                <div className="text-lg font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
+                <div className="text-xs text-slate-600 uppercase tracking-wider mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Satisfied</div>
+              </div>
+              <div>
+                <div className="flex items-center justify-center mb-1">
+                  <Shield className="w-4 h-4 text-[#0f172a]" />
                 </div>
+                <div className="text-lg font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>5★</div>
+                <div className="text-xs text-slate-600 uppercase tracking-wider mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Rated</div>
               </div>
             </div>
-
-              <Link 
-                href="/recently-sold"
-                className="mt-8 relative w-full px-8 py-4 bg-gradient-to-b from-[#1e293b] to-[#0f172a] text-white text-xs font-medium uppercase tracking-[0.25em] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden antialiased group/btn flex items-center justify-center gap-2"
-                style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-              >
-                <span className="relative z-10">View All Sold Cars</span>
-                <ArrowRight className="relative z-10 w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 skew-x-12"></div>
-              </Link>
-            </section>
           </div>
+
+
 
         </div>
       </div>
