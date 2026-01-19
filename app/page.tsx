@@ -198,7 +198,7 @@ export default function Home() {
           </div>
 
           {/* BUTTON ROW - BELOW COLUMNS */}
-          <div className="flex flex-col lg:flex-row gap-12 mb-8">
+          <div className="flex flex-col lg:flex-row gap-12">
             <Link 
               href="/testimonials"
               className="w-full relative px-8 py-4 bg-gradient-to-b from-[#1e293b] to-[#0f172a] text-white text-xs font-medium uppercase tracking-[0.25em] rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden antialiased group/btn flex items-center justify-center gap-2"
@@ -219,35 +219,6 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 skew-x-12"></div>
             </Link>
           </div>
-
-          {/* STATS BAR - FULL WIDTH BELOW BUTTON ROW */}
-          <div className="w-full bg-white rounded-lg p-4 shadow-md mt-12">
-            <div className="grid grid-cols-3 gap-4 text-center divide-x divide-slate-200">
-              <div>
-                <div className="flex items-center justify-center mb-1">
-                  <TrendingUp className="w-4 h-4 text-[#0f172a]" />
-                </div>
-                <div className="text-lg font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>50+</div>
-                <div className="text-xs text-slate-600 uppercase tracking-wider mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Cars Sold</div>
-              </div>
-              <div>
-                <div className="flex items-center justify-center mb-1">
-                  <Award className="w-4 h-4 text-[#0f172a]" />
-                </div>
-                <div className="text-lg font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>100%</div>
-                <div className="text-xs text-slate-600 uppercase tracking-wider mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Satisfied</div>
-              </div>
-              <div>
-                <div className="flex items-center justify-center mb-1">
-                  <Shield className="w-4 h-4 text-[#0f172a]" />
-                </div>
-                <div className="text-lg font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>5★</div>
-                <div className="text-xs text-slate-600 uppercase tracking-wider mt-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Rated</div>
-              </div>
-            </div>
-          </div>
-
-
 
         </div>
       </div>
