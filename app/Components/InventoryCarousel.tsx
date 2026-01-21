@@ -5,11 +5,18 @@ import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
 
 interface Car {
   id: number;
-  name: string;
-  price: string;
+  make: string;
+  model: string;
+  year: string;
+  mileage: string;
+  transmission: string;
+  fuel: string;
+  color: string;
+  grade: string;
+  estLandedCost: string;
+  status: string;
   image: string;
-  badge: string;
-  specs: string[];
+  gallery?: string[];
 }
 
 interface InventoryCarouselProps {
@@ -20,7 +27,8 @@ export default function InventoryCarousel({ cars }: InventoryCarouselProps) {
   const scrollCarousel = (direction: 'left' | 'right') => {
     const carousel = document.getElementById('inventory-carousel');
     if (carousel) {
-      const scrollAmount = direction === 'left' ? -400 : 400;
+      const cardWidth = 380 + 24; // card width + gap
+      const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
       carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
@@ -31,29 +39,33 @@ export default function InventoryCarousel({ cars }: InventoryCarouselProps) {
         <div>
           <div className="flex items-center gap-3 mb-3">
             <div className="h-1 w-12 bg-[#0f172a]"></div>
-            <span className="text-sm font-bold text-[#0f172a] uppercase tracking-widest" style={{ fontFamily: 'Raleway, sans-serif' }}>Premium Selection</span>
+            <span className="text-sm font-bold text-[#0f172a] uppercase tracking-widest" style={{ fontFamily: 'Raleway, sans-serif' }}>Live Auction Sourcing</span>
           </div>
           <h2 className="text-4xl sm:text-5xl font-black text-[#0f172a] tracking-tight" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
-            Current Inventory
+            Current Sourcing Opportunities
           </h2>
-          <p className="text-slate-600 mt-2 text-lg" style={{ fontFamily: 'Raleway, sans-serif' }}>Handpicked by us, according to your taste</p>
+          <p className="text-slate-600 mt-2 text-lg" style={{ fontFamily: 'Raleway, sans-serif' }}>Fresh auction listings we can source for you</p>
         </div>
         <div className="hidden md:flex items-center gap-4">
-          {/* Carousel Navigation Arrows */}
-          <button 
-            onClick={() => scrollCarousel('left')}
-            className="w-12 h-12 bg-white border-2 border-[#0f172a] hover:bg-[#0f172a] hover:-translate-y-1 transition-all duration-300 rounded-full group flex items-center justify-center"
-            aria-label="Previous cars"
-          >
-            <ChevronLeft className="w-5 h-5 text-[#0f172a] group-hover:text-white group-hover:-translate-x-0.5 transition-all" />
-          </button>
-          <button 
-            onClick={() => scrollCarousel('right')}
-            className="w-12 h-12 bg-white border-2 border-[#0f172a] hover:bg-[#0f172a] hover:-translate-y-1 transition-all duration-300 rounded-full group flex items-center justify-center"
-            aria-label="Next cars"
-          >
-            <ChevronRight className="w-5 h-5 text-[#0f172a] group-hover:text-white group-hover:translate-x-0.5 transition-all" />
-          </button>
+          {/* Carousel Navigation Arrows - Only show if more than 2 cards */}
+          {cars.length > 2 && (
+            <>
+              <button 
+                onClick={() => scrollCarousel('left')}
+                className="w-12 h-12 bg-white border-2 border-[#0f172a] hover:bg-[#0f172a] hover:-translate-y-1 transition-all duration-300 rounded-full group flex items-center justify-center"
+                aria-label="Previous cars"
+              >
+                <ChevronLeft className="w-5 h-5 text-[#0f172a] group-hover:text-white group-hover:-translate-x-0.5 transition-all" />
+              </button>
+              <button 
+                onClick={() => scrollCarousel('right')}
+                className="w-12 h-12 bg-white border-2 border-[#0f172a] hover:bg-[#0f172a] hover:-translate-y-1 transition-all duration-300 rounded-full group flex items-center justify-center"
+                aria-label="Next cars"
+              >
+                <ChevronRight className="w-5 h-5 text-[#0f172a] group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+              </button>
+            </>
+          )}
           {/* View All Button with Sheen */}
           <Link 
             href="/inventory"
@@ -76,7 +88,8 @@ export default function InventoryCarousel({ cars }: InventoryCarouselProps) {
         className="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth pb-4"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {cars.map((car) => (
+        {cars.map((car) => {
+          return (
           <Link 
             key={car.id} 
             href={`/inventory/${car.id}`}
@@ -84,42 +97,52 @@ export default function InventoryCarousel({ cars }: InventoryCarouselProps) {
           >
             
             {/* Image */}
-            <div className="relative h-64 overflow-hidden w-full">
+            <div className="relative h-64 overflow-hidden w-full bg-gray-100 flex items-center justify-center">
               <img 
                 src={car.image} 
-                alt={car.name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                alt={`${car.year} ${car.make} ${car.model}`}
+                className="w-full h-full object-contain"
               />
-              {/* Badge - Navy Pill */}
+              {/* Status Badge */}
               <div className="absolute top-4 left-4 px-4 py-2 bg-[#0f172a] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-lg" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                {car.badge}
+                {car.status}
               </div>
             </div>
 
             {/* Content */}
             <div className="p-6">
               <h3 className="font-bold text-xl text-slate-900 mb-2 group-hover:text-[#0f172a] transition-colors" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
-                {car.name}
+                {car.year} {car.make} {car.model}
               </h3>
               
               {/* Specs */}
-              <div className="flex items-center gap-3 mb-4 text-sm text-slate-600" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                {car.specs.map((spec, idx) => (
-                  <span key={idx}>
-                    {spec}
-                    {idx < car.specs.length - 1 && <span className="ml-3">•</span>}
-                  </span>
-                ))}
+              <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-slate-600" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                <span>{car.mileage}</span>
+                <span>•</span>
+                <span>Grade {car.grade}</span>
+                <span>•</span>
+                <span>{car.transmission}</span>
               </div>
 
-              {/* Price & CTA */}
-              <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                <div className="text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>{car.price}</div>
-                <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-[#0f172a] group-hover:translate-x-1 transition-all" />
+              {/* Est. Landed Cost & CTA */}
+              <div className="pt-4 border-t border-slate-100">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Est. Landed:</div>
+                    <div className="text-2xl font-black text-slate-900" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>{car.estLandedCost}</div>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-[#0f172a] group-hover:translate-x-1 transition-all" />
+                </div>
+                
+                {/* Legal Disclaimer */}
+                <p className="text-[10px] text-slate-400 leading-tight" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                  Estimate based on current auction averages. Final price varies.
+                </p>
               </div>
             </div>
           </Link>
-        ))}
+          );
+          })}
       </div>
 
       {/* Mobile View All Button */}

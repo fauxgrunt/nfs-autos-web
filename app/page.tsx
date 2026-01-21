@@ -7,31 +7,83 @@ import { ArrowRight, Star, MapPin, Calendar, ChevronRight, TrendingUp, Award, Sh
 
 export default function Home() {
 
-  // Featured cars data - REALISTIC INVENTORY
-  const featuredCars = [
+  // Sourcing examples data - COMPLIANT WITH SOURCING AGENT MODEL
+  const sourcingExamples = [
     {
       id: 1,
-      name: '2015 Toyota Crown Athlete',
-      price: '$18,999',
-      image: '/inventory/crown-athlete.jpg',
-      badge: 'Just Arrived',
-      specs: ['Auto', 'V6 3.5L', '65K km']
+      make: "Lexus",
+      model: "LS460 Version S",
+      year: "2006",
+      mileage: "87,160 km",
+      transmission: "Automatic (8-Speed)",
+      fuel: "Petrol",
+      color: "Pearl White",
+      grade: "4.0",
+      estLandedCost: "$16,490",
+      status: "Auction Opportunity",
+      image: "/inventory/2026/January/headers/lexus-ls460.png"
     },
     {
       id: 2,
-      name: '2013 Toyota Mark X 250G',
-      price: '$15,500',
-      image: '/inventory/mark-x-stock.jpg',
-      badge: 'Available Now',
-      specs: ['RWD', '2.5L', '72K km']
+      make: "Toyota",
+      model: "Mark X 250G S-Package",
+      year: "2008",
+      mileage: "50,541 km",
+      transmission: "Automatic (6-Speed)",
+      fuel: "Petrol",
+      color: "Pearl White",
+      grade: "3.5",
+      estLandedCost: "$12,490",
+      status: "Available Now",
+      badges: ["P-Plate Legal", "252HP V6", "Factory LSD"],
+      features: [
+        "TEMS Suspension Control",
+        "Radar Cruise Control",
+        "Rear Auto Shade",
+        "Factory Navigation & Reverse Camera",
+        "AFS Xenon Lights",
+        "Auto Reverse Park",
+        "Includes Compliance & Blue Slip"
+      ],
+      gallery: [
+        "/inventory/2026/January/headers/markx-2008.png",
+        "/inventory/2026/January/mark-x-2008-01.jpg",
+        "/inventory/2026/January/mark-x-2008-02.jpg",
+        "/inventory/2026/January/mark-x-2008-03.jpg",
+        "/inventory/2026/January/mark-x-2008-04.jpg",
+        "/inventory/2026/January/mark-x-2008-05.jpg",
+        "/inventory/2026/January/mark-x-2008-06.jpg",
+        "/inventory/2026/January/mark-x-2008-07.jpg"
+      ],
+      image: "/inventory/2026/January/headers/markx-2008.png"
     },
     {
       id: 3,
-      name: '2016 Lexus IS250 F-Sport',
-      price: '$22,900',
-      image: '/inventory/lexus-is-stock.jpg',
-      badge: 'Premium',
-      specs: ['Auto', '2.5L V6', '58K km']
+      make: "Toyota",
+      model: "Mark X",
+      year: "2004",
+      mileage: "33,581 km",
+      transmission: "Automatic (6-Speed)",
+      fuel: "Petrol",
+      color: "Silver",
+      grade: "4.0",
+      estLandedCost: "$13,290",
+      status: "Auction Opportunity",
+      image: "/inventory/2026/January/headers/markx-2004.png"
+    },
+    {
+      id: 4,
+      make: "Toyota",
+      model: "Mark X",
+      year: "2005",
+      mileage: "130,952 km",
+      transmission: "Automatic (6-Speed)",
+      fuel: "Petrol",
+      color: "Silver",
+      grade: "3.5",
+      estLandedCost: "Enquire for Quote",
+      status: "Budget Sourcing",
+      image: "/inventory/2026/January/headers/markx-2005.png"
     }
   ];
 
@@ -83,8 +135,8 @@ export default function Home() {
       <div className="bg-slate-50 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           
-          {/* FEATURED INVENTORY SECTION */}
-          <InventoryCarousel cars={featuredCars} />
+          {/* SOURCING OPPORTUNITIES SECTION */}
+          <InventoryCarousel cars={sourcingExamples} />
 
           {/* TWO COLUMN SECTION - TESTIMONIALS & RECENTLY DELIVERED */}
           <div className="flex flex-col lg:flex-row items-stretch gap-12 mb-8">

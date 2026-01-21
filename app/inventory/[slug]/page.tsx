@@ -47,12 +47,12 @@ export default function VehicleDetailPage() {
           {/* LEFT COLUMN - Gallery (65%) */}
           <div className="lg:col-span-2">
             {/* Main Image - Gallery Print Style */}
-            <div className="relative aspect-[16/10] bg-black mb-6">
+            <div className="relative aspect-[16/10] bg-black mb-6 flex items-center justify-center overflow-hidden">
               <Image
                 src={vehicle.images[selectedImage]}
                 alt={`${vehicle.make} ${vehicle.model}`}
                 fill
-                className="object-cover"
+                className="object-contain"
                 priority
               />
             </div>
@@ -131,10 +131,11 @@ export default function VehicleDetailPage() {
                   {vehicle.year} {vehicle.model}
                 </h1>
 
-                {/* Price - Sophisticated Weight */}
-                <p className="text-3xl font-semibold text-gray-900 mb-2">
-                  ${vehicle.price.toLocaleString()}
-                </p>
+                {/* Est. Landed Cost */}
+                <div className="mb-2">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Est. Landed</p>
+                  <p className="text-3xl font-semibold text-gray-900">{vehicle.estLandedCost}</p>
+                </div>
               </div>
 
               {/* Status Badge */}

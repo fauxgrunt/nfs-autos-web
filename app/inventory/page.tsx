@@ -139,9 +139,9 @@ export default function InventoryPage() {
         case 'oldest':
           return a.year - b.year;
         case 'price_asc':
-          return a.price - b.price;
         case 'price_desc':
-          return b.price - a.price;
+          // Price sorting disabled for sourcing model (estLandedCost is string)
+          return 0;
         case 'mileage_asc':
           return mileageA - mileageB;
         case 'mileage_desc':
@@ -196,7 +196,7 @@ export default function InventoryPage() {
                 {/* Filter Header */}
                 <div className="mb-8 pb-6 border-b border-white/20">
                   <p className="font-ui text-sm font-semibold text-white/90 mb-3 tracking-wide">
-                    {filteredCars.length} <span className="text-white/60">VEHICLES AVAILABLE</span>
+                    {filteredCars.length} <span className="text-white/60">SOURCING OPPORTUNITIES</span>
                   </p>
                   <button 
                     onClick={resetFilters}
@@ -373,7 +373,7 @@ export default function InventoryPage() {
                 {/* Filter Header */}
                 <div className="mb-8 pb-6 border-b border-white/20">
                   <p className="font-ui text-sm font-semibold text-white/90 mb-3 tracking-wide">
-                    {filteredCars.length} <span className="text-white/60">VEHICLES AVAILABLE</span>
+                    {filteredCars.length} <span className="text-white/60">SOURCING OPPORTUNITIES</span>
                   </p>
                   <button 
                     onClick={resetFilters}
@@ -662,11 +662,12 @@ export default function InventoryPage() {
                       key={car.id}
                       id={car.id}
                       title={car.title}
-                      price={car.price}
+                      estLandedCost={car.estLandedCost}
                       image={car.image}
                       mileage={car.mileage}
                       transmission={car.transmission}
-                      bodyType={car.bodyType}
+                      grade={car.grade}
+                      gallery={car.gallery || car.images}
                     />
                   ))}
                 </div>
@@ -685,10 +686,10 @@ export default function InventoryPage() {
 
                     {/* Empty State Text */}
                     <h3 className="font-condensed text-2xl font-bold text-gray-900 mb-2 uppercase tracking-tight">
-                      No Vehicles Found
+                      No Sourcing Opportunities Found
                     </h3>
                     <p className="font-ui text-sm text-gray-500 mb-8 max-w-md mx-auto">
-                      No vehicles match your current filter criteria. Try adjusting your filters to see more results.
+                      No vehicles match your current filter criteria. Try adjusting your filters to see more sourcing opportunities.
                     </p>
 
                     {/* Clear Filters Button */}
