@@ -29,8 +29,12 @@ const chakraPetch = Chakra_Petch({
 });
 
 export const metadata: Metadata = {
-  title: "NFS Autos | Premium Import Specialist",
-  description: "Curated JDM legends and luxury imports.",
+  title: "NFS Autos | Premium JDM Import Sourcing",
+  description: "Source your dream car directly from Japanese auctions. Transparent pricing, expert handling, and direct delivery to you.",
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
+  },
 };
 
 export const viewport = {

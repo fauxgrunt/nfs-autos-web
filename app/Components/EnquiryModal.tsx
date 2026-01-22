@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, ChevronDown } from 'lucide-react';
 import { useEnquiryModal } from '../contexts/EnquiryModalContext';
+import emailjs from '@emailjs/browser';
 
 export default function EnquiryModal() {
   const { isOpen, carName, defaultService, closeModal } = useEnquiryModal();
@@ -17,6 +18,8 @@ export default function EnquiryModal() {
     specificRequirements: ''
   });
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isGradeDropdownOpen, setIsGradeDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -62,31 +65,61 @@ export default function EnquiryModal() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Console log the form data
-    console.log('Appointment Request:', {
-      ...formData,
-      carName: carName || 'General Enquiry',
-      timestamp: new Date().toISOString()
+    // 1. Validation
+    if (!formData.name || !formData.phone || !formData.targetVehicle) {
+      setError('Please fill in all required fields marked with *');
+      return;
+    }
+
+    // 2. Set Loading State
+    setIsSending(true);
+    setError('');
+
+    // 3. Define Explicit Template Parameters
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      target_vehicle: formData.targetVehicle,
+      budget: formData.estimatedBudget,
+      auction_grade: formData.auctionGrade,
+      specific_requirements: formData.specificRequirements
+    };
+
+    // 4. Send Both Emails (Business + Auto-Reply)
+    Promise.all([
+      // Email to Business
+      emailjs.send('service_crsliam', 'template_rb8hgnq', templateParams, 'Kvw3h6qxCVXjx1A6F'),
+      // Auto-Reply to Client
+      emailjs.send('service_crsliam', 'template_l8nls3i', templateParams, 'Kvw3h6qxCVXjx1A6F')
+    ])
+    .then(() => {
+      console.log('Both emails sent successfully');
+      setIsSuccess(true); // Show Success Popup
+      
+      // Reset after 3 seconds
+      setTimeout(() => {
+        setIsSuccess(false);
+        setFormData({ 
+          name: '', 
+          phone: '', 
+          email: '',
+          subject: 'brokerage',
+          targetVehicle: '',
+          estimatedBudget: '',
+          auctionGrade: '4.0',
+          specificRequirements: ''
+        });
+        closeModal();
+      }, 3000);
+    })
+    .catch((error) => {
+      console.error('Email failed:', error);
+      setError('Failed to send request. Please try again later.');
+    })
+    .finally(() => {
+      setIsSending(false); // Stop Loading
     });
-
-    // Show success message
-    setIsSuccess(true);
-
-    // Reset after 3 seconds
-    setTimeout(() => {
-      setIsSuccess(false);
-      setFormData({ 
-        name: '', 
-        phone: '', 
-        email: '',
-        subject: 'brokerage',
-        targetVehicle: '',
-        estimatedBudget: '',
-        auctionGrade: '4.0',
-        specificRequirements: ''
-      });
-      closeModal();
-    }, 3000);
   };
 
   const handleClose = () => {
@@ -265,6 +298,7 @@ export default function EnquiryModal() {
                       <input
                         type="text"
                         id="estimatedBudget"
+                        name="budget"
                         required
                         value={formData.estimatedBudget}
                         onChange={(e) => setFormData(prev => ({ ...prev, estimatedBudget: e.target.value }))}
@@ -350,6 +384,15 @@ export default function EnquiryModal() {
 
             {/* Bottom Section - Trust Notice + Button */}
             <div className="px-6 py-4 border-t border-gray-100 bg-gray-50">
+              {/* Error Message */}
+              {error && (
+                <div className="mb-3 p-3 bg-red-50 border border-red-200 rounded-md">
+                  <p className="text-xs text-red-600 text-center" style={{ fontFamily: 'Raleway, sans-serif' }}>
+                    {error}
+                  </p>
+                </div>
+              )}
+              
               {/* Thin Trust Notice */}
               <p className="text-[10px] text-amber-800 text-center mb-3 font-medium" style={{ fontFamily: 'Raleway, sans-serif' }}>
                 ✓ Flat Brokerage Fee Applies. Transparent Sourcing Guaranteed.
@@ -359,10 +402,11 @@ export default function EnquiryModal() {
               <button
                 onClick={handleSubmit}
                 type="submit"
-                className="w-full px-6 py-3 bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white font-semibold text-xs uppercase tracking-[0.15em] rounded-md transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.01] active:scale-95"
+                disabled={isSending}
+                className="w-full px-6 py-3 bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-white font-semibold text-xs uppercase tracking-[0.15em] rounded-md transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.01] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
               >
-                REQUEST SOURCING CONSULTATION
+                {isSending ? 'SENDING REQUEST...' : 'REQUEST SOURCING CONSULTATION'}
               </button>
             </div>
           </>

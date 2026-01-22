@@ -16,6 +16,10 @@ interface BookingModalProps {
 function BookingModal({ isOpen, onClose, carDetails }: BookingModalProps) {
   if (!isOpen) return null;
 
+  // Generate booking URL with 30-minute slot and current date
+  const currentDate = new Date().toISOString().split('T')[0];
+  const bookingUrl = `https://cal.com/nfs-autos-6hl4of/30min?notes=${encodeURIComponent(carDetails)}&date=${currentDate}`;
+
   return (
     <div 
       className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
@@ -36,7 +40,7 @@ function BookingModal({ isOpen, onClose, carDetails }: BookingModalProps) {
         
         {/* iframe */}
         <iframe
-          src={`https://cal.com/nfs-autos-6hl4of?notes=${encodeURIComponent(carDetails)}`}
+          src={bookingUrl}
           className="w-full h-[600px] border-0"
           title="Book a consultation"
         />

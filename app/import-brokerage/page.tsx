@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
 import { CheckCircle, Search, Shield, Truck } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
@@ -10,20 +9,6 @@ import 'swiper/css/pagination';
 
 export default function ImportBrokeragePage() {
   const { openModal } = useEnquiryModal();
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    model: '',
-    budget: ''
-  });
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    console.log('Form Data:', formData);
-    alert('Thank you! Our team will contact you.');
-    // Reset form
-    setFormData({ name: '', phone: '', model: '', budget: '' });
-  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -444,143 +429,6 @@ export default function ImportBrokeragePage() {
               </p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Section 4: The Spec Sheet Form */}
-      <section className="bg-white py-20 lg:py-28 border-t border-slate-200">
-        <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-2xl">
-          
-          {/* Form Header */}
-          <div className="text-center mb-12">
-            <h2 
-              className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight uppercase mb-4"
-              style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-            >
-              START YOUR ORDER
-            </h2>
-            <p 
-              className="text-xl text-slate-500"
-              style={{ fontFamily: 'Raleway, sans-serif' }}
-            >
-              Tell us what you&apos;re looking for
-            </p>
-          </div>
-
-          {/* Premium Form */}
-          <form onSubmit={handleSubmit} className="bg-slate-50 rounded-2xl p-8 md:p-12 border border-slate-200">
-            <div className="space-y-6">
-              
-              {/* Name Field */}
-              <div>
-                <label 
-                  htmlFor="name"
-                  className="block text-sm font-bold text-slate-900 uppercase tracking-wide mb-2"
-                  style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                >
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-slate-900 transition-colors"
-                  style={{ fontFamily: 'Raleway, sans-serif' }}
-                  placeholder="John Smith"
-                />
-              </div>
-
-              {/* Phone Field */}
-              <div>
-                <label 
-                  htmlFor="phone"
-                  className="block text-sm font-bold text-slate-900 uppercase tracking-wide mb-2"
-                  style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                >
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg focus:outline-none focus:border-slate-900 transition-colors"
-                  style={{ fontFamily: 'Raleway, sans-serif' }}
-                  placeholder="+1 (555) 123-4567"
-                />
-              </div>
-
-              {/* Model Dropdown */}
-              <div>
-                <label 
-                  htmlFor="model"
-                  className="block text-sm font-bold text-slate-900 uppercase tracking-wide mb-2"
-                  style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                >
-                  Desired Model
-                </label>
-                <select
-                  id="model"
-                  required
-                  value={formData.model}
-                  onChange={(e) => setFormData({ ...formData, model: e.target.value })}
-                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-slate-900 transition-colors appearance-none cursor-pointer"
-                  style={{ fontFamily: 'Raleway, sans-serif' }}
-                >
-                  <option value="" className="text-slate-400">Select a model</option>
-                  <option value="crown" className="text-slate-900">Toyota Crown</option>
-                  <option value="markx" className="text-slate-900">Toyota Mark X</option>
-                  <option value="lexus-is" className="text-slate-900">Lexus IS Series</option>
-                  <option value="lexus-gs" className="text-slate-900">Lexus GS Series</option>
-                  <option value="other" className="text-slate-900">Other Model</option>
-                </select>
-              </div>
-
-              {/* Budget Range */}
-              <div>
-                <label 
-                  htmlFor="budget"
-                  className="block text-sm font-bold text-slate-900 uppercase tracking-wide mb-2"
-                  style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-                >
-                  Budget Range
-                </label>
-                <select
-                  id="budget"
-                  required
-                  value={formData.budget}
-                  onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-slate-900 transition-colors appearance-none cursor-pointer"
-                  style={{ fontFamily: 'Raleway, sans-serif' }}
-                >
-                  <option value="" className="text-slate-400">Select your budget</option>
-                  <option value="10-15k" className="text-slate-900">$10,000 - $15,000</option>
-                  <option value="15-20k" className="text-slate-900">$15,000 - $20,000</option>
-                  <option value="20-30k" className="text-slate-900">$20,000 - $30,000</option>
-                  <option value="30k+" className="text-slate-900">$30,000+</option>
-                </select>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full py-4 bg-slate-900 text-white font-bold uppercase tracking-wider rounded-lg hover:bg-slate-800 transition-colors duration-300"
-                style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}
-              >
-                SUBMIT REQUEST
-              </button>
-
-              <p 
-                className="text-sm text-slate-500 text-center mt-4"
-                style={{ fontFamily: 'Raleway, sans-serif' }}
-              >
-                Our team will contact you within 24 hours
-              </p>
-            </div>
-          </form>
         </div>
       </section>
 
