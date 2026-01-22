@@ -4,14 +4,51 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams, notFound } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, X } from 'lucide-react';
 import { getVehicleById } from '@/app/lib/inventoryData';
-import { useEnquiryModal } from '@/app/contexts/EnquiryModalContext';
+
+interface BookingModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  carDetails: string;
+}
+
+function BookingModal({ isOpen, onClose, carDetails }: BookingModalProps) {
+  if (!isOpen) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+      onClick={onClose}
+    >
+      <div 
+        className="relative bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 transition"
+          aria-label="Close modal"
+        >
+          <X className="w-5 h-5" />
+        </button>
+        
+        {/* iframe */}
+        <iframe
+          src={`https://cal.com/nfs-autos-6hl4of?notes=${encodeURIComponent(carDetails)}`}
+          className="w-full h-[600px] border-0"
+          title="Book a consultation"
+        />
+      </div>
+    </div>
+  );
+}
 
 export default function VehicleDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
-  const { openModal } = useEnquiryModal();
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
   
   // Get vehicle data based on slug
   const vehicle = getVehicleById(slug);
@@ -22,6 +59,16 @@ export default function VehicleDetailPage() {
   }
 
   const [selectedImage, setSelectedImage] = useState(0);
+
+  // WhatsApp handler
+  const openWhatsApp = () => {
+    const phone = "61400000000"; // REPLACE WITH YOUR ACTUAL BUSINESS NUMBER
+    const message = `Hi, I'm interested in the ${vehicle.year} ${vehicle.make} ${vehicle.model} (${vehicle.id}). Is it available for viewing?`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
+  // Cal.com booking details
+  const carDetails = `Vehicle ID: ${vehicle.id} | ${vehicle.year} ${vehicle.make} ${vehicle.model} | ${vehicle.estLandedCost} | ${vehicle.mileage} | Grade ${vehicle.grade}`;
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden w-full pt-24">
@@ -151,16 +198,21 @@ export default function VehicleDetailPage() {
               {/* Call to Action Buttons */}
               <div className="space-y-3 mb-8">
                 <button 
-                  onClick={() => openModal(`${vehicle.year} ${vehicle.make} ${vehicle.model}`)}
+                  type="button"
+                  onClick={() => setIsBookingOpen(true)}
                   className="w-full bg-black hover:bg-gray-800 text-white font-bold py-4 px-6 transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-wide text-sm"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   Inquire Now
                 </button>
                 
-                <button className="w-full bg-white hover:bg-gray-50 text-black font-semibold py-4 px-6 border border-black transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-wide text-sm">
+                <button 
+                  type="button"
+                  onClick={openWhatsApp}
+                  className="w-full bg-white hover:bg-gray-50 text-black font-semibold py-4 px-6 border border-black transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-wide text-sm"
+                >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
@@ -235,11 +287,12 @@ export default function VehicleDetailPage() {
       {/* Mobile Sticky CTA Footer */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-50">
         <button 
-          onClick={() => openModal(`${vehicle.year} ${vehicle.make} ${vehicle.model}`)}
+          type="button"
+          onClick={() => setIsBookingOpen(true)}
           className="w-full bg-black hover:bg-gray-800 text-white font-bold py-4 px-6 transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-wide text-sm"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
           Inquire Now
         </button>
@@ -247,6 +300,13 @@ export default function VehicleDetailPage() {
 
       {/* Mobile Bottom Padding (to prevent content hiding under sticky footer) */}
       <div className="lg:hidden h-24"></div>
+
+      {/* Booking Modal */}
+      <BookingModal 
+        isOpen={isBookingOpen} 
+        onClose={() => setIsBookingOpen(false)}
+        carDetails={carDetails}
+      />
     </div>
   );
 }
