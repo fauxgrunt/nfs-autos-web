@@ -98,12 +98,12 @@ export default function VehicleDetailPage() {
           {/* LEFT COLUMN - Gallery (65%) */}
           <div className="lg:col-span-2">
             {/* Main Image - Gallery Print Style */}
-            <div className="relative aspect-[16/10] bg-black mb-6 flex items-center justify-center overflow-hidden">
+            <div className="relative aspect-[16/10] w-full mb-6 overflow-hidden bg-gray-100">
               <Image
                 src={vehicle.images[selectedImage]}
                 alt={`${vehicle.make} ${vehicle.model}`}
                 fill
-                className="object-contain"
+                className="object-cover"
                 priority
               />
             </div>

@@ -4,6 +4,7 @@ import AboutHome from "./Components/AboutHome";
 import InventoryCarousel from "./Components/InventoryCarousel";
 import Link from 'next/link';
 import { ArrowRight, Star, MapPin, Calendar, ChevronRight, TrendingUp, Award, Shield, ChevronLeft } from 'lucide-react';
+import { SOLD_INVENTORY_DATA } from './lib/soldInventoryData';
 
 export default function Home() {
 
@@ -115,13 +116,8 @@ export default function Home() {
     }
   ];
 
-  // Sold cars data - REALISTIC VEHICLES YOU ACTUALLY SELL
-  const soldCars = [
-    { name: 'Toyota Crown Athlete', location: 'Sydney, NSW', date: 'Grade 4.5 Import', image: '/delivered/crown-owner.jpg' },
-    { name: 'Lexus GS350', location: 'Melbourne, VIC', date: 'Black Line Edition', image: '/delivered/gs350-city.jpg' },
-    { name: 'Toyota Mark X 350S', location: 'Perth, WA', date: 'Custom Widebody Source', image: '/delivered/markx-street.jpg' },
-    { name: 'Lexus IS250', location: 'Brisbane, QLD', date: 'Showroom Condition', image: '/delivered/is250-rear.jpg' }
-  ];
+  // Use the actual sold inventory data
+  const soldCars = SOLD_INVENTORY_DATA;
 
   return (
     <main className="min-h-screen bg-white text-slate-900 font-sans w-full overflow-x-hidden pt-24">
@@ -204,9 +200,9 @@ export default function Home() {
 
               {/* Premium Grid Layout - 2x2 Grid - Fills to match testimonials */}
               <div className="grid grid-cols-2 gap-4 h-full flex-grow">
-                {soldCars.map((car, idx) => (
+                {soldCars.map((car) => (
                   <Link 
-                    key={idx} 
+                    key={car.id} 
                     href="/recently-sold" 
                     className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 flex flex-col"
                   >
@@ -214,7 +210,7 @@ export default function Home() {
                     <div className="relative flex-1 overflow-hidden">
                       <img 
                         src={car.image} 
-                        alt={car.name}
+                        alt={car.title}
                         className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
                       />
                       
@@ -228,18 +224,18 @@ export default function Home() {
                     <div className="p-3 border-t border-slate-100">
                       {/* Car Model Name */}
                       <h3 className="font-bold text-xs text-[#0f172a] mb-2.5 line-clamp-2 leading-tight" style={{ fontFamily: 'var(--font-chakra-petch), sans-serif' }}>
-                        {car.name}
+                        {car.title}
                       </h3>
                       
-                      {/* Metadata - Grade & Location */}
+                      {/* Metadata - Mileage & Color */}
                       <div className="space-y-1.5 text-[10px]">
                         <div className="flex items-center gap-1.5 text-slate-700">
                           <Award className="w-3 h-3 text-[#0f172a] flex-shrink-0" />
-                          <span className="font-medium text-slate-900">{car.date}</span>
+                          <span className="font-medium text-slate-900">{car.mileage}</span>
                         </div>
                         <div className="flex items-center gap-1.5 text-slate-700">
                           <MapPin className="w-3 h-3 text-[#0f172a] flex-shrink-0" />
-                          <span className="font-medium text-slate-900">{car.location}</span>
+                          <span className="font-medium text-slate-900">{car.color}</span>
                         </div>
                       </div>
                     </div>

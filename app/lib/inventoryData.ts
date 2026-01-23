@@ -46,9 +46,10 @@ export const INVENTORY_DATA: Vehicle[] = [
     image: '/inventory/2026/January/headers/lexus-ls460.png',
     images: [
       '/inventory/2026/January/headers/lexus-ls460.png',
-      'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80',
+      '/inventory/2026/January/lexus-2006/1.png',
+      '/inventory/2026/January/lexus-2006/2.png',
+      '/inventory/2026/January/lexus-2006/3.png',
+      '/inventory/2026/January/lexus-2006/4.png',
     ]
   },
   {
@@ -119,9 +120,10 @@ export const INVENTORY_DATA: Vehicle[] = [
     image: '/inventory/2026/January/headers/markx-2004.png',
     images: [
       '/inventory/2026/January/headers/markx-2004.png',
-      'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1600&q=80',
+      '/inventory/2026/January/Markx-2004/1.png',
+      '/inventory/2026/January/Markx-2004/2.png',
+      '/inventory/2026/January/Markx-2004/3.png',
+      '/inventory/2026/January/Markx-2004/4.png',
     ]
   },
   {
@@ -144,9 +146,9 @@ export const INVENTORY_DATA: Vehicle[] = [
     image: '/inventory/2026/January/headers/markx-2005.png',
     images: [
       '/inventory/2026/January/headers/markx-2005.png',
-      'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1600&q=80',
+      '/inventory/2026/January/Markx-2005/1.png',
+      '/inventory/2026/January/Markx-2005/2.png',
+      '/inventory/2026/January/Markx-2005/3.png',
     ]
   }
 ];
