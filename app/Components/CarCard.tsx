@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 interface CarProps {
   id: string;
+  slug: string; // Slug added for linking
   title: string;
   estLandedCost: string;
   image: string;
@@ -20,6 +21,7 @@ interface CarProps {
 
 export default function CarCard({ 
   id, 
+  slug, // Destructure slug
   title, 
   estLandedCost, 
   image, 
@@ -37,7 +39,7 @@ export default function CarCard({
 
   return (
     <Link 
-      href={`/inventory/${id}`} 
+      href={`/inventory/${slug}`} // Use slug for the link
       className="group relative flex flex-col bg-white rounded-lg overflow-hidden border border-gray-200 hover:border-gray-300 hover:shadow-xl transition-all duration-300"
     >
       {/* Image Container with Hover Zoom */}
