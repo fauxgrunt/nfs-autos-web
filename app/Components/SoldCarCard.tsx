@@ -16,7 +16,7 @@ export default function SoldCarCard({
   onFindSimilar
 }: SoldCarCardProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100 overflow-hidden">
       {/* Image Container - Strict 4:3 Aspect Ratio */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
         <Image
@@ -49,7 +49,7 @@ export default function SoldCarCard({
         {/* Find Similar Button */}
         <button
           onClick={onFindSimilar}
-          className="w-full mt-4 py-2.5 rounded-lg border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-black hover:text-white hover:border-black transition-all duration-300"
+          className="w-full mt-4 py-2.5 rounded-lg bg-[#0B1221] text-sm font-semibold text-white hover:bg-opacity-90 transition-all duration-300"
         >
           Find similar like this
         </button>
