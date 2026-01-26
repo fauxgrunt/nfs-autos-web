@@ -66,9 +66,16 @@ export default function VehicleDetailPage() {
 
   // WhatsApp handler
   const openWhatsApp = () => {
-    const phone = "61400000000"; // REPLACE WITH YOUR ACTUAL BUSINESS NUMBER
+    const phone = "61416378869"; // Corrected phone number
     const message = `Hi, I'm interested in the ${vehicle.year} ${vehicle.make} ${vehicle.model} (${vehicle.id}). Is it available for viewing?`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+
+    // Log the URL for debugging
+    console.log("WhatsApp URL:", whatsappUrl);
+
+    // Open the WhatsApp URL
+    window.open(whatsappUrl, '_blank');
   };
 
   // Cal.com booking details
@@ -211,17 +218,32 @@ export default function VehicleDetailPage() {
                   </svg>
                   Inquire Now
                 </button>
-                
-                <button 
-                  type="button"
-                  onClick={openWhatsApp}
-                  className="w-full bg-white hover:bg-gray-50 text-black font-semibold py-4 px-6 border border-black transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-wide text-sm"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  Call / WhatsApp
-                </button>
+
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Call Button */}
+                  <a 
+                    href="tel:+61416378869"
+                    className="flex items-center justify-center gap-2 py-4 px-6 border border-black text-black font-semibold uppercase tracking-wide text-sm transition-colors hover:bg-gray-50"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    Call
+                  </a>
+
+                  {/* WhatsApp Button */}
+                  <a 
+                    href="https://wa.me/61416378869" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 py-4 px-6 border border-black text-black font-semibold uppercase tracking-wide text-sm transition-colors hover:bg-gray-50"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    WhatsApp
+                  </a>
+                </div>
               </div>
 
               {/* Trust Signals */}

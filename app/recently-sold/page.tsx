@@ -52,55 +52,98 @@ export default function RecentlySoldPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validation
+
+    // 1. Basic Validation
     if (!formData.name || !formData.phone || !formData.email) {
       setError('Please fill in all required fields marked with *');
+      return;
+    }
+    if (!formData.email.trim()) {
+      setError('Email address is required.');
       return;
     }
 
     setIsSending(true);
     setError('');
 
-    // Define template parameters
+    // 2. Prepare the Content Strings
+    // This string corresponds to {{reply_subject}} in your screenshot
+    const emailSubject = `Inquiry: ${selectedCar} (Sourcing Request)`;
+    
+    // Updated email body for the "Find Similar" request
+    const emailBody = `Hi ${formData.name},
+
+Thank you for your inquiry regarding the ${selectedCar}.
+
+Unfortunately, this specific unit has already been sold. However, we have received your request to source a vehicle similar to this one based on your requirements.
+
+Your Sourcing Request Details:
+• Target Vehicle: ${selectedCar}
+• Budget: ${formData.estimatedBudget || 'Not provided'}
+• Grade Preference: ${formData.auctionGrade || 'Not provided'}
+• Phone: ${formData.phone}
+
+Next Steps: My team is currently cross-referencing your requirements with upcoming Japanese auction listings to find a match. We will contact you shortly to discuss available options.
+
+Best regards,
+The NFS Autos Team`;
+
+    // 3. Map the data to the Template Variables
     const templateParams = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      target_vehicle: selectedCar, // Pre-filled from selected car
-      budget: formData.estimatedBudget,
-      auction_grade: formData.auctionGrade,
-      specific_requirements: formData.specificRequirements
+      // These keys MUST match the {{variables}} in your Dashboard screenshots
+      reply_subject: emailSubject, 
+      reply_body: emailBody,
+      
+      // Matches "To Email" setting in image_aecd94.png
+      user_email: formData.email, 
+
+      // Extra data just in case you use them in other templates
+      to_name: formData.name,
+      message: emailBody,
     };
 
-    // Send both emails (Business + Auto-Reply)
+    // 4. Send the Emails
     Promise.all([
-      emailjs.send('service_crsliam', 'template_rb8hgnq', templateParams, 'Kvw3h6qxCVXjx1A6F'),
-      emailjs.send('service_crsliam', 'template_l8nls3i', templateParams, 'Kvw3h6qxCVXjx1A6F')
+        // Email 1: To the Business (You)
+        // Make sure 'template_rb8hgnq' exists and uses simple variables like {{phone}}, {{budget}}
+        emailjs.send(
+            'service_crsliam',
+            'template_rb8hgnq', 
+            templateParams,
+            'Kvw3h6qxCVXjx1A6F'
+        ),
+        // Email 2: Auto-Reply to Client
+        // This is the one from your screenshots (image_aecd94.png)
+        emailjs.send(
+            'service_crsliam',
+            'template_l8nls3i',
+            templateParams,
+            'Kvw3h6qxCVXjx1A6F'
+        )
     ])
-    .then(() => {
-      console.log('Both emails sent successfully');
-      setIsSuccess(true);
-      
-      setTimeout(() => {
-        setIsSuccess(false);
-        setFormData({ 
-          name: '', 
-          phone: '', 
-          email: '',
-          estimatedBudget: '',
-          auctionGrade: '4.0',
-          specificRequirements: ''
-        });
-        setIsModalOpen(false);
-      }, 3000);
+    .then((responses) => {
+        console.log('Emails sent successfully', responses);
+        setIsSuccess(true);
+        
+        setTimeout(() => {
+          setIsSuccess(false);
+          setFormData({ 
+            name: '', 
+            phone: '', 
+            email: '',
+            estimatedBudget: '',
+            auctionGrade: '4.0',
+            specificRequirements: ''
+          });
+          setIsModalOpen(false);
+        }, 3000);
     })
     .catch((error) => {
-      console.error('Email failed:', error);
-      setError('Failed to send request. Please try again later.');
+        console.error('Email failed:', error);
+        setError('Failed to send request. Please try again.');
     })
     .finally(() => {
-      setIsSending(false);
+        setIsSending(false);
     });
   };
 

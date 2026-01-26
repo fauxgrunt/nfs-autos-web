@@ -65,8 +65,8 @@ export default function EnquiryModal() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // 1. Validation
-    if (!formData.name || !formData.phone || !formData.targetVehicle) {
+    // 1. Validation (Added check for formData.email)
+    if (!formData.name || !formData.phone || !formData.email || !formData.targetVehicle) {
       setError('Please fill in all required fields marked with *');
       return;
     }
@@ -76,14 +76,35 @@ export default function EnquiryModal() {
     setError('');
 
     // 3. Define Explicit Template Parameters
+    const emailSubject = `Sourcing Request: ${formData.targetVehicle}`;
+    const emailBody = `Hi ${formData.name},
+
+Thank you for choosing NFS Autos. We have officially received your sourcing request.
+
+REQUEST DETAILS
+• Vehicle: ${formData.targetVehicle || 'Not provided'}
+• Budget: ${formData.estimatedBudget || 'Not provided'}
+• Grade Preference: ${formData.auctionGrade || 'Not provided'}
+
+NEXT STEPS
+My team is currently cross-referencing your requirements with upcoming Japanese auction listings. We are looking for units that strictly match your Grade ${formData.auctionGrade || 'Not provided'} standard.
+
+We will contact you at ${formData.phone || 'Not provided'} shortly to discuss viable candidates.
+
+Best regards,
+The NFS Autos Team`;
+
     const templateParams = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      target_vehicle: formData.targetVehicle,
-      budget: formData.estimatedBudget,
-      auction_grade: formData.auctionGrade,
-      specific_requirements: formData.specificRequirements
+      name: formData.name || 'Not provided',
+      to_name: formData.name || 'Not provided',
+      user_email: formData.email || 'Not provided', // Changed from 'email' to 'user_email'
+      phone: formData.phone || 'Not provided',
+      target_vehicle: formData.targetVehicle || 'Not provided',
+      budget: formData.estimatedBudget || 'Not provided',
+      auction_grade: formData.auctionGrade || 'Not provided',
+      specific_requirements: formData.specificRequirements || 'Not provided',
+      reply_subject: emailSubject,
+      reply_body: emailBody
     };
 
     // 4. Send Both Emails (Business + Auto-Reply)
